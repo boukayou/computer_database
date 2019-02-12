@@ -1,6 +1,6 @@
 package com.excilys.projet.cdb;
 
-public class Company {
+public class EntityCompany {
 
 	
 	private long id ;
