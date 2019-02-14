@@ -79,7 +79,7 @@ public class ComputerDaoImpl implements ComputerDao {
 	@Override
 	public Computer ComputerById(long id)throws SQLException {
 		// TODO Auto-generated method stub
-		List<Computer> listComputer = new ArrayList<Computer>();
+		//List<Computer> listComputer = new ArrayList<Computer>();
 		Connection connect = this.factory.getConnection();
 		PreparedStatement prepastat = connect.prepareStatement("SELECT * FROM computer WHERE id= ?");
 		prepastat.setLong(1,id);
