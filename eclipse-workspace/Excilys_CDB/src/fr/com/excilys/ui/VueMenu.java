@@ -1,6 +1,8 @@
 package fr.com.excilys.ui;
 
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Scanner;
 
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
@@ -35,6 +37,26 @@ public class VueMenu {
 	public static void showComputersDetails(Computer computer) {
 		
 			System.out.println("Computer name: " + computer.getName() +" introduced: " + computer.getIntroduced() + " discontinued:" +computer.getDiscontinued());
+	}
+	
+	public static Computer addComputerUser() {
+		
+		System.out.println("Please enter the details of your new computer: /n");
+	
+		Scanner scnId = new Scanner(System.in);
+		System.out.println("enter name: ");
+		String name = new String(scnId.nextLine());
+		System.out.println("Enter Introduced date in the following format [yyyy-mm-dd] : /n");
+		String timeIntro = new String (scnId.nextLine());
+		System.out.println("Enter Discontuned date in the following format [yyyy-mm-dd] : /n");
+		String timeDisc = new String (scnId.nextLine());
+		System.out.println(timeDisc);
+		//computerToAdd.setDiscontinued(Timestamp.valueOf(scnId.nextLine()));
+		System.out.println("Enter ID company : \n");
+		long idCompany = Long.parseLong(scnId.nextLine());
+		//computerToAdd.setCompany_id(Long.valueOf(scnId.nextLine()));
+		Computer computerToAdd = new Computer(name,Timestamp.valueOf(timeIntro),Timestamp.valueOf(timeDisc),idCompany) ;
+		return computerToAdd;
 	}
 
 }

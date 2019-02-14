@@ -10,9 +10,18 @@ public class Computer {
 	private Timestamp discontinued;
 	private long company_id;
 
-	public Computer(long id, String name, Timestamp introduced, Timestamp discontinued, long company_id) {
+	public Computer( long id,String name, Timestamp introduced, Timestamp discontinued, long company_id) {
 		super();
 		this.id = id;
+		this.name = name;
+		this.introduced = introduced;
+		this.discontinued = discontinued;
+		this.company_id = company_id;
+	}
+	
+	public Computer(String name, Timestamp introduced, Timestamp discontinued, long company_id) {
+		super();
+		
 		this.name = name;
 		this.introduced = introduced;
 		this.discontinued = discontinued;

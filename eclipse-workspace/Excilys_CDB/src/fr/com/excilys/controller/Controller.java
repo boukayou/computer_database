@@ -29,6 +29,11 @@ public class Controller {
 		}
 		return instance;
 	}
+	
+	private void addComputer(Computer computerToAdd) throws SQLException {
+		
+		computerDao.createComputer(computerToAdd);
+	}
 
 	
 	private void initialise() {
@@ -42,7 +47,6 @@ public class Controller {
 	private void Begin() {
 		initialise();
 		while(this.isAlive) {
-			VueMenu.showChoice();
 			try {
 				UserRequest();
 			} catch (SQLException e) {
@@ -58,7 +62,7 @@ public class Controller {
 		List<Company>  listCompany  = companyDao.listCompany();
 		
 		while(false != isAlive) {
-			
+			VueMenu.showChoice();
 			Scanner scn = new Scanner(System.in);
 			String value = scn.nextLine();
 			
@@ -72,16 +76,17 @@ public class Controller {
 			case "3" :
 				System.out.println("Enter the id you are looking for: /n");
 				Scanner scnId = new Scanner(System.in);				 
-				VueMenu.showComputersDetails(computerDao.ComputerById( Long.valueOf(scn.nextLine())));
+				VueMenu.showComputersDetails(computerDao.ComputerById( Long.valueOf(scnId.nextLine())));
 				break;
 			case "4" :
-				VueMenu.showAllComputers(listComputer);
+				
+				computerDao.createComputer(VueMenu.addComputerUser());
 				break;
 			case "5" :
-				VueMenu.showAllComputers(listComputer);
+				//update
 				break;
 			case "6" :
-				VueMenu.showAllComputers(listComputer);
+				//delete
 				break;
 			case "7" :
 				this.isAlive = false;
