@@ -1,11 +1,18 @@
 package fr.com.excilys.controller;
 
+import java.text.ParseException;
+
 public class App {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		 Controller.getInstance();
+		 try {
+			Controller.getInstance();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

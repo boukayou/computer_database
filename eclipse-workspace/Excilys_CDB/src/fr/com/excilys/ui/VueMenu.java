@@ -1,6 +1,8 @@
 package fr.com.excilys.ui;
 
-import java.sql.Timestamp;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,28 +36,40 @@ public class VueMenu {
 		}
 	}
 	
-	public static void showComputersDetails(Computer computer) {
+	public static long getId() {
+		System.out.println("Enter the id : /n");
+		Scanner scnId = new Scanner(System.in);	
+		return scnId.nextLong();
+}
+	public static void showComputersDetails(Computer comp ) {
 		
-			System.out.println("Computer name: " + computer.getName() +" introduced: " + computer.getIntroduced() + " discontinued:" +computer.getDiscontinued());
+		System.out.println("Computer name: " + comp.getName() +" introduced: " + comp.getIntroduced() + " discontinued:" +comp.getDiscontinued());
+		
 	}
 	
-	public static Computer addComputerUser() {
+	public static Computer addComputerUser() throws ParseException {
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		System.out.println("Please enter the details of your new computer: /n");
-	
-		Scanner scnId = new Scanner(System.in);
+		Scanner scn = new Scanner(System.in);
+		
 		System.out.println("enter name: ");
-		String name = new String(scnId.nextLine());
+		String name = new String(scn.nextLine());
+		
+		
 		System.out.println("Enter Introduced date in the following format [yyyy-mm-dd] : /n");
-		String timeIntro = new String (scnId.nextLine());
+		Date timeIntro = sdf.parse(scn.nextLine());
+		//System.out.println(new java.sql.Timestamp(timeIntro.getTime()) );
+		
 		System.out.println("Enter Discontuned date in the following format [yyyy-mm-dd] : /n");
-		String timeDisc = new String (scnId.nextLine());
-		System.out.println(timeDisc);
-		//computerToAdd.setDiscontinued(Timestamp.valueOf(scnId.nextLine()));
+		
+		Date timeDisc = sdf.parse(scn.nextLine());
+					
 		System.out.println("Enter ID company : \n");
-		long idCompany = Long.parseLong(scnId.nextLine());
+		long idCompany = Long.parseLong(scn.nextLine());
 		//computerToAdd.setCompany_id(Long.valueOf(scnId.nextLine()));
-		Computer computerToAdd = new Computer(name,Timestamp.valueOf(timeIntro),Timestamp.valueOf(timeDisc),idCompany) ;
+		
+		Computer computerToAdd = new Computer(name,timeIntro,timeDisc,idCompany) ;
 		return computerToAdd;
 	}
 

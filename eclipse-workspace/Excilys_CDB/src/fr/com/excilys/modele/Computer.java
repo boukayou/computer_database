@@ -1,16 +1,16 @@
 package fr.com.excilys.modele;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class Computer {
 	
 	private long id;
 	private String name;
-	private Timestamp introduced;
-	private Timestamp discontinued;
+	private Date introduced;
+	private Date discontinued;
 	private long company_id;
 
-	public Computer( long id,String name, Timestamp introduced, Timestamp discontinued, long company_id) {
+	public Computer( long id,String name, Date introduced, Date discontinued, long company_id) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -19,7 +19,7 @@ public class Computer {
 		this.company_id = company_id;
 	}
 	
-	public Computer(String name, Timestamp introduced, Timestamp discontinued, long company_id) {
+	public Computer(String name, Date introduced, Date discontinued, long company_id) {
 		super();
 		
 		this.name = name;
@@ -48,22 +48,22 @@ public class Computer {
 	}
 
 
-	public Timestamp getIntroduced() {
+	public Date getIntroduced() {
 		return introduced;
 	}
 
 
-	public void setIntroduced(Timestamp introduced) {
+	public void setIntroduced(Date introduced) {
 		this.introduced = introduced;
 	}
 
 
-	public Timestamp getDiscontinued() {
+	public Date getDiscontinued() {
 		return discontinued;
 	}
 
 
-	public void setDiscontinued(Timestamp discontinued) {
+	public void setDiscontinued(Date discontinued) {
 		this.discontinued = discontinued;
 	}
 

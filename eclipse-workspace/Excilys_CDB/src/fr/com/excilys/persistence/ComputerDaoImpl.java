@@ -1,10 +1,10 @@
 package fr.com.excilys.persistence;
 
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +21,15 @@ public class ComputerDaoImpl implements ComputerDao {
 	public void createComputer(Computer computer)throws SQLException {
 		// TODO Auto-generated method stub
 		Connection connect = this.factory.getConnection();
-		PreparedStatement prepastat = connect.prepareStatement("Insert into computer values[?,?,?,?,?] ");
-		prepastat.setLong(1, computer.getId());
-		prepastat.setString(2, computer.getName());
-		prepastat.setTimestamp(3, computer.getIntroduced());
-		prepastat.setTimestamp(4, computer.getDiscontinued());
-		prepastat.setLong(5, computer.getCompany_id());
-		prepastat.executeQuery();
+		PreparedStatement prepastat = connect.prepareStatement("Insert into computer (name,introduced,discontinued,company_id) values(?,?,?,?) ");
+		//prepastat.setLong(1, computer.getId());
+		prepastat.setString(1, computer.getName());
+		prepastat.setTimestamp(2, new java.sql.Timestamp(computer.getIntroduced().getTime()));
+		prepastat.setTimestamp(3, new java.sql.Timestamp(computer.getDiscontinued().getTime()));
+		prepastat.setLong(4, computer.getCompany_id());
+		System.out.println(prepastat);
+		prepastat.execute();
+		
 		connect.close();
 	}
 
@@ -37,8 +39,8 @@ public class ComputerDaoImpl implements ComputerDao {
 		Connection connect = this.factory.getConnection();
 		PreparedStatement prepastat = connect.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ? where id=?");
 		prepastat.setString(1,computer.getName());
-		prepastat.setTimestamp(2,computer.getIntroduced());
-		prepastat.setTimestamp(3,computer.getDiscontinued());
+		prepastat.setTimestamp(2,new java.sql.Timestamp(computer.getIntroduced().getTime()));
+		prepastat.setTimestamp(3,new java.sql.Timestamp(computer.getDiscontinued().getTime()));
 		prepastat.setLong(4, computer.getId());
 		prepastat.execute();
 		connect.close();
@@ -59,27 +61,26 @@ public class ComputerDaoImpl implements ComputerDao {
 		// TODO Auto-generated method stub
 		List<Computer> listComputer = new ArrayList<Computer>();
 		Connection connect = this.factory.getConnection();
-		PreparedStatement prepastat = connect.prepareStatement("SELECT * FROM computer");
+		PreparedStatement prepastat = connect.prepareStatement("SELECT id,name,introduced,discontinued,company_id FROM computer");
 		ResultSet result = prepastat.executeQuery();
 		
 		while(result.next()) {
 			long id = result.getLong("id");
 			String name = result.getString("name");
-			Timestamp introd = result.getTimestamp("introduced");
-			Timestamp discon = result.getTimestamp("discontinued");
+			Date introd = result.getDate("introduced");
+			Date discon = result.getDate("discontinued");
 			long idCompany = result.getLong("company_id");
 			
 			listComputer.add(new Computer(id,name,introd,discon,idCompany));
 			
 		}
-		
 		return listComputer;
 	}
 
 	@Override
 	public Computer ComputerById(long id)throws SQLException {
 		// TODO Auto-generated method stub
-		List<Computer> listComputer = new ArrayList<Computer>();
+		//List<Computer> listComputer = new ArrayList<Computer>();
 		Connection connect = this.factory.getConnection();
 		PreparedStatement prepastat = connect.prepareStatement("SELECT * FROM computer WHERE id= ?");
 		prepastat.setLong(1,id);
@@ -88,8 +89,8 @@ public class ComputerDaoImpl implements ComputerDao {
 		result.next();
 		long idcomputer = result.getLong("id");
 		String name = result.getString("name");
-		Timestamp introd = result.getTimestamp("introduced");
-		Timestamp discon = result.getTimestamp("discontinued");
+		Date introd = result.getDate("introduced") ;
+		Date discon = result.getDate("discontinued");
 		long idCompany = result.getLong("company_id");
 		Computer computer =new Computer(idcomputer,name,introd,discon,idCompany);
 

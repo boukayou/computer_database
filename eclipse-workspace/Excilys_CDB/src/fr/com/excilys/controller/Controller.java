@@ -1,6 +1,7 @@
 package fr.com.excilys.controller;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,11 +20,11 @@ public class Controller {
 	private Boolean isAlive ;
 	public static Controller instance;
 	
-	private Controller() {
+	private Controller() throws ParseException {
 		Begin();
 	}
 	
-	public static Controller getInstance() {
+	public static Controller getInstance() throws ParseException {
 		if(instance==null) {
 			instance = new Controller();
 		}
@@ -44,7 +45,7 @@ public class Controller {
 	}
 	
 	
-	private void Begin() {
+	private void Begin() throws ParseException {
 		initialise();
 		while(this.isAlive) {
 			try {
@@ -56,11 +57,9 @@ public class Controller {
 		}
 	}
 	
-	private void UserRequest() throws SQLException {
+	private void UserRequest() throws SQLException, ParseException {
 		
-		List<Computer> listComputer = computerDao.ListComputer();
-		List<Company>  listCompany  = companyDao.listCompany();
-		
+			
 		while(false != isAlive) {
 			VueMenu.showChoice();
 			Scanner scn = new Scanner(System.in);
@@ -68,15 +67,16 @@ public class Controller {
 			
 			switch(value) {
 			case "1" :
+				List<Company>  listCompany  = companyDao.listCompany();
 				VueMenu.showAllCompanies(listCompany);
 				break;
 			case "2" :
+				List<Computer> listComputer = computerDao.ListComputer();
 				VueMenu.showAllComputers(listComputer);
 				break;
 			case "3" :
-				System.out.println("Enter the id you are looking for: /n");
-				Scanner scnId = new Scanner(System.in);				 
-				VueMenu.showComputersDetails(computerDao.ComputerById( Long.valueOf(scnId.nextLine())));
+				Computer computer;
+				VueMenu.showComputersDetails(computer =computerDao.ComputerById(VueMenu.getId()));
 				break;
 			case "4" :
 				
@@ -86,11 +86,10 @@ public class Controller {
 				//update
 				break;
 			case "6" :
-				//delete
+				computerDao.deleteComputer(computer =computerDao.ComputerById(VueMenu.getId()));
 				break;
 			case "7" :
 				this.isAlive = false;
-					//create
 				break;
 			default:
 				System.out.println(" Error !");
