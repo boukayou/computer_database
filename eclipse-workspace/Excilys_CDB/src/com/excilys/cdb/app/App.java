@@ -1,10 +1,12 @@
-package fr.com.excilys.controller;
+package com.excilys.cdb.app;
 
 import java.text.ParseException;
 
+import fr.com.excilys.controller.Controller;
+
 public class App {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException {
 		// TODO Auto-generated method stub
 		
 		 try {

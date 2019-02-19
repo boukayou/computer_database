@@ -1,11 +1,8 @@
 package fr.com.excilys.persistence;
-
-import java.sql.SQLException;
-import java.util.List;
-
 import fr.com.excilys.modele.Company;
+import java.util.List;
 
 public interface CompanyDao {
 
-	List<Company> listCompany() throws SQLException;
+	List<Company> listCompany() ;
 }

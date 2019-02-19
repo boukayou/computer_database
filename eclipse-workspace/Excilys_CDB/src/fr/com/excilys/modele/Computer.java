@@ -10,7 +10,7 @@ public class Computer {
 	private Date discontinued;
 	private long company_id;
 
-	public Computer( long id,String name, Date introduced, Date discontinued, long company_id) {
+	public Computer(long id,String name, Date introduced, Date discontinued, long company_id) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -26,6 +26,15 @@ public class Computer {
 		this.introduced = introduced;
 		this.discontinued = discontinued;
 		this.company_id = company_id;
+	}
+	
+	public Computer(long id,String name, Date introduced, Date discontinued) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.introduced = introduced;
+		this.discontinued = discontinued;
+		this.id = id;
 	}
 	
 	public long getId() {

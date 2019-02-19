@@ -5,6 +5,9 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 
+import com.excilys.services.CompanyService;
+import com.excilys.services.ComputerService;
+
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.persistence.CompanyDao;
@@ -14,38 +17,31 @@ import fr.com.excilys.ui.VueMenu;
 
 public class Controller {
 
-	private ComputerDao computerDao ;
-	private CompanyDao companyDao ;
-	private DaoFactory daoFactory;
 	private Boolean isAlive ;
 	public static Controller instance;
+	private CompanyService companyService;
+	private ComputerService computerService;
 	
-	private Controller() throws ParseException {
+	
+	private Controller() throws ParseException, ClassNotFoundException {
 		Begin();
 	}
 	
-	public static Controller getInstance() throws ParseException {
+	public static Controller getInstance() throws ParseException, ClassNotFoundException {
 		if(instance==null) {
 			instance = new Controller();
 		}
 		return instance;
 	}
-	
-	private void addComputer(Computer computerToAdd) throws SQLException {
-		
-		computerDao.createComputer(computerToAdd);
-	}
 
-	
 	private void initialise() {
 		this.isAlive = true;
-		this.daoFactory  = DaoFactory.getInstence();
-		this.computerDao = this.daoFactory.getComputerDao();
-		this.companyDao  = this.daoFactory.getCompanyDao();
+		this.computerService = computerService.getInstance();
+		this.companyService = CompanyService.getInstance();
 	}
 	
 	
-	private void Begin() throws ParseException {
+	private void Begin() throws ParseException, ClassNotFoundException {
 		initialise();
 		while(this.isAlive) {
 			try {
@@ -57,36 +53,33 @@ public class Controller {
 		}
 	}
 	
-	private void UserRequest() throws SQLException, ParseException {
+	private void UserRequest() throws SQLException, ParseException, ClassNotFoundException {
 		
 			
 		while(false != isAlive) {
 			VueMenu.showChoice();
-			Scanner scn = new Scanner(System.in);
-			String value = scn.nextLine();
-			
-			switch(value) {
+						
+			switch(VueMenu.Choice()) {
 			case "1" :
-				List<Company>  listCompany  = companyDao.listCompany();
-				VueMenu.showAllCompanies(listCompany);
+				//List<Company>  listCompany  = companyDao.listCompany();
+				VueMenu.showAllCompanies(companyService.getList());
 				break;
 			case "2" :
-				List<Computer> listComputer = computerDao.ListComputer();
-				VueMenu.showAllComputers(listComputer);
+				//List<Computer> listComputer = computerDao.ListComputer();
+				VueMenu.showAllComputers(computerService.getList());
 				break;
 			case "3" :
 				Computer computer;
-				VueMenu.showComputersDetails(computer =computerDao.ComputerById(VueMenu.getId()));
+				VueMenu.showComputersDetails(computer = computerService.getById((VueMenu.getId())));
 				break;
 			case "4" :
-				
-				computerDao.createComputer(VueMenu.addComputerUser());
+				computerService.create(VueMenu.addComputer());
 				break;
 			case "5" :
-				//update
+				computerService.upDate(VueMenu.upDateComputer());
 				break;
 			case "6" :
-				computerDao.deleteComputer(computer =computerDao.ComputerById(VueMenu.getId()));
+				computerService.delete((computer =computerService.getById(VueMenu.getId())));
 				break;
 			case "7" :
 				this.isAlive = false;
