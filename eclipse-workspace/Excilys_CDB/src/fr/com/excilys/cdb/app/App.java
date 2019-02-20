@@ -1,4 +1,4 @@
-package com.excilys.cdb.app;
+package fr.com.excilys.cdb.app;
 
 import java.text.ParseException;
 

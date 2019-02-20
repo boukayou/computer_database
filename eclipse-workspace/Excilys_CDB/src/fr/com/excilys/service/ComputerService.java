@@ -1,6 +1,6 @@
-package com.excilys.services;
-import java.util.List;
+package fr.com.excilys.service;
 
+import java.util.List;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.persistence.ComputerDao;
 import fr.com.excilys.persistence.DaoFactory;

@@ -1,16 +1,17 @@
 package fr.com.excilys.modele;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Computer {
 	
 	private long id;
 	private String name;
-	private Date introduced;
-	private Date discontinued;
+	private LocalDate introduced;
+	private LocalDate discontinued;
 	private long company_id;
 
-	public Computer(long id,String name, Date introduced, Date discontinued, long company_id) {
+	public Computer(long id,String name, LocalDate introduced, LocalDate discontinued, long company_id) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -19,7 +20,7 @@ public class Computer {
 		this.company_id = company_id;
 	}
 	
-	public Computer(String name, Date introduced, Date discontinued, long company_id) {
+	public Computer(String name, LocalDate introduced, LocalDate discontinued, long company_id) {
 		super();
 		
 		this.name = name;
@@ -28,7 +29,7 @@ public class Computer {
 		this.company_id = company_id;
 	}
 	
-	public Computer(long id,String name, Date introduced, Date discontinued) {
+	public Computer(long id,String name, LocalDate introduced, LocalDate discontinued) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -57,22 +58,22 @@ public class Computer {
 	}
 
 
-	public Date getIntroduced() {
+	public LocalDate getIntroduced() {
 		return introduced;
 	}
 
 
-	public void setIntroduced(Date introduced) {
+	public void setIntroduced(LocalDate introduced) {
 		this.introduced = introduced;
 	}
 
 
-	public Date getDiscontinued() {
+	public LocalDate getDiscontinued() {
 		return discontinued;
 	}
 
 
-	public void setDiscontinued(Date discontinued) {
+	public void setDiscontinued(LocalDate discontinued) {
 		this.discontinued = discontinued;
 	}
 

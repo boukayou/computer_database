@@ -1,13 +1,14 @@
 package fr.com.excilys.persistence;
 
 import java.sql.Connection;
-import java.util.Date;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 import fr.com.excilys.modele.Computer;
 
@@ -27,10 +28,9 @@ public class ComputerDaoImpl implements ComputerDao {
 			PreparedStatement prepastat = connect.prepareStatement("Insert into computer (name,introduced,discontinued,company_id) values(?,?,?,?) ");
 			//prepastat.setLong(1, computer.getId());
 			prepastat.setString(1, computer.getName());
-			prepastat.setTimestamp(2, new java.sql.Timestamp(computer.getIntroduced().getTime()));
-			prepastat.setTimestamp(3, new java.sql.Timestamp(computer.getDiscontinued().getTime()));
+			prepastat.setTimestamp(2,new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
+			prepastat.setTimestamp(3, new java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
 			prepastat.setLong(4, computer.getCompany_id());
-			System.out.println(prepastat);
 			prepastat.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -46,8 +46,8 @@ public class ComputerDaoImpl implements ComputerDao {
 				
 			PreparedStatement prepastat = connect.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ? where id=?");
 			prepastat.setString(1,computer.getName());
-			prepastat.setTimestamp(2,new java.sql.Timestamp(computer.getIntroduced().getTime()));
-			prepastat.setTimestamp(3,new java.sql.Timestamp(computer.getDiscontinued().getTime()));
+			prepastat.setTimestamp(2,new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
+			prepastat.setTimestamp(3,new java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
 			prepastat.setLong(4, computer.getId());
 			prepastat.execute();
 		} catch (SQLException e) {
@@ -83,8 +83,8 @@ public class ComputerDaoImpl implements ComputerDao {
 			while(result.next()) {
 				long id = result.getLong("id");
 				String name = result.getString("name");
-				Date introd = result.getDate("introduced");
-				Date discon = result.getDate("discontinued");
+				LocalDate introd = result.getTimestamp("introduced").toLocalDateTime().toLocalDate();
+				LocalDate discon = result.getTimestamp("discontinued").toLocalDateTime().toLocalDate();
 				long idCompany = result.getLong("company_id");
 				listComputer.add(new Computer(id,name,introd,discon,idCompany));
 				return listComputer;
@@ -110,8 +110,8 @@ public class ComputerDaoImpl implements ComputerDao {
 			result.next();
 			long idcomputer = result.getLong("id");
 			String name = result.getString("name");
-			Date introd = result.getDate("introduced") ;
-			Date discon = result.getDate("discontinued");
+			LocalDate introd = result.getTimestamp("introduced").toLocalDateTime().toLocalDate() ;
+			LocalDate discon = result.getTimestamp("discontinued").toLocalDateTime().toLocalDate();
 			long idCompany = result.getLong("company_id");
 			computer =new Computer(idcomputer,name,introd,discon,idCompany);
 

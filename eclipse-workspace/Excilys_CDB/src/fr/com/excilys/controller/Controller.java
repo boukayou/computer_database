@@ -4,9 +4,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
-
-import com.excilys.services.CompanyService;
-import com.excilys.services.ComputerService;
+import fr.com.excilys.service.*;
 
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
