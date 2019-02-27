@@ -2,7 +2,6 @@ package fr.com.excilys.checking;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Optional;
 
 public class ConvertData {

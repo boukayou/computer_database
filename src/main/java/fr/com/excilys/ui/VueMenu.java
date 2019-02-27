@@ -67,7 +67,9 @@ public class VueMenu  {
 		Scanner scn = new Scanner(System.in);
 		
 		System.out.println("Enter ID company : \n");
-		long idCompany = Long.parseLong(scn.nextLine());
+		Company company =new Company();
+		company.setId(Long.parseLong((scn.nextLine())));
+		
 		
 		String name;
 		do{
@@ -114,7 +116,7 @@ public class VueMenu  {
 			}
 		}
 		
-		Computer computer = new Computer(name,introduced,discontinued,idCompany);
+		Computer computer = new Computer(name,introduced,discontinued,company);
 	   return computer;
 	}
 	
@@ -132,7 +134,7 @@ public class VueMenu  {
 		
 		System.out.println("Enter ID computer : \n");
 		long idComputer = Long.parseLong(scn.nextLine());
-		
+					
 		String name;
 		do{
 			System.out.println("enter name: ");
@@ -172,8 +174,11 @@ public class VueMenu  {
 		       System.out.println(date +" is Invalid Date format\n");   
 			}	
 		}
+		System.out.println("Enter ID company : \n");
+		Company company =new Company();
+		company.setId(Long.parseLong((scn.nextLine())));
 		
-		Computer computer = new Computer(idComputer,name,introduced,discontinued);
+		Computer computer = new Computer(idComputer,name,introduced,discontinued,company);
 	
 	   return computer;
 	}

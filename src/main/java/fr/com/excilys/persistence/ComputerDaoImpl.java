@@ -65,7 +65,7 @@ public class ComputerDaoImpl implements ComputerDao {
 		 
 		try(Connection connect = this.factory.getConnection();) {
 				
-			PreparedStatement prepastat = connect.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ? where id=?");
+			PreparedStatement prepastat = connect.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ? , company_id =? where id=?");
 			prepastat.setString(1,computer.getName());
 			if (computer.getIntroduced()==null) { 
 				prepastat.setTimestamp(2, null);
@@ -79,8 +79,12 @@ public class ComputerDaoImpl implements ComputerDao {
 			}
 			//prepastat.setTimestamp(2,new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
 			//prepastat.setTimestamp(3,new java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
-			prepastat.setLong(4, computer.getId());
+			prepastat.setLong(4, computer.getCompany().getId());
 			prepastat.execute();
+			
+			prepastat.setLong(5, computer.getId());
+			prepastat.execute();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

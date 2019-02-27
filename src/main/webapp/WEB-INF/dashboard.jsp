@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -9,9 +8,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8">
 <!-- Bootstrap -->
-<link href="/computer-database/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="/computer-database/css/font-awesome.css" rel="stylesheet" media="screen">
-<link href="/computer-database/css/main.css" rel="stylesheet" media="screen">
+<link href="/cdb/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="/cdb/css/font-awesome.css" rel="stylesheet" media="screen">
+<link href="/cdb/css/main.css" rel="stylesheet" media="screen">
 </head>
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
@@ -37,8 +36,8 @@
                     </form>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-success" id="addComputer" href="addComputer.html">Add Computer</a> 
-                    <a class="btn btn-default" id="editComputer" href="#" onclick="$.fn.toggleEditMode();">Edit</a>
+                    <a class="btn btn-success" id="addComputer" href="/cdb/AddComputer">Add Computer</a> 
+                    <a class="btn btn-default" id="editComputer" href="/cdb/EditComputer" onclick="$.fn.toggleEditMode();">Edit</a>
                 </div>
             </div>
         </div>
@@ -74,7 +73,7 @@
                         </th>
                         <!-- Table header for Company -->
                         <th>
-                            Company
+                            Company 
                         </th>
 
                     </tr>
@@ -91,7 +90,7 @@
                             <input type="checkbox" name="cb" class="cb" value="0">
                         </td>
                         <td>
-                            <a href="editComputer.html" onclick="">${mavariable.name}</a>
+                            <a href="/cdb/EditComputer" onclick="">${mavariable.name}</a>
                         </td>
                         <td>${mavariable.introduced}</td>
                         <td>${mavariable.discontinued}</td>
@@ -123,7 +122,7 @@
                 </a>
             </li>
         </ul>
-
+	 </div>
         <div class="btn-group btn-group-sm pull-right" role="group" >
             <button type="button" class="btn btn-default">10</button>
             <button type="button" class="btn btn-default">50</button>

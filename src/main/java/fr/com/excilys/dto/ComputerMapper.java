@@ -31,10 +31,11 @@ public class ComputerMapper {
 
 	}
 	
-	public Computer DtoToComputer(ComputerDTO computerDto) {
+	public static Computer DtoToComputer(ComputerDTO computerDto) {
 		Computer computer = new Computer();
-		computer.setId(Long.parseLong(computerDto.getId()));
-		computer.setName(computer.getName());
+		if(computerDto.getId()==null) {
+		}else computer.setId(Long.parseLong(computerDto.getId()));
+		computer.setName(computerDto.getName());
 		computer.setIntroduced(convertToString(computerDto.getIntroduced()));
 		computer.setDiscontinued(convertToString(computerDto.getDiscontinued()));
 		

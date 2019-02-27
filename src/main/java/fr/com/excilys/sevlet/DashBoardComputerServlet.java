@@ -41,9 +41,7 @@ public class DashBoardComputerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	List<Computer> listcomputer = computerService.getList() ;
-	
 	List<ComputerDTO> listComputerDto = ComputerMapper.getListComputerDto(listcomputer);
-		
 		request.setAttribute("list", listComputerDto);
 	this.getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request, response);
 
