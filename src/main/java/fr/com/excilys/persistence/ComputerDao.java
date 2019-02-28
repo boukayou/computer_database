@@ -8,7 +8,8 @@ public interface ComputerDao {
 	void createComputer (Computer computer);
 	void UpdateComputer (Computer computer);
 	void deleteComputer (Computer computer);
-	List<Computer> ListComputer();
+	int count();
+	List<Computer> getList(int page,int nbOfElements );
 	Computer ComputerById(long id);
 	
 }

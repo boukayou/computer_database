@@ -13,46 +13,50 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.com.excilys.checking.ConvertData;
+import fr.com.excilys.checking.Pagination;
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
 
-
 public class ComputerDaoImpl implements ComputerDao {
-	
+	final Logger logger = LoggerFactory.getLogger(ComputerDaoImpl.class);
 	final static String COMPUTER_BY_ID = "SELECT computer.id,computer.name,computer.introduced,computer.discontinued,computer.company_id, company.name "
 			+ "								FROM computer LEFT JOIN company ON computer.company_id = company.id "
 			+ "							 		WHERE computer.id= ?";
-	
-	final static String LIST_COMPUTER = "SELECT computer.id,computer.name,computer.introduced,computer.discontinued,computer.company_id, company.name "
-			+ "								FROM computer LEFT JOIN company ON computer.company_id = company.id ";
-	final Logger logger = LoggerFactory.getLogger(ComputerDaoImpl.class);
-	DaoFactory factory ;
-	
+
+	final static String LIST = "SELECT computer.id,computer.name,computer.introduced,computer.discontinued,computer.company_id, company.name "
+			+ "								FROM computer LEFT JOIN company ON computer.company_id = company.id LIMIT ? OFFSET ?";
+	final static String INSERT = "Insert into computer (name,introduced,discontinued,company_id) values(?,?,?,?) ";
+	final static String UP_DATE = "UPDATE computer SET name = ?, introduced = ?, discontinued = ? , company_id =? where id=?";
+	final static String DELETE = "DELETE FROM computer where id =?";
+	final static String COUNT_ELEMENTS = "SELECT COUNT (*) AS nbElements FROM computer ";
+	DaoFactory factory;
+
 	public ComputerDaoImpl(DaoFactory fact) {
-		this.factory=fact;
+		this.factory = fact;
 	}
+
 	@Override
 	public void createComputer(Computer computer) {
 		// TODO Auto-generated method stub
-		
+
 		try (Connection connect = this.factory.getConnection()) {
-			
-			PreparedStatement prepastat = connect.prepareStatement("Insert into computer (name,introduced,discontinued,company_id) values(?,?,?,?) ");
-			//prepastat.setLong(1, computer.getId());
+
+			PreparedStatement prepastat = connect.prepareStatement(INSERT);
+			// prepastat.setLong(1, computer.getId());
 			prepastat.setString(1, computer.getName());
-			if (computer.getIntroduced()==null) { 
+			if (computer.getIntroduced() == null) {
 				prepastat.setTimestamp(2, null);
-			}else {
-				prepastat.setTimestamp(2,new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
+			} else {
+				prepastat.setTimestamp(2, new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
 			}
-			if(computer.getDiscontinued()==null) {
-				prepastat.setTimestamp(3,null);
-			}else {
+			if (computer.getDiscontinued() == null) {
+				prepastat.setTimestamp(3, null);
+			} else {
 				prepastat.setTimestamp(3, new java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
 			}
 			prepastat.setLong(4, computer.getCompany().getId());
 			prepastat.execute();
-		    logger.info(" was added to database.");
+			logger.info(" was added to database.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,29 +66,31 @@ public class ComputerDaoImpl implements ComputerDao {
 	@Override
 	public void UpdateComputer(Computer computer) {
 		// TODO Auto-generated method stub
-		 
-		try(Connection connect = this.factory.getConnection();) {
-				
-			PreparedStatement prepastat = connect.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ? , company_id =? where id=?");
-			prepastat.setString(1,computer.getName());
-			if (computer.getIntroduced()==null) { 
+
+		try (Connection connect = this.factory.getConnection();) {
+
+			PreparedStatement prepastat = connect.prepareStatement(UP_DATE);
+			prepastat.setString(1, computer.getName());
+			if (computer.getIntroduced() == null) {
 				prepastat.setTimestamp(2, null);
-			}else {
-				prepastat.setTimestamp(2,new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
+			} else {
+				prepastat.setTimestamp(2, new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
 			}
-			if(computer.getDiscontinued()==null) {
-				prepastat.setTimestamp(3,null);
-			}else {
+			if (computer.getDiscontinued() == null) {
+				prepastat.setTimestamp(3, null);
+			} else {
 				prepastat.setTimestamp(3, new java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
 			}
-			//prepastat.setTimestamp(2,new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
-			//prepastat.setTimestamp(3,new java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
+			// prepastat.setTimestamp(2,new
+			// java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
+			// prepastat.setTimestamp(3,new
+			// java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
 			prepastat.setLong(4, computer.getCompany().getId());
 			prepastat.execute();
-			
+
 			prepastat.setLong(5, computer.getId());
 			prepastat.execute();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,9 +100,9 @@ public class ComputerDaoImpl implements ComputerDao {
 	@Override
 	public void deleteComputer(Computer computer) {
 		// TODO Auto-generated method stub
-		
-		try(Connection connect = this.factory.getConnection();) {		
-			PreparedStatement prepastat = connect.prepareStatement("DELETE FROM computer where id =?");
+
+		try (Connection connect = this.factory.getConnection();) {
+			PreparedStatement prepastat = connect.prepareStatement(DELETE);
 			prepastat.setLong(1, computer.getId());
 			prepastat.execute();
 		} catch (SQLException e) {
@@ -106,60 +112,82 @@ public class ComputerDaoImpl implements ComputerDao {
 	}
 
 	@Override
-	public List<Computer> ListComputer() {
+	public List<Computer> getList(int page, int nbOfElements) {
 		// TODO Auto-generated method stub
 		List<Computer> listComputer = new ArrayList<Computer>();
-		
-		try (Connection connect = this.factory.getConnection();){
-			
-			PreparedStatement prepastat = connect.prepareStatement(LIST_COMPUTER);
+
+		try (Connection connect = this.factory.getConnection();) {
+
+			PreparedStatement prepastat = connect.prepareStatement(LIST);
+			prepastat.setInt(1, nbOfElements);
+			prepastat.setInt(2,page*nbOfElements );
 			ResultSet result = prepastat.executeQuery();
-			
-			while(result.next()) {
+
+			while (result.next()) {
 				long id = result.getLong("computer.id");
 				String name = result.getString("computer.name");
-				LocalDate introd = ConvertData.timestampToLocalDate(result.getTimestamp("computer.introduced")).orElse(null) ;
-				LocalDate discon=ConvertData.timestampToLocalDate(result.getTimestamp("computer.discontinued")).orElse(null) ;
+				LocalDate introd = ConvertData.timestampToLocalDate(result.getTimestamp("computer.introduced"))
+						.orElse(null);
+				LocalDate discon = ConvertData.timestampToLocalDate(result.getTimestamp("computer.discontinued"))
+						.orElse(null);
 				long idCompany = result.getLong("computer.company_id");
 				Company company = new Company();
 				company.setId(idCompany);
 				company.setName(result.getString("company.name"));
-				
-				listComputer.add(new Computer(id,name,introd,discon,company));
-				
+
+				listComputer.add(new Computer(id, name, introd, discon, company));
+
 			}
 			return listComputer;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return listComputer;
+	}
+	@Override
+	public int count() {
+		// TODO Auto-generated method stub
+		int count = 0;
+		try (Connection connect = this.factory.getConnection();) {
+
+			PreparedStatement prepastat = connect.prepareStatement(COUNT_ELEMENTS);
+
+			ResultSet result = prepastat.executeQuery();
+			if (result.next()) {
+				count = result.getInt("nbElements");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 	@Override
 	public Computer ComputerById(long id) {
 		// TODO Auto-generated method stub
 		Computer computer = null;
-		
+
 		try (Connection connect = this.factory.getConnection();) {
-			
+
 			PreparedStatement prepastat = connect.prepareStatement(COMPUTER_BY_ID);
-			prepastat.setLong(1,id);
+			prepastat.setLong(1, id);
 			ResultSet result = prepastat.executeQuery();
 			result.next();
 			long idcomputer = result.getLong("id");
 			String name = result.getString("name");
-			LocalDate introd = ConvertData.timestampToLocalDate(result.getTimestamp("introduced")).orElse(null) ;
-			LocalDate discon=ConvertData.timestampToLocalDate(result.getTimestamp("discontinued")).orElse(null) ;
+			LocalDate introd = ConvertData.timestampToLocalDate(result.getTimestamp("introduced")).orElse(null);
+			LocalDate discon = ConvertData.timestampToLocalDate(result.getTimestamp("discontinued")).orElse(null);
 			long idCompany = result.getLong("company_id");
-			computer =new Computer(idcomputer,name,introd,discon,new Company(idCompany));
+			computer = new Computer(idcomputer, name, introd, discon, new Company(idCompany));
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return computer ;
+		return computer;
 	}
-	
+
 }

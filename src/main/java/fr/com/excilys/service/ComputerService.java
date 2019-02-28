@@ -1,5 +1,6 @@
 package fr.com.excilys.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.com.excilys.modele.Computer;
@@ -23,10 +24,19 @@ public class ComputerService {
 		return instance;
 	}
 	
-	public List<Computer> getList(){
+	public List<Computer> getList(int page,int nbOfElements){
 		List<Computer>  listComputer = null;
-		listComputer  = this.computerDao.ListComputer();
+		listComputer  = this.computerDao.getList(page, nbOfElements);
 		return listComputer ;
+	}
+	
+	public List<Computer> getList(){
+
+		return new ArrayList<Computer>();
+	}
+	
+	public int count() {
+		return computerDao.count();
 	}
 	public Computer getById(long id) {
 		
