@@ -12,11 +12,13 @@ import fr.com.excilys.service.ComputerService;
 public class Pagination {
 	private int nbOfElements = 10;
 	private int page = 0;
+	private int max;
 	// final Logger logger = LoggerFactory.getLogger(Pagination.class);
 
 	ComputerService computerService = ComputerService.getInstance();
 
 	public Pagination() {
+		
 	}
 
 	public Pagination(int nbOfElements, int page) {
