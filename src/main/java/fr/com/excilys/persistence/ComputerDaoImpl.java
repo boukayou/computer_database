@@ -19,16 +19,20 @@ import fr.com.excilys.modele.Computer;
 
 public class ComputerDaoImpl implements ComputerDao {
 	final Logger logger = LoggerFactory.getLogger(ComputerDaoImpl.class);
-	final static String COMPUTER_BY_ID = "SELECT computer.id,computer.name,computer.introduced,computer.discontinued,computer.company_id, company.name "
-			+ "								FROM computer LEFT JOIN company ON computer.company_id = company.id "
-			+ "							 		WHERE computer.id= ?";
-
-	final static String LIST = "SELECT computer.id,computer.name,computer.introduced,computer.discontinued,computer.company_id, company.name "
-			+ "								FROM computer LEFT JOIN company ON computer.company_id = company.id LIMIT ? OFFSET ?";
 	final static String INSERT = "Insert into computer (name,introduced,discontinued,company_id) values(?,?,?,?) ";
 	final static String UP_DATE = "UPDATE computer SET name = ?, introduced = ?, discontinued = ? , company_id =? where id=?";
 	final static String DELETE = "DELETE FROM computer where id =?";
-	final static String COUNT_ELEMENTS = "SELECT COUNT (*) AS nbElements FROM computer ";
+	final static String COUNT_ELEMENTS = "SELECT COUNT(*) AS nbElements FROM computer ";
+	final static String COMPUTER_BY_ID = "SELECT computer.id,computer.name,computer.introduced,computer.discontinued,computer.company_id, company.name "
+			+ "								FROM computer "
+			+ "									LEFT JOIN company ON computer.company_id = company.id "
+			+ "							 			WHERE computer.id= ?";
+
+	final static String LIST = "SELECT computer.id,computer.name,computer.introduced,computer.discontinued,computer.company_id, company.name "
+			+ "								FROM computer "
+			+ "									LEFT JOIN company ON computer.company_id = company.id "
+			+ "										LIMIT ? OFFSET ?";
+	
 	DaoFactory factory;
 
 	public ComputerDaoImpl(DaoFactory fact) {
@@ -162,6 +166,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	
 		return count;
 	}
 

@@ -1,5 +1,6 @@
 package fr.com.excilys.checking;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ public class Pagination {
 	ComputerService computerService = ComputerService.getInstance();
 
 	public Pagination() {
+		//navigation();
 		
 	}
 
@@ -41,6 +43,7 @@ public class Pagination {
 	}
 
 	public int getPage() {
+		
 		return page;
 	}
 
@@ -59,6 +62,18 @@ public class Pagination {
 	}
 
 	public List<Computer> getList() {
+		System.out.println("nombre offset :" + page + " nombre de limite:" + nbOfElements);
 		return computerService.getList(page, nbOfElements);
+	}
+
+	public List<Integer> navigation() {
+		
+		List<Integer> listNavigation= new ArrayList<Integer>();
+		
+		long computersFound =  computerService.count();
+		long pages = computersFound%nbOfElements;
+			
+		return listNavigation;
+				
 	}
 }
