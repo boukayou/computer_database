@@ -40,8 +40,8 @@
                             <div class="form-group">
                                 <label for="companyId">Company</label>
                                 <select class="form-control" id="companyId" name="companyId" >
-                                <c:forEach items="${list}" var="mavariable">
-                                    <option value="${mavariable.id}">${mavariable.name}</option>
+                                <c:forEach items="${list}" var="maListCompany">
+                                    <option value="${maListCompany.id}">${maListCompany.name}</option>
                                   </c:forEach>   
                                 </select>
                             </div>                                              

@@ -15,8 +15,8 @@ public class ComputerMapper {
 		
 		computerDto.setId(Long.toString(computer.getId()));
 		computerDto.setName(computer.getName());
-		computerDto.setIntroduced(convertToDate(computer.getIntroduced()));
-		computerDto.setDiscontinued(convertToDate(computer.getDiscontinued()));
+		computerDto.setIntroduced(convertToString(computer.getIntroduced()));
+		computerDto.setDiscontinued(convertToString(computer.getDiscontinued()));
 		computerDto.setCompanyID(Long.toString(computer.getCompany().getId()));
 		computerDto.setCompanyName(computer.getCompany().getName());
 		return computerDto;
@@ -33,11 +33,21 @@ public class ComputerMapper {
 	
 	public static Computer DtoToComputer(ComputerDTO computerDto) {
 		Computer computer = new Computer();
+		
 		if(computerDto.getId()==null) {
 		}else computer.setId(Long.parseLong(computerDto.getId()));
+		
 		computer.setName(computerDto.getName());
-		computer.setIntroduced(convertToString(computerDto.getIntroduced()));
-		computer.setDiscontinued(convertToString(computerDto.getDiscontinued()));
+		
+		if(computerDto.getIntroduced().equals("")) {
+			computer.setIntroduced(null);
+		}else computer.setIntroduced(convertToDate(computerDto.getIntroduced()));
+		
+		
+		if(computerDto.getDiscontinued().equals("")) {
+			computer.setDiscontinued(null);
+		}else computer.setDiscontinued(convertToDate(computerDto.getDiscontinued()));
+		
 		
 		Company company = new Company();
 		company.setId(Long.parseLong(computerDto.getCompanyID()));
@@ -47,7 +57,7 @@ public class ComputerMapper {
 		return computer;
 	}
 	
-	public static String convertToDate(LocalDate localDate) {
+	public static String convertToString(LocalDate localDate) {
 		String formattedString;
 		System.out.println(localDate);
 		if(null!=localDate) {
@@ -58,12 +68,26 @@ public class ComputerMapper {
 		return formattedString;
 	}
 	
-	public static LocalDate convertToString(String str) {
+	public static LocalDate convertToDate(String str) {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate formattedString = LocalDate.parse(str,formatter);
 		
 		return formattedString;
+	}
+	
+	public static long StringToLong(String str) {
+		return Long.parseLong(str);
+	}
+	
+	public static List<String> IntToString(List<Integer> linteger) {
+		List<String> strNavigation = new ArrayList<String>();
+		
+			for(Integer integer : linteger) {
+			
+				strNavigation.add(String.valueOf(integer));
+			}
+		return strNavigation;
 	}
 	
 }

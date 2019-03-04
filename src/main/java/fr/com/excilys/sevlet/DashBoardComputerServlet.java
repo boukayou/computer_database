@@ -53,6 +53,8 @@ public class DashBoardComputerServlet extends HttpServlet {
 		List<Computer> listcomputer = pagination.getList();
 		List<ComputerDTO> listComputerDto = ComputerMapper.getListComputerDto(listcomputer);
 		request.setAttribute("list", listComputerDto);
+		List<String> listNavigation = ComputerMapper.IntToString(pagination.navigation());
+		request.setAttribute("listNavigation",listNavigation );
 		this.getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request, response);
 
 	}

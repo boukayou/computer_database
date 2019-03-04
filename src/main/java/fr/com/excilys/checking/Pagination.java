@@ -35,7 +35,7 @@ public class Pagination {
 	public void setNbOfElements(String nbOfElements) {
 		if (nbOfElements != null) {
 			try {
-				this.page = Integer.parseInt(nbOfElements);
+				this.nbOfElements = Integer.parseInt(nbOfElements);
 			} catch (NumberFormatException e) {
 				// Logger.WARN_INT("Le format du nombre");
 			}
@@ -69,11 +69,18 @@ public class Pagination {
 	public List<Integer> navigation() {
 		
 		List<Integer> listNavigation= new ArrayList<Integer>();
-		
+		List<Integer> navigation= new ArrayList<Integer>();
 		long computersFound =  computerService.count();
-		long pages = computersFound%nbOfElements;
-			
+		long pages = computersFound/nbOfElements;
+		
+		for(Integer i=1;i<=pages+1;i++){
+			listNavigation.add(i);
+		}
+		for(int i =-2;i<page+2;i++)
+		navigation.add(listNavigation.indexOf(page));
+		
 		return listNavigation;
 				
 	}
+	
 }

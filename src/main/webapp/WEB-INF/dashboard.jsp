@@ -90,12 +90,11 @@
                             <input type="checkbox" name="cb" class="cb" value="0">
                         </td>
                         <td>
-                            <a href="/cdb/EditComputer" onclick="">${mavariable.name}</a>
+                            <a href="/cdb/EditComputer?idComputer=${mavariable.id}" onclick="">${mavariable.name}</a>
                         </td>
                         <td>${mavariable.introduced}</td>
                         <td>${mavariable.discontinued}</td>
                         <td>${mavariable.companyName}</td>
-
                     </tr>
                    </c:forEach>
                 </tbody>
@@ -110,12 +109,10 @@
                       <span aria-hidden="true">&laquo;</span>
                   </a>
                 </li>
-              <li><a href="/cdb/Dashboard?page=1">1</a></li>
-              <li><a href="/cdb/Dashboard?page=2">2</a></li>
-              <li><a href="/cdb/Dashboard?page=3">3</a></li>
-              <li><a href="/cdb/Dashboard?page=4">4</a></li>
-              <li><a href="/cdb/Dashboard?page=5">5</a></li>
-              <li>
+               <c:forEach items="${listNavigation}" var="navigation"> 
+               <li><a href="/cdb/Dashboard?page=${navigation}">${navigation}</a></li>
+               </c:forEach>
+               <li>
                 <a href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>

@@ -63,7 +63,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			logger.info(" was added to database.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error in ComputerDaoImplement/creating computer");
 		}
 	}
 
@@ -90,14 +90,13 @@ public class ComputerDaoImpl implements ComputerDao {
 			// prepastat.setTimestamp(3,new
 			// java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
 			prepastat.setLong(4, computer.getCompany().getId());
-			prepastat.execute();
-
 			prepastat.setLong(5, computer.getId());
 			prepastat.execute();
-
+			logger.info(" was update to database.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error("Error in ComputerDaoImplement/Updating computer");
 		}
 	}
 
@@ -111,7 +110,9 @@ public class ComputerDaoImpl implements ComputerDao {
 			prepastat.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			logger.error("Error in ComputerDaoImplement/deleting computer");
+
 		}
 	}
 
@@ -145,7 +146,9 @@ public class ComputerDaoImpl implements ComputerDao {
 			return listComputer;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			logger.error("Error in ComputerDaoImplement/to get list of computer");
+
 		}
 
 		return listComputer;
@@ -164,7 +167,9 @@ public class ComputerDaoImpl implements ComputerDao {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			logger.error("Error in ComputerDaoImplement/counting computer");
+
 		}
 	
 		return count;
@@ -190,7 +195,9 @@ public class ComputerDaoImpl implements ComputerDao {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			logger.error("Error in ComputerDaoImplement/to get computer by id");
+
 		}
 		return computer;
 	}
