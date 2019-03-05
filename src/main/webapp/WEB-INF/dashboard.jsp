@@ -35,14 +35,16 @@
                         class="btn btn-primary" />
                     </form>
                 </div>
+                
                 <div class="pull-right">
                     <a class="btn btn-success" id="addComputer" href="/cdb/AddComputer">Add Computer</a> 
-                    <a class="btn btn-default" id="editComputer" href="/cdb/EditComputer" onclick="$.fn.toggleEditMode();">Edit</a>
+                    <a class="btn btn-default" id="editComputer" href="#"
+                     onclick="$.fn.toggleEditMode();">Edit</a>
                 </div>
             </div>
         </div>
 
-        <form id="deleteForm" action="#" method="POST">
+        <form id="deleteForm" action="/cdb/DeleteComputer" method="POST">
             <input type="hidden" name="selection" value="">
         </form>
 
@@ -56,7 +58,7 @@
                         <th class="editMode" style="width: 60px; height: 22px;">
                             <input type="checkbox" id="selectall" /> 
                             <span style="vertical-align: top;">
-                                 -  <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();">
+                                 -  <a href="#" id="deleteSelected"  onclick="$.fn.deleteSelected();">
                                         <i class="fa fa-trash-o fa-lg"></i>
                                     </a>
                             </span>
@@ -87,7 +89,7 @@
  				
                     <tr>
                         <td class="editMode">
-                            <input type="checkbox" name="cb" class="cb" value="0">
+                            <input type="checkbox" name="cb" class="cb" value="${mavariable.id}">
                         </td>
                         <td>
                             <a href="/cdb/EditComputer?idComputer=${mavariable.id}" onclick="">${mavariable.name}</a>
@@ -126,9 +128,9 @@
         </div>
 	</div>
     </footer>
-<script src="/js/jquery.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/dashboard.js"></script>
+<script src="/cdb/js/jquery.min.js"></script>
+<script src="/cdb/js/bootstrap.min.js"></script>
+<script src="/cdb/js/dashboard.js"></script>
 
 </body>
 </html>

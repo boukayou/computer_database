@@ -24,8 +24,7 @@ import fr.com.excilys.service.ComputerService;
 
 public class DashBoardComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private CompanyService companyService;
-	private ComputerService computerService;
+
 	private String nbrOfElements;
 	private String page;
 	Pagination pagination = new Pagination();
@@ -35,8 +34,6 @@ public class DashBoardComputerServlet extends HttpServlet {
 	 */
 	public DashBoardComputerServlet() {
 		// TODO Auto-generated constructor stub
-		companyService = CompanyService.getInstance();
-		computerService = ComputerService.getInstance();
 	}
 
 	/**

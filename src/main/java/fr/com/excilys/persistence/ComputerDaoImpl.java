@@ -103,14 +103,14 @@ public class ComputerDaoImpl implements ComputerDao {
 	@Override
 	public void deleteComputer(Computer computer) {
 		// TODO Auto-generated method stub
-
+			System.out.println(computer);
 		try (Connection connect = this.factory.getConnection();) {
 			PreparedStatement prepastat = connect.prepareStatement(DELETE);
 			prepastat.setLong(1, computer.getId());
 			prepastat.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			e.printStackTrace();
 			logger.error("Error in ComputerDaoImplement/deleting computer");
 
 		}

@@ -52,6 +52,6 @@ public class ComputerService {
 	}
 	
 	public void delete (Computer computer) {
-		this.delete(computer);
+		this.computerDao.deleteComputer(computer);
 	}
 }
