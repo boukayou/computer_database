@@ -60,7 +60,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			}
 			prepastat.setLong(4, computer.getCompany().getId());
 			prepastat.execute();
-			logger.info(" was added to database.");
+			logger.info("The computer: " +computer+" was added to database.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			logger.error("Error in ComputerDaoImplement/creating computer");
@@ -92,7 +92,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			prepastat.setLong(4, computer.getCompany().getId());
 			prepastat.setLong(5, computer.getId());
 			prepastat.execute();
-			logger.info(" was update to database.");
+			logger.info("The computer: "+ computer +" was updated to database.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,6 +108,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			PreparedStatement prepastat = connect.prepareStatement(DELETE);
 			prepastat.setLong(1, computer.getId());
 			prepastat.execute();
+			logger.info("The computer: "+computer +" was deleted.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -146,8 +147,8 @@ public class ComputerDaoImpl implements ComputerDao {
 			return listComputer;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
 			logger.error("Error in ComputerDaoImplement/to get list of computer");
+			e.printStackTrace();
 
 		}
 
@@ -165,6 +166,8 @@ public class ComputerDaoImpl implements ComputerDao {
 			if (result.next()) {
 				count = result.getInt("nbElements");
 			}
+			
+		logger.info(count +" computers found in database");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
@@ -192,7 +195,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			LocalDate discon = ConvertData.timestampToLocalDate(result.getTimestamp("discontinued")).orElse(null);
 			long idCompany = result.getLong("company_id");
 			computer = new Computer(idcomputer, name, introd, discon, new Company(idCompany));
-
+			logger.info("the computer:" + computer +" was found in the database.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();

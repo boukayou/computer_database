@@ -3,9 +3,9 @@ package fr.com.excilys.checking;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.qos.logback.classic.Logger;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.persistence.ComputerDaoImpl;
 import fr.com.excilys.service.ComputerService;
@@ -14,7 +14,8 @@ public class Pagination {
 	private int nbOfElements = 10;
 	private int page = 0;
 	private int max;
-	// final Logger logger = LoggerFactory.getLogger(Pagination.class);
+
+	final Logger logger = LoggerFactory.getLogger(Pagination.class);
 
 	ComputerService computerService = ComputerService.getInstance();
 
@@ -37,7 +38,7 @@ public class Pagination {
 			try {
 				this.nbOfElements = Integer.parseInt(nbOfElements);
 			} catch (NumberFormatException e) {
-				// Logger.WARN_INT("Le format du nombre");
+			 logger.warn("Error in the method SetNbOfElements in the class :fr.com.excilys.cheking/Pagination: check if the parsing type is valid!");
 			}
 		}
 	}
@@ -56,13 +57,13 @@ public class Pagination {
 					this.page = 0;
 				}
 			} catch (NumberFormatException e) {
-				// Logger.WARN_INT("Le format du nombre");
+				 logger.warn("Error in the method setPage in the class :fr.com.excilys.cheking/Pagination: check if the parsing type is valid!");
+
 			}
 		}
 	}
 
 	public List<Computer> getList() {
-		System.out.println("nombre offset :" + page + " nombre de limite:" + nbOfElements);
 		return computerService.getList(page, nbOfElements);
 	}
 

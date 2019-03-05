@@ -21,7 +21,7 @@
     <section id="main">
         <div class="container">
             <h1 id="homeTitle">
-                121 Computers found
+                ${nbrOfCompFOund} Computers found
      
             </h1>
             <div id="actions" class="form-horizontal">

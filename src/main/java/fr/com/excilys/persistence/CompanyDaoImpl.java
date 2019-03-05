@@ -8,10 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.com.excilys.modele.Company;
 
 public class  CompanyDaoImpl implements CompanyDao {
-	
+	final Logger logger = LoggerFactory.getLogger(CompanyDaoImpl.class);
+
 	DaoFactory factory;
 	public CompanyDaoImpl(DaoFactory fact){
 		this.factory = fact;		
@@ -36,6 +40,8 @@ public class  CompanyDaoImpl implements CompanyDao {
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			logger.error("Error in CompanyDaoImplement/ mathod listCompany");
+
 			e.printStackTrace();
 		}
 		return listCompany;

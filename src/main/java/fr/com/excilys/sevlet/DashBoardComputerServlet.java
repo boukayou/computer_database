@@ -27,13 +27,15 @@ public class DashBoardComputerServlet extends HttpServlet {
 
 	private String nbrOfElements;
 	private String page;
-	Pagination pagination = new Pagination();
+	private Pagination pagination = new Pagination();
+	private ComputerService computerService ;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public DashBoardComputerServlet() {
 		// TODO Auto-generated constructor stub
+		computerService = ComputerService.getInstance();
 	}
 
 	/**
@@ -52,6 +54,8 @@ public class DashBoardComputerServlet extends HttpServlet {
 		request.setAttribute("list", listComputerDto);
 		List<String> listNavigation = ComputerMapper.IntToString(pagination.navigation());
 		request.setAttribute("listNavigation",listNavigation );
+		String nbrOfCompFOund =String.valueOf(computerService.count());
+		request.setAttribute("nbrOfCompFOund",nbrOfCompFOund );
 		this.getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request, response);
 
 	}

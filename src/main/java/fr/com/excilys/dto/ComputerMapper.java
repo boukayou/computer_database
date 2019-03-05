@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.com.excilys.checking.ValidationComputer;
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
 
@@ -33,6 +34,7 @@ public class ComputerMapper {
 	
 	public static Computer DtoToComputer(ComputerDTO computerDto) {
 		Computer computer = new Computer();
+		//ValidationComputer.checkDateNotAmbigious(computerDto.getIntroduced());
 		
 		if(computerDto.getId()==null) {
 		}else computer.setId(Long.parseLong(computerDto.getId()));

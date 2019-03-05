@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DaoFactory {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+public class DaoFactory {
+	final static Logger logger = LoggerFactory.getLogger(DaoFactory.class);
 	private static final String URL="jdbc:mysql://localhost:3306/computer-database-db";
 	private static final String DRIVER="com.mysql.cj.jdbc.Driver";
 	private static final String USERNAME="admincdb";
@@ -24,6 +27,8 @@ public class DaoFactory {
         this.password = password;
 	}
 	
+	
+	
 	public static DaoFactory getInstence() {
 		if (instance == null) {
 			try {
@@ -31,6 +36,8 @@ public class DaoFactory {
 				instance = new DaoFactory(URL,USERNAME,PASSWORD);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
+				logger.error("Error in DaoFactory/ in method getInstence");
+
 				e.printStackTrace();
 			}
 			

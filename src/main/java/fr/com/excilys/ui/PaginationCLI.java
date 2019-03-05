@@ -1,11 +1,11 @@
 package fr.com.excilys.ui;
 
-public class Pagination {
+public class PaginationCLI {
 	
 	public int maxElements;
 	public int offset ;
 	
-	public Pagination(int maxElements, int offset) {
+	public PaginationCLI(int maxElements, int offset) {
 		super();
 		this.maxElements = maxElements;
 		this.offset = offset;
