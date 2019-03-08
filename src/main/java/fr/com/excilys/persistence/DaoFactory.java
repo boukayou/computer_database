@@ -1,4 +1,4 @@
-package fr.com.excilys.persistence;
+/*package fr.com.excilys.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -59,3 +59,4 @@ public class DaoFactory {
 			return new CompanyDaoImpl(this);
 		}
 }
+*/

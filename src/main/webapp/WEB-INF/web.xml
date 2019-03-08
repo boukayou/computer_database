@@ -2,6 +2,16 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>cdb</display-name>
   <welcome-file-list>
-  	<welcome-file>/bashboard.jsp</welcome-file>
+    <welcome-file>/bashboard.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>SearchComputers</display-name>
+    <servlet-name>SearchComputers</servlet-name>
+    <servlet-class>fr.com.excilys.sevlet.SearchComputers</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchComputers</servlet-name>
+    <url-pattern>/SearchComputers</url-pattern>
+  </servlet-mapping>
 </web-app>

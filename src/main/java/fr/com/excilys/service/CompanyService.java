@@ -4,16 +4,16 @@ import java.util.List;
 
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.persistence.CompanyDao;
-import fr.com.excilys.persistence.DaoFactory;
+import fr.com.excilys.persistence.DaoFactoryHikaricp;
 
 public class CompanyService {
 	
 	private static CompanyService instance;
 	private CompanyDao companyDao ;
-	private DaoFactory daoFactory;
+	private DaoFactoryHikaricp daoFactory;
 	
 	private CompanyService() {
-		this.daoFactory = DaoFactory.getInstence();
+		this.daoFactory  = DaoFactoryHikaricp.getInstence();
 		this.companyDao  = this.daoFactory.getCompanyDao();
 	}
 	

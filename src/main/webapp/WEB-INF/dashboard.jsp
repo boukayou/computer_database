@@ -82,23 +82,20 @@
                 </thead>
                 <!-- Browse attribute computers -->
                 <tbody id="results">
-
-   
-    
- 				<c:forEach items="${list}" var="mavariable">
+                <c:forEach items="${listComputerDto}" var="computerDto">
  				
                     <tr>
                         <td class="editMode">
-                            <input type="checkbox" name="cb" class="cb" value="${mavariable.id}">
+                            <input type="checkbox" name="cb" class="cb" value="${computerDto.id}">
                         </td>
                         <td>
-                            <a href="/cdb/EditComputer?idComputer=${mavariable.id}" onclick="">${mavariable.name}</a>
+                            <a href="/cdb/EditComputer?idComputer=${computerDto.id}" onclick="">${computerDto.name}</a>
                         </td>
-                        <td>${mavariable.introduced}</td>
-                        <td>${mavariable.discontinued}</td>
-                        <td>${mavariable.companyName}</td>
+                        <td>${computerDto.introduced}</td>
+                        <td>${computerDto.discontinued}</td>
+                        <td>${computerDto.companyName}</td>
                     </tr>
-                   </c:forEach>
+				</c:forEach>
                 </tbody>
             </table>
         </div>

@@ -64,9 +64,8 @@ public class EditComputerServlet extends HttpServlet {
 		computerDto.setIntroduced(request.getParameter("introduced"));
 		computerDto.setDiscontinued(request.getParameter("discontinued"));
 		computerDto.setCompanyID(request.getParameter("companyId"));
-		computerService.upDate(ComputerMapper.DtoToComputer(computerDto));
+		computerService.upDate(ComputerMapper.DtoToComputer(computerDto).get());
 		response.sendRedirect(request.getContextPath() + "/Dashboard");
-		//this.getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request, response);
 	}
 
 }

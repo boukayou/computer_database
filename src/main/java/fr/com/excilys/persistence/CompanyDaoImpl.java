@@ -16,8 +16,8 @@ import fr.com.excilys.modele.Company;
 public class  CompanyDaoImpl implements CompanyDao {
 	final Logger logger = LoggerFactory.getLogger(CompanyDaoImpl.class);
 
-	DaoFactory factory;
-	public CompanyDaoImpl(DaoFactory fact){
+	DaoFactoryHikaricp factory;
+	public CompanyDaoImpl(DaoFactoryHikaricp fact){
 		this.factory = fact;		
 	}
 

@@ -5,12 +5,11 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 import fr.com.excilys.service.*;
-
+import fr.com.excilys.checking.Pagination;
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.persistence.CompanyDao;
 import fr.com.excilys.persistence.ComputerDao;
-import fr.com.excilys.persistence.DaoFactory;
 import fr.com.excilys.ui.VueMenu;
 
 public class Controller {
@@ -64,7 +63,7 @@ public class Controller {
 				break;
 			case "2" :
 				//List<Computer> listComputer = computerDao.ListComputer();
-				VueMenu.showAllComputers(computerService.getList());
+				VueMenu.showAllComputers(computerService.getList(10,2,"appl"));
 				break;
 			case "3" :
 				Computer computer;

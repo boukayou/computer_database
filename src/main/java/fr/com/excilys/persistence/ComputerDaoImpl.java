@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,15 +28,23 @@ public class ComputerDaoImpl implements ComputerDao {
 			+ "								FROM computer "
 			+ "									LEFT JOIN company ON computer.company_id = company.id "
 			+ "							 			WHERE computer.id= ?";
+	
+	
+	
+	final static String COMPUTER_BY_NAME = "SELECT computer.id,computer.name,computer.introduced,computer.discontinued,computer.company_id, company.name "
+			+ "									FROM computer " 
+			+ "										LEFT JOIN company ON computer.company_id = company.id " 
+			+ "							 				WHERE computer.name LIKE ? ORDER BY computer.name ASC"
+			+ "												 LIMIT ? OFFSET ? ";
 
 	final static String LIST = "SELECT computer.id,computer.name,computer.introduced,computer.discontinued,computer.company_id, company.name "
 			+ "								FROM computer "
 			+ "									LEFT JOIN company ON computer.company_id = company.id "
 			+ "										LIMIT ? OFFSET ?";
 	
-	DaoFactory factory;
+	DaoFactoryHikaricp factory;
 
-	public ComputerDaoImpl(DaoFactory fact) {
+	public ComputerDaoImpl(DaoFactoryHikaricp fact) {
 		this.factory = fact;
 	}
 
@@ -71,7 +80,7 @@ public class ComputerDaoImpl implements ComputerDao {
 	public void UpdateComputer(Computer computer) {
 		// TODO Auto-generated method stub
 
-		try (Connection connect = this.factory.getConnection();) {
+		try (Connection connect = this.factory.getConnection()) {
 
 			PreparedStatement prepastat = connect.prepareStatement(UP_DATE);
 			prepastat.setString(1, computer.getName());
@@ -104,7 +113,7 @@ public class ComputerDaoImpl implements ComputerDao {
 	public void deleteComputer(Computer computer) {
 		// TODO Auto-generated method stub
 			System.out.println(computer);
-		try (Connection connect = this.factory.getConnection();) {
+		try (Connection connect = this.factory.getConnection()) {
 			PreparedStatement prepastat = connect.prepareStatement(DELETE);
 			prepastat.setLong(1, computer.getId());
 			prepastat.execute();
@@ -118,33 +127,32 @@ public class ComputerDaoImpl implements ComputerDao {
 	}
 
 	@Override
-	public List<Computer> getList(int page, int nbOfElements) {
+	public List<Computer> getList(int nbrOfElements , int page,String search ) {
 		// TODO Auto-generated method stub
 		List<Computer> listComputer = new ArrayList<Computer>();
-
-		try (Connection connect = this.factory.getConnection();) {
-
-			PreparedStatement prepastat = connect.prepareStatement(LIST);
-			prepastat.setInt(1, nbOfElements);
-			prepastat.setInt(2,page*nbOfElements );
+	
+		try (Connection connect = this.factory.getConnection()) {
+			PreparedStatement prepastat = connect.prepareStatement(COMPUTER_BY_NAME);
+			prepastat.setString(1, "%"+search+"%");
+			prepastat.setInt(2, nbrOfElements);
+			prepastat.setInt(3,nbrOfElements*page);
+			
 			ResultSet result = prepastat.executeQuery();
 
 			while (result.next()) {
 				long id = result.getLong("computer.id");
 				String name = result.getString("computer.name");
-				LocalDate introd = ConvertData.timestampToLocalDate(result.getTimestamp("computer.introduced"))
-						.orElse(null);
-				LocalDate discon = ConvertData.timestampToLocalDate(result.getTimestamp("computer.discontinued"))
-						.orElse(null);
+				LocalDate introd = ConvertData.timestampToLocalDate(result.getTimestamp("computer.introduced")).orElse(null);
+				LocalDate discon = ConvertData.timestampToLocalDate(result.getTimestamp("computer.discontinued")).orElse(null);
 				long idCompany = result.getLong("computer.company_id");
 				Company company = new Company();
 				company.setId(idCompany);
 				company.setName(result.getString("company.name"));
-
 				listComputer.add(new Computer(id, name, introd, discon, company));
-
 			}
+			
 			return listComputer;
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			logger.error("Error in ComputerDaoImplement/to get list of computer");
@@ -154,11 +162,13 @@ public class ComputerDaoImpl implements ComputerDao {
 
 		return listComputer;
 	}
+	
+	
 	@Override
 	public int count() {
 		// TODO Auto-generated method stub
 		int count = 0;
-		try (Connection connect = this.factory.getConnection();) {
+		try (Connection connect = this.factory.getConnection()) {
 
 			PreparedStatement prepastat = connect.prepareStatement(COUNT_ELEMENTS);
 
@@ -178,12 +188,14 @@ public class ComputerDaoImpl implements ComputerDao {
 		return count;
 	}
 
+	
+	
 	@Override
-	public Computer ComputerById(long id) {
+	public Computer computerById(long id) {
 		// TODO Auto-generated method stub
 		Computer computer = null;
 
-		try (Connection connect = this.factory.getConnection();) {
+		try (Connection connect = this.factory.getConnection()) {
 
 			PreparedStatement prepastat = connect.prepareStatement(COMPUTER_BY_ID);
 			prepastat.setLong(1, id);
@@ -204,5 +216,42 @@ public class ComputerDaoImpl implements ComputerDao {
 		}
 		return computer;
 	}
+	
+	@Override
+	public Optional<List<Computer>> computerByName(String computerName,Pagination pagination) {
+		// TODO Auto-generated method stub
+		Optional<List<Computer>> optionalListComputer = Optional.empty();
+		List<Computer> listComputer = new ArrayList<Computer>();
+		Computer computer ;
+
+		try (Connection connect = this.factory.getConnection()) {
+
+			PreparedStatement prepastat = connect.prepareStatement(COMPUTER_BY_NAME);
+			prepastat.setString(1, computerName);
+			prepastat.setInt(2, pagination.getNbOfElements());
+			prepastat.setInt(3,pagination.getPage()*pagination.getNbOfElements() );
+			ResultSet result = prepastat.executeQuery();
+			if(result.next()) {
+			long idcomputer = result.getLong("id");
+			String name = result.getString("name");
+			LocalDate introd = ConvertData.timestampToLocalDate(result.getTimestamp("introduced")).orElse(null);
+			LocalDate discon = ConvertData.timestampToLocalDate(result.getTimestamp("discontinued")).orElse(null);
+			long idCompany = result.getLong("company_id");
+			
+			computer = new Computer(idcomputer, name, introd, discon, new Company(idCompany));
+			listComputer.add(computer);
+			optionalListComputer = Optional.of(listComputer);
+			logger.info("the computer:" + computer +" was found in the database.");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			logger.error("Error in ComputerDaoImplement/to get computer by id");
+
+		}
+		return optionalListComputer;
+	}
+	
 
 }
+

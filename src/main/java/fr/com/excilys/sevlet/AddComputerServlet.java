@@ -59,7 +59,7 @@ public class AddComputerServlet extends HttpServlet {
 		computerDto.setIntroduced(request.getParameter("introduced"));
 		computerDto.setDiscontinued(request.getParameter("discontinued"));
 		computerDto.setCompanyID(request.getParameter("companyId"));
-		computerService.create(ComputerMapper.DtoToComputer(computerDto));
+		computerService.create(ComputerMapper.DtoToComputer(computerDto).get());
 		
 	}
 

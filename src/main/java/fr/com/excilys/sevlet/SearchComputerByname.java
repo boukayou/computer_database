@@ -21,9 +21,9 @@ import fr.com.excilys.service.ComputerService;
 /**
  * Servlet implementation class DashBoardComputerServlet
  */
-@WebServlet({ "/Dashboard", "" })
+@WebServlet("/SearchComputerByname")
 
-public class DashBoardComputerServlet extends HttpServlet {
+public class SearchComputerByname extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private String nbrOfElements;
@@ -34,7 +34,7 @@ public class DashBoardComputerServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public DashBoardComputerServlet() {
+	public SearchComputerByname() {
 		// TODO Auto-generated constructor stub
 		computerService = ComputerService.getInstance();
 	}
@@ -46,23 +46,27 @@ public class DashBoardComputerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		nbrOfElements = request.getParameter("nbrOfElements");
-		page = request.getParameter("page");
+			nbrOfElements = request.getParameter("nbrOfElements");
+			page = request.getParameter("page");
 		
+
 			pagination.setPage(page);
 			pagination.setNbOfElements(nbrOfElements);
-			if(null!=request.getParameter("search")) {
-				pagination.setSearch(request.getParameter("search"));
+			String name =request.getParameter("search");
+			String stringname = "App";
+			Optional<List<Computer>> optionalListComputer=pagination.ComputersByName(stringname, pagination);
+			if(optionalListComputer.isPresent()) {
+				List<Computer> listcomputer = optionalListComputer.get();
+				for(Computer computer :listcomputer) {
+					System.out.println(computer);
+				}
+				List<ComputerDTO> listComputerDto = ComputerMapper.getListComputerDto(listcomputer);
+				request.setAttribute("listComputerByname", listComputerDto);
+				List<String> listNavigation = ComputerMapper.IntToString(pagination.navigation());
+				request.setAttribute("listNavigation",listNavigation );
+				String nbrOfCompFOund =String.valueOf(computerService.count());
+				request.setAttribute("nbrOfCompFOund",nbrOfCompFOund );
 			}
-		
-			List<Computer> listcomputer = pagination.getList();
-			List<ComputerDTO> listComputerDto = ComputerMapper.getListComputerDto(listcomputer);
-			request.setAttribute("listComputerDto", listComputerDto);
-			List<String> listNavigation = ComputerMapper.IntToString(pagination.navigation());
-			request.setAttribute("listNavigation",listNavigation );
-			String nbrOfCompFOund =String.valueOf(computerService.count());
-			request.setAttribute("nbrOfCompFOund",nbrOfCompFOund );
-		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request, response);
 
 	}
@@ -74,7 +78,7 @@ public class DashBoardComputerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }

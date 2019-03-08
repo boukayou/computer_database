@@ -2,6 +2,7 @@ package fr.com.excilys.checking;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,9 @@ import fr.com.excilys.service.ComputerService;
 public class Pagination {
 	private int nbOfElements = 10;
 	private int page = 0;
+	private String search ="";
 	private int max;
+	
 
 	final Logger logger = LoggerFactory.getLogger(Pagination.class);
 
@@ -62,10 +65,23 @@ public class Pagination {
 			}
 		}
 	}
-
-	public List<Computer> getList() {
-		return computerService.getList(page, nbOfElements);
+	
+	public String getSearch() {
+		return search;
 	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+	
+	public List<Computer> getList() {
+		return computerService.getList( nbOfElements,page, search);
+	}
+	
+	
+	public Optional<List<Computer>> ComputersByName(String computerName,Pagination pagination) {
+		return computerService.search(computerName,pagination);
+	} 
 
 	public List<Integer> navigation() {
 		
