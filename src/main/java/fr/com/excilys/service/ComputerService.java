@@ -16,7 +16,7 @@ public class ComputerService {
 	private DaoFactoryHikaricp daoFactory;
 
 	private ComputerService() {
-		daoFactory =  this.daoFactory.getInstence();
+		daoFactory =  DaoFactoryHikaricp.getInstance();
 		computerDao = this.daoFactory.getComputerDao();
 	}
 
@@ -27,10 +27,8 @@ public class ComputerService {
 		return instance;
 	}
 
-	public List<Computer> getList(int nbrOfElements, int page, String search) {
-	
-		return  computerDao.getList( nbrOfElements, page, search);
-	
+	public List<Computer> getList(Pagination pagination){
+	  return  computerDao.getList(pagination);
 	}
 
 	public int count() {
@@ -52,9 +50,5 @@ public class ComputerService {
 
 	public void delete(Computer computer) {
 		computerDao.deleteComputer(computer);
-	}
-// pas d'optional sur une liste car elle est soit vide  ou remplit
-	public Optional<List<Computer>> search(String computerName, Pagination pagination) {
-		return computerDao.computerByName(computerName, pagination);
 	}
 }

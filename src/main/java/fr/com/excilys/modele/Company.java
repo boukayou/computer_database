@@ -11,13 +11,11 @@ public class Company {
 	
 	
 	public Company(long id) {
-		super();
 		this.id = id;
 	}
 
 
 	public Company(long id, String name) {
-		super();
 		this.id = id;
 		this.name = name;
 	}

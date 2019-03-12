@@ -11,8 +11,8 @@ public interface ComputerDao {
 	void UpdateComputer (Computer computer);
 	void deleteComputer (Computer computer);
 	int count();
-	List<Computer> getList(int nbrOfElements , int page , String search);
+	List<Computer> getList(Pagination pagination);
 	Computer computerById(long id);
-	Optional<List<Computer>>computerByName(String computerName,Pagination pagination);
+
 
 }

@@ -16,7 +16,7 @@ public class Controller {
 
 	private Boolean isAlive ;
 	public static Controller instance;
-	private CompanyService companyService;
+	//private CompanyService companyService;
 	private ComputerService computerService;
 	
 	
@@ -34,7 +34,7 @@ public class Controller {
 	private void initialise() {
 		this.isAlive = true;
 		this.computerService = ComputerService.getInstance();
-		this.companyService = CompanyService.getInstance();
+		//this.companyService = CompanyService.getInstance();
 	}
 	
 	
@@ -59,11 +59,11 @@ public class Controller {
 			switch(VueMenu.Choice()) {
 			case "1" :
 				//List<Company>  listCompany  = companyDao.listCompany();
-				VueMenu.showAllCompanies(companyService.getList());
+				//VueMenu.showAllCompanies(companyService.getList());
 				break;
 			case "2" :
 				//List<Computer> listComputer = computerDao.ListComputer();
-				VueMenu.showAllComputers(computerService.getList(10,2,"appl"));
+				//VueMenu.showAllComputers(computerService.getList(10,2,"appl"));
 				break;
 			case "3" :
 				Computer computer;

@@ -34,8 +34,8 @@ public class ComputerDaoImpl implements ComputerDao {
 	final static String COMPUTER_BY_NAME = "SELECT computer.id,computer.name,computer.introduced,computer.discontinued,computer.company_id, company.name "
 			+ "									FROM computer " 
 			+ "										LEFT JOIN company ON computer.company_id = company.id " 
-			+ "							 				WHERE computer.name LIKE ? ORDER BY computer.name ASC"
-			+ "												 LIMIT ? OFFSET ? ";
+			+ "							 				WHERE computer.name LIKE ? ORDER BY %s ASC"
+			+ "												 LIMIT ?  OFFSET ?  ";
 
 	final static String LIST = "SELECT computer.id,computer.name,computer.introduced,computer.discontinued,computer.company_id, company.name "
 			+ "								FROM computer "
@@ -94,10 +94,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			} else {
 				prepastat.setTimestamp(3, new java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
 			}
-			// prepastat.setTimestamp(2,new
-			// java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
-			// prepastat.setTimestamp(3,new
-			// java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
+			
 			prepastat.setLong(4, computer.getCompany().getId());
 			prepastat.setLong(5, computer.getId());
 			prepastat.execute();
@@ -112,7 +109,6 @@ public class ComputerDaoImpl implements ComputerDao {
 	@Override
 	public void deleteComputer(Computer computer) {
 		// TODO Auto-generated method stub
-			System.out.println(computer);
 		try (Connection connect = this.factory.getConnection()) {
 			PreparedStatement prepastat = connect.prepareStatement(DELETE);
 			prepastat.setLong(1, computer.getId());
@@ -127,16 +123,18 @@ public class ComputerDaoImpl implements ComputerDao {
 	}
 
 	@Override
-	public List<Computer> getList(int nbrOfElements , int page,String search ) {
+      public List<Computer> getList(Pagination pagination ){
 		// TODO Auto-generated method stub
 		List<Computer> listComputer = new ArrayList<Computer>();
-	
 		try (Connection connect = this.factory.getConnection()) {
-			PreparedStatement prepastat = connect.prepareStatement(COMPUTER_BY_NAME);
-			prepastat.setString(1, "%"+search+"%");
-			prepastat.setInt(2, nbrOfElements);
-			prepastat.setInt(3,nbrOfElements*page);
 			
+			String formattedComputerByName = String.format(COMPUTER_BY_NAME,pagination.getSort() );
+			PreparedStatement prepastat = connect.prepareStatement(formattedComputerByName);
+		    
+			prepastat.setString(1, "%"+pagination.getSearch()+"%");
+			prepastat.setInt(2, pagination.getNbOfElements());
+			prepastat.setInt(3,pagination.getNbOfElements()*pagination.getPage());
+		
 			ResultSet result = prepastat.executeQuery();
 
 			while (result.next()) {
@@ -216,42 +214,6 @@ public class ComputerDaoImpl implements ComputerDao {
 		}
 		return computer;
 	}
-	
-	@Override
-	public Optional<List<Computer>> computerByName(String computerName,Pagination pagination) {
-		// TODO Auto-generated method stub
-		Optional<List<Computer>> optionalListComputer = Optional.empty();
-		List<Computer> listComputer = new ArrayList<Computer>();
-		Computer computer ;
-
-		try (Connection connect = this.factory.getConnection()) {
-
-			PreparedStatement prepastat = connect.prepareStatement(COMPUTER_BY_NAME);
-			prepastat.setString(1, computerName);
-			prepastat.setInt(2, pagination.getNbOfElements());
-			prepastat.setInt(3,pagination.getPage()*pagination.getNbOfElements() );
-			ResultSet result = prepastat.executeQuery();
-			if(result.next()) {
-			long idcomputer = result.getLong("id");
-			String name = result.getString("name");
-			LocalDate introd = ConvertData.timestampToLocalDate(result.getTimestamp("introduced")).orElse(null);
-			LocalDate discon = ConvertData.timestampToLocalDate(result.getTimestamp("discontinued")).orElse(null);
-			long idCompany = result.getLong("company_id");
-			
-			computer = new Computer(idcomputer, name, introd, discon, new Company(idCompany));
-			listComputer.add(computer);
-			optionalListComputer = Optional.of(listComputer);
-			logger.info("the computer:" + computer +" was found in the database.");
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			logger.error("Error in ComputerDaoImplement/to get computer by id");
-
-		}
-		return optionalListComputer;
-	}
-	
 
 }
 

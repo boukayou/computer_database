@@ -38,8 +38,7 @@
                 
                 <div class="pull-right">
                     <a class="btn btn-success" id="addComputer" href="/cdb/AddComputer">Add Computer</a> 
-                    <a class="btn btn-default" id="editComputer" href="#"
-                     onclick="$.fn.toggleEditMode();">Edit</a>
+                    <a class="btn btn-default" id="editComputer" href="#"onclick="$.fn.toggleEditMode();">Edit</a>
                 </div>
             </div>
         </div>
@@ -64,18 +63,18 @@
                             </span>
                         </th>
                         <th>
-                            Computer name
+                            <a href="/cdb/Dashboard?sortBycomputer=computer.name">Computer name</a>
                         </th>
                         <th>
-                            Introduced date
+                            <a href="/cdb/Dashboard?sortBycomputer=computer.introduced">Introduced date</a>
                         </th>
                         <!-- Table header for Discontinued Date -->
                         <th>
-                            Discontinued date
+                            <a href="/cdb/Dashboard?sortBycomputer=computer.discontinued">Discontinued date</a>
                         </th>
                         <!-- Table header for Company -->
                         <th>
-                            Company 
+                            <a href="/cdb/Dashboard?sortBycomputer=company.name">Company</a> 
                         </th>
 
                     </tr>

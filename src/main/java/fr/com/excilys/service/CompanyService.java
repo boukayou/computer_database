@@ -13,7 +13,7 @@ public class CompanyService {
 	private DaoFactoryHikaricp daoFactory;
 	
 	private CompanyService() {
-		this.daoFactory  = DaoFactoryHikaricp.getInstence();
+		this.daoFactory  = DaoFactoryHikaricp.getInstance();
 		this.companyDao  = this.daoFactory.getCompanyDao();
 	}
 	
@@ -25,9 +25,11 @@ public class CompanyService {
 	}
 	
 	public List<Company> getList() {
-		List<Company>  listCompany = null;
-		listCompany  = this.companyDao.listCompany();
-		
-		return listCompany ;
+		return this.companyDao.listCompany();
+			
+	}
+	
+	public void delete(Company company) {
+		companyDao.deleteCompany(company);
 	}
 }

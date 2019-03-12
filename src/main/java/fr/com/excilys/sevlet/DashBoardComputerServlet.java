@@ -28,8 +28,9 @@ public class DashBoardComputerServlet extends HttpServlet {
 
 	private String nbrOfElements;
 	private String page;
+	private String sort;
 	private Pagination pagination = new Pagination();
-	private ComputerService computerService ;
+	private ComputerService computerService;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -48,21 +49,24 @@ public class DashBoardComputerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		nbrOfElements = request.getParameter("nbrOfElements");
 		page = request.getParameter("page");
+		sort = request.getParameter("sortBycomputer");
+		pagination.setPage(page);
+		pagination.setSort(sort);
+		pagination.setNbOfElements(nbrOfElements);
+		if (null != request.getParameter("search")) {
+			pagination.setSearch(request.getParameter("search"));
+		}
 		
-			pagination.setPage(page);
-			pagination.setNbOfElements(nbrOfElements);
-			if(null!=request.getParameter("search")) {
-				pagination.setSearch(request.getParameter("search"));
-			}
+		List<Computer> listcomputer = pagination.getList();
+		List<ComputerDTO> listComputerDto = ComputerMapper.getListComputerDto(listcomputer);
+		request.setAttribute("listComputerDto", listComputerDto);
 		
-			List<Computer> listcomputer = pagination.getList();
-			List<ComputerDTO> listComputerDto = ComputerMapper.getListComputerDto(listcomputer);
-			request.setAttribute("listComputerDto", listComputerDto);
-			List<String> listNavigation = ComputerMapper.IntToString(pagination.navigation());
-			request.setAttribute("listNavigation",listNavigation );
-			String nbrOfCompFOund =String.valueOf(computerService.count());
-			request.setAttribute("nbrOfCompFOund",nbrOfCompFOund );
+		List<String> listNavigation = ComputerMapper.IntToString(pagination.navigation());
+		request.setAttribute("listNavigation", listNavigation);
 		
+		String nbrOfCompFOund = String.valueOf(computerService.count());
+		request.setAttribute("nbrOfCompFOund", nbrOfCompFOund);
+
 		this.getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request, response);
 
 	}

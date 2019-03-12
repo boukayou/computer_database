@@ -10,34 +10,37 @@ import org.slf4j.LoggerFactory;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-public class DaoFactoryHikaricp3 {
-	final static Logger logger = LoggerFactory.getLogger(DaoFactoryHikaricp.class);
+public class DaoFactoryHikaricpWithOutFile {
+	final static Logger logger = LoggerFactory.getLogger(DaoFactoryHikaricpWithOutFile.class);
 	private static final String URL = "jdbc:mysql://localhost:3306/computer-database-db";
 	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 	private static final String USERNAME = "admincdb";
 	private static final String PASSWORD = "qwerty1234";
 
-	//private String url;
-	//private String userName;
-	//private String password;
+	private String url;
+	private String userName;
+	private String password;
 
-//	private static DaoFactoryHikaricp instance;
-	private static Connection instance;
+	private static DaoFactoryHikaricpWithOutFile instance;
 
-	private DaoFactoryHikaricp(String url, String userName, String password) {
+	private DaoFactoryHikaricpWithOutFile(String url, String userName, String password) {
 
 		this.url = url;
 		this.userName = userName;
 		this.password = password;
 	}
 
-	public static Connection getInstence() throws SQLException {
-		if (instance == null || instance.isClosed()) {
+	private DaoFactoryHikaricpWithOutFile() {
+
+	}
+
+	public static DaoFactoryHikaricpWithOutFile getInstance() {
+		if (instance == null) {
 			try {
 				Class.forName(DRIVER);
+				instance = new DaoFactoryHikaricpWithOutFile(URL, USERNAME, PASSWORD);
 
-				instance = DaoFactoryHikaricp.getConnection();
-			} catch (ClassNotFoundException | SQLException e) {
+			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				logger.error("Error in DaoFactory/ in method getInstence");
 
@@ -48,13 +51,13 @@ public class DaoFactoryHikaricp3 {
 		return instance;
 	}
 
-	public static Connection getConnection() throws SQLException {
+	Connection getConnection() throws SQLException {
 		HikariConfig cfg = new HikariConfig();
-		cfg.setJdbcUrl(URL);
-		cfg.setUsername(USERNAME);
-		cfg.setPassword(PASSWORD);
+		cfg.setJdbcUrl(url);
+		cfg.setUsername(userName);
+		cfg.setPassword(password);
 		HikariDataSource ds = new HikariDataSource(cfg);
-		
+
 		return ds.getConnection();
 	}
 
@@ -67,4 +70,5 @@ public class DaoFactoryHikaricp3 {
 
 		return new CompanyDaoImpl(this);
 	}
-}*/
+}
+*/
