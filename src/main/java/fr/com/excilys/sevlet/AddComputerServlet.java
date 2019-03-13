@@ -3,6 +3,7 @@ package fr.com.excilys.sevlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -59,7 +60,12 @@ public class AddComputerServlet extends HttpServlet {
 		computerDto.setIntroduced(request.getParameter("introduced"));
 		computerDto.setDiscontinued(request.getParameter("discontinued"));
 		computerDto.setCompanyID(request.getParameter("companyId"));
+	try {
 		computerService.create(ComputerMapper.DtoToComputer(computerDto).get());
+	}catch(NoSuchElementException e) {
+		
+		e.getStackTrace();
+	}
 		
 	}
 

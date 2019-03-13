@@ -71,6 +71,8 @@ public class ComputerDaoImpl implements ComputerDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			logger.error("Error in ComputerDaoImplement/creating computer");
+			e.printStackTrace();
+			
 		}
 	}
 

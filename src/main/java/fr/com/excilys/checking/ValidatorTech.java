@@ -9,6 +9,7 @@ package fr.com.excilys.checking;
 public class ValidatorTech {
 
 		public static boolean validatorComputer(ComputerDTO computerDto) {
+			System.out.println(((checkDateIsValidType(computerDto) & checkNameIsNotEmpty(computerDto))) ? true : false);
 			return ((checkDateIsValidType(computerDto) & checkNameIsNotEmpty(computerDto))) ? true : false;
 			
 		}
@@ -31,8 +32,8 @@ public class ValidatorTech {
 		}
 
 		public static boolean checkNameIsNotEmpty(ComputerDTO computerDto) {
-
-			return !computerDto.getName().isEmpty();
+			
+			return computerDto.getName().matches( "^\\S.*");
 		}
 
 		public static boolean checkIdIsValid(ComputerDTO computerDto) {

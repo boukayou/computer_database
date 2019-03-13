@@ -43,6 +43,7 @@ public class ComputerMapper {
 	public static Optional<Computer> DtoToComputer(ComputerDTO computerDto) {
 		Computer computer = new Computer();
 		Optional<Computer> optionalComputer = Optional.empty();
+		
 		if (ValidatorTech.validatorComputer(computerDto)) {
 
 			if (computerDto.getId() != null) {
