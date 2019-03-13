@@ -50,7 +50,7 @@
                             </div>            
                         </fieldset>
                         <div class="actions pull-right">
-                            <input type="submit" value="Edit" class="btn btn-primary">
+                            <input id="validForm" type="submit" value="Edit" class="btn btn-primary">
                             or
                             <a href="dashboard.html" class="btn btn-default">Cancel</a>
                         </div>
@@ -59,5 +59,9 @@
             </div>
         </div>
     </section>
+    <footer>
+    	<script src="/cdb/js/jquery.min.js"></script>
+    	<script src="/cdb/js/frontValidator.js"></script>
+    </footer>
 </body>
 </html>

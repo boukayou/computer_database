@@ -9,7 +9,7 @@ package fr.com.excilys.checking;
 public class ValidatorTech {
 
 		public static boolean validatorComputer(ComputerDTO computerDto) {
-			return ((checkDateIsValidType(computerDto) & checkNameIsNotEmpty(computerDto) & checkIdIsValid(computerDto) )) ? true : false;
+			return ((checkDateIsValidType(computerDto) & checkNameIsNotEmpty(computerDto))) ? true : false;
 			
 		}
 

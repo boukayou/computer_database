@@ -6,7 +6,8 @@ public class ValidaTorComputer {
 
 	public static boolean validatorComputer(Computer computer) {
 		
-		return computer.getIntroduced().isBefore(computer.getDiscontinued());
+			return computer.getIntroduced().isBefore(computer.getDiscontinued());
+		
 	}
 
 }

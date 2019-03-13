@@ -56,5 +56,9 @@
             </div>
         </div>
     </section>
+    <footer>
+    	<script src="/cdb/js/jquery.min.js"></script>
+    	<script src="/cdb/js/frontValidator.js"></script>
+    </footer>
 </body>
 </html>

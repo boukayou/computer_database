@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import fr.com.excilys.checking.Pagination;
+import fr.com.excilys.checking.ValidaTorComputer;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.persistence.ComputerDao;
 import fr.com.excilys.persistence.DaoFactoryHikaricp;
@@ -16,7 +17,7 @@ public class ComputerService {
 	private DaoFactoryHikaricp daoFactory;
 
 	private ComputerService() {
-		daoFactory =  DaoFactoryHikaricp.getInstance();
+		daoFactory = DaoFactoryHikaricp.getInstance();
 		computerDao = this.daoFactory.getComputerDao();
 	}
 
@@ -27,8 +28,8 @@ public class ComputerService {
 		return instance;
 	}
 
-	public List<Computer> getList(Pagination pagination){
-	  return  computerDao.getList(pagination);
+	public List<Computer> getList(Pagination pagination) {
+		return computerDao.getList(pagination);
 	}
 
 	public int count() {
@@ -41,7 +42,11 @@ public class ComputerService {
 	}
 
 	public void create(Computer computer) {
-		computerDao.createComputer(computer);
+		if (ValidaTorComputer.validatorComputer(computer)) {
+			computerDao.createComputer(computer);
+		} else {
+			System.out.println(" Invalid date ! ");
+		}
 	}
 
 	public void upDate(Computer computer) {

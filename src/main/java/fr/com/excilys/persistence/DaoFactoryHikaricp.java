@@ -14,9 +14,11 @@ public class DaoFactoryHikaricp {
 	final static Logger logger = LoggerFactory.getLogger(DaoFactoryHikaricp.class);
 
 	private static DaoFactoryHikaricp instance;
+	private HikariDataSource ds;
 
 	private DaoFactoryHikaricp() {
-
+		HikariConfig cfg = new HikariConfig("/home/excilys/computer_database/hikari.properties");
+		ds = new HikariDataSource(cfg);
 	}
 
 	public static DaoFactoryHikaricp getInstance() {
@@ -28,9 +30,6 @@ public class DaoFactoryHikaricp {
 	}
 
 	Connection getConnection() throws SQLException {
-		HikariConfig cfg = new HikariConfig("/home/excilys/computer_database/hikari.properties");
-		HikariDataSource ds = new HikariDataSource(cfg);
-
 		return ds.getConnection();
 	}
 
