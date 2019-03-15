@@ -12,20 +12,23 @@ import org.slf4j.LoggerFactory;
 
 import com.google.protobuf.TextFormat.ParseException;
 
-import fr.com.excilys.checking.ValidatorTech;
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.persistence.ComputerDaoImpl;
+import fr.com.excilys.validator.ValidatorTech;
 
 public class ComputerMapper {
+	
 	final static Logger logger = LoggerFactory.getLogger(ComputerDaoImpl.class);
+	
+	
 	public static ComputerDTO computerToDto(Computer computer) {
 		ComputerDTO computerDto = new ComputerDTO();
 
 		computerDto.setId(Long.toString(computer.getId()));
 		computerDto.setName(computer.getName());
-		computerDto.setIntroduced(convertToString(computer.getIntroduced()));
-		computerDto.setDiscontinued(convertToString(computer.getDiscontinued()));
+		computerDto.setIntroduced(convertLocalDateToString(computer.getIntroduced()));
+		computerDto.setDiscontinued(convertLocalDateToString(computer.getDiscontinued()));
 		computerDto.setCompanyID(Long.toString(computer.getCompany().getId()));
 		computerDto.setCompanyName(computer.getCompany().getName());
 		return computerDto;
@@ -55,13 +58,13 @@ public class ComputerMapper {
 			if (computerDto.getIntroduced().equals("")) {
 				computer.setIntroduced(null);
 			} else {
-				computer.setIntroduced(convertToDate(computerDto.getIntroduced()).get());
+				computer.setIntroduced(convertStringToLocalDate(computerDto.getIntroduced()).get());
 			}
 			
 			if (computerDto.getDiscontinued().equals("")) {
 				computer.setDiscontinued(null);
 			} else {
-				computer.setDiscontinued(convertToDate(computerDto.getDiscontinued()).get());
+				computer.setDiscontinued(convertStringToLocalDate(computerDto.getDiscontinued()).get());
 			}
 
 			Company company = new Company();
@@ -74,11 +77,10 @@ public class ComputerMapper {
 		return optionalComputer;
 	}
 
-	public static String convertToString(LocalDate localDate) {
+	public static String convertLocalDateToString(LocalDate localDate) {
 		String formattedString;
-		System.out.println(localDate);
 		if (null != localDate) {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 			formattedString = localDate.format(formatter);
 		} else
 			formattedString = "-";
@@ -86,10 +88,10 @@ public class ComputerMapper {
 		return formattedString;
 	}
 
-	public static Optional<LocalDate> convertToDate(String str) {
+	public static Optional<LocalDate> convertStringToLocalDate(String str) {
 		
 		Optional<LocalDate> optionalDate = Optional.empty();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		
 		try {
 			LocalDate formattedLocalDate = LocalDate.parse(str, formatter);

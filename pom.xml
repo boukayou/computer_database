@@ -5,14 +5,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>fr.cgaiton611</groupId>
+	<groupId>Excilys</groupId>
 	<artifactId>computer-database</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>computer-database</name>
 	<!-- FIXME change it to the project's website -->
-	<url>https://github.com/CyrilGa/computer-database</url>
+	<url>https://github.com/boukayou/computer-database</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

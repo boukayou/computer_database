@@ -1,4 +1,4 @@
-package fr.com.excilys.checking;
+package fr.com.excilys.validator;
 
 	import java.util.regex.Matcher;
 	import java.util.regex.Pattern;
@@ -9,7 +9,7 @@ package fr.com.excilys.checking;
 public class ValidatorTech {
 
 		public static boolean validatorComputer(ComputerDTO computerDto) {
-			System.out.println(((checkDateIsValidType(computerDto) & checkNameIsNotEmpty(computerDto))) ? true : false);
+		
 			return ((checkDateIsValidType(computerDto) & checkNameIsNotEmpty(computerDto))) ? true : false;
 			
 		}

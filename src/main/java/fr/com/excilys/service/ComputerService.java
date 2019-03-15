@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import fr.com.excilys.checking.Pagination;
-import fr.com.excilys.checking.ValidaTorComputer;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.persistence.ComputerDao;
 import fr.com.excilys.persistence.DaoFactoryHikaricp;
+import fr.com.excilys.validator.Pagination;
+import fr.com.excilys.validator.ValidaTorComputer;
 
 public class ComputerService {
 

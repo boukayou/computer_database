@@ -2,8 +2,8 @@ package fr.com.excilys.persistence;
 import java.util.List;
 import java.util.Optional;
 
-import fr.com.excilys.checking.Pagination;
 import fr.com.excilys.modele.Computer;
+import fr.com.excilys.validator.Pagination;
 
 public interface ComputerDao {
 	

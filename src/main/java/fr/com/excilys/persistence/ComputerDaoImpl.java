@@ -8,15 +8,14 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fr.com.excilys.checking.ConvertData;
-import fr.com.excilys.checking.Pagination;
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
+import fr.com.excilys.validator.ConvertData;
+import fr.com.excilys.validator.Pagination;
 
 public class ComputerDaoImpl implements ComputerDao {
 	final Logger logger = LoggerFactory.getLogger(ComputerDaoImpl.class);

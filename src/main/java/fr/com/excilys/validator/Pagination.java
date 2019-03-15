@@ -1,4 +1,4 @@
-package fr.com.excilys.checking;
+package fr.com.excilys.validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,9 +85,9 @@ public class Pagination {
 	}
 
 	public List<Computer> getList() {
-		Company company = new Company();
+		/*Company company = new Company();
 		company.setId(10);
-	    companyService.delete(company);
+	    companyService.delete(company);*/
 		return computerService.getList(this);
 	}
 

@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.com.excilys.checking.Pagination;
 import fr.com.excilys.dto.ComputerDTO;
 import fr.com.excilys.dto.ComputerMapper;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.service.CompanyService;
 import fr.com.excilys.service.ComputerService;
+import fr.com.excilys.validator.Pagination;
 
 /**
  * Servlet implementation class DashBoardComputerServlet

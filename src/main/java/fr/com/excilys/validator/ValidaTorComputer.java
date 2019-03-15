@@ -1,4 +1,4 @@
-package fr.com.excilys.checking;
+package fr.com.excilys.validator;
 
 import fr.com.excilys.modele.Computer;
 
