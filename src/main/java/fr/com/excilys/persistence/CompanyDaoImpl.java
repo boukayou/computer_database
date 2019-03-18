@@ -6,14 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import fr.com.excilys.modele.Company;
-import fr.com.excilys.modele.Computer;
 
+@Component
 public class CompanyDaoImpl implements CompanyDao {
 	final Logger logger = LoggerFactory.getLogger(CompanyDaoImpl.class);
 	DaoFactoryHikaricp factory;

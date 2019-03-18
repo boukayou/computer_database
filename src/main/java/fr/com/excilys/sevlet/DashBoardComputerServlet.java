@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import fr.com.excilys.dto.ComputerDTO;
 import fr.com.excilys.dto.ComputerMapper;
 import fr.com.excilys.modele.Computer;
@@ -47,6 +50,7 @@ public class DashBoardComputerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		 ApplicationContext context = new ClassPathXmlApplicationContext("SpringConfig");
 		nbrOfElements = request.getParameter("nbrOfElements");
 		page = request.getParameter("page");
 		sort = request.getParameter("sortBycomputer");

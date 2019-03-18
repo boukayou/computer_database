@@ -9,14 +9,14 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.protobuf.TextFormat.ParseException;
+import org.springframework.stereotype.Component;
 
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.persistence.ComputerDaoImpl;
 import fr.com.excilys.validator.ValidatorTech;
 
+@Component
 public class ComputerMapper {
 	
 	final static Logger logger = LoggerFactory.getLogger(ComputerDaoImpl.class);

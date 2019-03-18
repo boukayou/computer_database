@@ -11,12 +11,14 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.validator.ConvertData;
 import fr.com.excilys.validator.Pagination;
 
+@Component
 public class ComputerDaoImpl implements ComputerDao {
 	final Logger logger = LoggerFactory.getLogger(ComputerDaoImpl.class);
 	final static String INSERT = "Insert into computer (name,introduced,discontinued,company_id) values(?,?,?,?) ";

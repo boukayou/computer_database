@@ -3,6 +3,11 @@ package fr.com.excilys.modele;
 import java.time.LocalDate;
 import java.util.Date;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+
+@Configuration
+@Component
 public class Computer {
 
 	private long id;
