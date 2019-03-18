@@ -9,24 +9,23 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import fr.com.excilys.modele.Company;
 
-@Component
+@Repository
 public class CompanyDaoImpl implements CompanyDao {
 	final Logger logger = LoggerFactory.getLogger(CompanyDaoImpl.class);
 	DaoFactoryHikaricp factory;
 	static final String LIST_COMPANY = "SELECT name,id FROM company";
 	final static String DELETE_COMPUTER = "DELETE FROM computer where company_id =?";
 	final static String DELETE_COMPANY = "DELETE FROM company where company.id =?";
-	
+
 	public CompanyDaoImpl(DaoFactoryHikaricp fact) {
 		this.factory = fact;
 	}
 
 	public List<Company> listCompany() {
-		// TODO Auto-generated method stub
 		List<Company> listCompany = new ArrayList<Company>();
 
 		try (Connection connect = this.factory.getConnection()) {
@@ -41,7 +40,6 @@ public class CompanyDaoImpl implements CompanyDao {
 			return listCompany;
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			logger.error("Error in CompanyDaoImplement/ mathod listCompany");
 
 			e.printStackTrace();
@@ -51,7 +49,6 @@ public class CompanyDaoImpl implements CompanyDao {
 
 	@Override
 	public void deleteCompany(Company company) {
-		// TODO Auto-generated method stub
 		try (Connection connect = this.factory.getConnection()) {
 
 			try {
@@ -66,14 +63,12 @@ public class CompanyDaoImpl implements CompanyDao {
 				connect.commit();
 				logger.info("The company: " + company + " was deleted.");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				connect.rollback();
 				e.printStackTrace();
 				logger.error("Error in CompanyDaoImplement/deleting company");
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 
 			e.printStackTrace();
 			logger.error("Error in CompanyDaoImplement/deleting company");

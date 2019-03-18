@@ -1,15 +1,16 @@
 package fr.com.excilys.persistence;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+@Repository
 public class DaoFactoryHikaricp {
 	final static Logger logger = LoggerFactory.getLogger(DaoFactoryHikaricp.class);
 

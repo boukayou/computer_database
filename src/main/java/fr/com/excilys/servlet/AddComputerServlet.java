@@ -1,7 +1,6 @@
-package fr.com.excilys.sevlet;
+package fr.com.excilys.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -11,10 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import fr.com.excilys.dto.ComputerDTO;
 import fr.com.excilys.dto.ComputerMapper;
 import fr.com.excilys.modele.Company;
-import fr.com.excilys.modele.Computer;
 import fr.com.excilys.service.CompanyService;
 import fr.com.excilys.service.ComputerService;
 
@@ -29,11 +29,11 @@ public class AddComputerServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddComputerServlet() {
+	
+    public AddComputerServlet(ComputerService computerService,CompanyService companyService) {
        
-        // TODO Auto-generated constructor stub
-    	 companyService = CompanyService.getInstance();
-         computerService= ComputerService.getInstance();
+    	this.companyService = companyService;
+         this.computerService= computerService;
         
     }
 
@@ -41,7 +41,6 @@ public class AddComputerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		List<Company> listCompany = companyService.getList() ;
 		
 			request.setAttribute("list", listCompany);
@@ -52,7 +51,6 @@ public class AddComputerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		//this.doPost(request, response);
 		ComputerDTO computerDto = new ComputerDTO();
 		

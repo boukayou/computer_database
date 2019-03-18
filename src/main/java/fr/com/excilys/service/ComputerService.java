@@ -1,8 +1,8 @@
 package fr.com.excilys.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.persistence.ComputerDao;
@@ -10,6 +10,7 @@ import fr.com.excilys.persistence.DaoFactoryHikaricp;
 import fr.com.excilys.validator.Pagination;
 import fr.com.excilys.validator.ValidaTorComputer;
 
+@Service
 public class ComputerService {
 
 	private static ComputerService instance;

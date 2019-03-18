@@ -2,10 +2,13 @@ package fr.com.excilys.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.persistence.CompanyDao;
 import fr.com.excilys.persistence.DaoFactoryHikaricp;
 
+@Service
 public class CompanyService {
 	
 	private static CompanyService instance;

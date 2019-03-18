@@ -19,10 +19,10 @@ import fr.com.excilys.validator.ValidatorTech;
 @Component
 public class ComputerMapper {
 	
+
 	final static Logger logger = LoggerFactory.getLogger(ComputerDaoImpl.class);
-	
-	
-	public static ComputerDTO computerToDto(Computer computer) {
+
+	public  ComputerDTO computerToDto(Computer computer) {
 		ComputerDTO computerDto = new ComputerDTO();
 
 		computerDto.setId(Long.toString(computer.getId()));
@@ -34,7 +34,7 @@ public class ComputerMapper {
 		return computerDto;
 	}
 
-	public static List<ComputerDTO> getListComputerDto(List<Computer> computers) {
+	public  List<ComputerDTO> getListComputerDto(List<Computer> computers) {
 		List<ComputerDTO> listToreturn = new ArrayList<ComputerDTO>();
 		for (Computer computer : computers) {
 			listToreturn.add(computerToDto(computer));
@@ -43,10 +43,10 @@ public class ComputerMapper {
 
 	}
 
-	public static Optional<Computer> DtoToComputer(ComputerDTO computerDto) {
+	public  Optional<Computer> DtoToComputer(ComputerDTO computerDto) {
 		Computer computer = new Computer();
 		Optional<Computer> optionalComputer = Optional.empty();
-		
+
 		if (ValidatorTech.validatorComputer(computerDto)) {
 
 			if (computerDto.getId() != null) {
@@ -54,13 +54,13 @@ public class ComputerMapper {
 			}
 
 			computer.setName(computerDto.getName());
-			
+
 			if (computerDto.getIntroduced().equals("")) {
 				computer.setIntroduced(null);
 			} else {
 				computer.setIntroduced(convertStringToLocalDate(computerDto.getIntroduced()).get());
 			}
-			
+
 			if (computerDto.getDiscontinued().equals("")) {
 				computer.setDiscontinued(null);
 			} else {
@@ -77,7 +77,7 @@ public class ComputerMapper {
 		return optionalComputer;
 	}
 
-	public static String convertLocalDateToString(LocalDate localDate) {
+	public  String convertLocalDateToString(LocalDate localDate) {
 		String formattedString;
 		if (null != localDate) {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -88,27 +88,28 @@ public class ComputerMapper {
 		return formattedString;
 	}
 
-	public static Optional<LocalDate> convertStringToLocalDate(String str) {
-		
+	public  Optional<LocalDate> convertStringToLocalDate(String str) {
+
 		Optional<LocalDate> optionalDate = Optional.empty();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		
+
 		try {
 			LocalDate formattedLocalDate = LocalDate.parse(str, formatter);
 			optionalDate = Optional.of(formattedLocalDate);
 
-		}catch(DateTimeParseException e) {
-			logger.error("Error in Computermapper/ConvertDate the date format is not valid at index :" + e.getErrorIndex());
-			
+		} catch (DateTimeParseException e) {
+			logger.error(
+					"Error in Computermapper/ConvertDate the date format is not valid at index :" + e.getErrorIndex());
+
 		}
 		return optionalDate;
 	}
 
-	public static long StringToLong(String str) {
+	public  long StringToLong(String str) {
 		return Long.parseLong(str);
 	}
 
-	public static List<String> IntToString(List<Integer> linteger) {
+	public  List<String> IntToString(List<Integer> linteger) {
 		List<String> strNavigation = new ArrayList<String>();
 
 		for (Integer integer : linteger) {

@@ -2,15 +2,10 @@ package fr.com.excilys.controller;
 
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.List;
-import java.util.Scanner;
-import fr.com.excilys.service.*;
-import fr.com.excilys.modele.Company;
+
 import fr.com.excilys.modele.Computer;
-import fr.com.excilys.persistence.CompanyDao;
-import fr.com.excilys.persistence.ComputerDao;
+import fr.com.excilys.service.ComputerService;
 import fr.com.excilys.ui.VueMenu;
-import fr.com.excilys.validator.Pagination;
 
 public class Controller {
 
@@ -44,7 +39,6 @@ public class Controller {
 			try {
 				UserRequest();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

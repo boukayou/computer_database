@@ -1,7 +1,8 @@
-package fr.com.excilys.sevlet;
+package fr.com.excilys.servlet;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +31,6 @@ public class EditComputerServlet extends HttpServlet {
 	public EditComputerServlet() {
 		companyService = CompanyService.getInstance();
 		computerService = ComputerService.getInstance();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -39,7 +39,6 @@ public class EditComputerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		/*ComputerDTO computerDto = new ComputerDTO();
 		computerDto.setId(request.getParameter("idComputer"));
 		Computer computer = ComputerMapper.DtoToComputer(computerDto);*/
@@ -57,7 +56,6 @@ public class EditComputerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		ComputerDTO computerDto = new ComputerDTO();
 		computerDto.setId((request.getParameter("idComputer")));
 		computerDto.setName(request.getParameter("computerName"));

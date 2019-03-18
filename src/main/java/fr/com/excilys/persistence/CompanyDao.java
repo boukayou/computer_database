@@ -1,8 +1,7 @@
 package fr.com.excilys.persistence;
-import fr.com.excilys.modele.Company;
-import fr.com.excilys.modele.Computer;
-
 import java.util.List;
+
+import fr.com.excilys.modele.Company;
 
 public interface CompanyDao {
 

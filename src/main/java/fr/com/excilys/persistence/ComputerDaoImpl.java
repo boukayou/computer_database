@@ -11,14 +11,14 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.validator.ConvertData;
 import fr.com.excilys.validator.Pagination;
 
-@Component
+@Repository
 public class ComputerDaoImpl implements ComputerDao {
 	final Logger logger = LoggerFactory.getLogger(ComputerDaoImpl.class);
 	final static String INSERT = "Insert into computer (name,introduced,discontinued,company_id) values(?,?,?,?) ";
@@ -49,7 +49,6 @@ public class ComputerDaoImpl implements ComputerDao {
 
 	@Override
 	public void createComputer(Computer computer) {
-		// TODO Auto-generated method stub
 
 		try (Connection connect = this.factory.getConnection()) {
 
@@ -70,7 +69,6 @@ public class ComputerDaoImpl implements ComputerDao {
 			prepastat.execute();
 			logger.info("The computer: " + computer + " was added to database.");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			logger.error("Error in ComputerDaoImplement/creating computer");
 			e.printStackTrace();
 			
@@ -79,7 +77,6 @@ public class ComputerDaoImpl implements ComputerDao {
 
 	@Override
 	public void UpdateComputer(Computer computer) {
-		// TODO Auto-generated method stub
 
 		try (Connection connect = this.factory.getConnection()) {
 
@@ -101,7 +98,6 @@ public class ComputerDaoImpl implements ComputerDao {
 			prepastat.execute();
 			logger.info("The computer: " + computer + " was updated to database.");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			logger.error("Error in ComputerDaoImplement/Updating computer");
 		}
@@ -109,15 +105,13 @@ public class ComputerDaoImpl implements ComputerDao {
 
 	@Override
 	public void deleteComputer(Computer computer) {
-		// TODO Auto-generated method stub
-		try (Connection connect = this.factory.getConnection()) {
+				try (Connection connect = this.factory.getConnection()) {
 			PreparedStatement prepastat = connect.prepareStatement(DELETE);
 			prepastat.setLong(1, computer.getId());
 			prepastat.execute();
 			logger.info("The computer: " + computer + " was deleted.");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+						e.printStackTrace();
 			logger.error("Error in ComputerDaoImplement/deleting computer");
 
 		}
@@ -125,8 +119,7 @@ public class ComputerDaoImpl implements ComputerDao {
 
 	@Override
 	public List<Computer> getList(Pagination pagination) {
-		// TODO Auto-generated method stub
-		List<Computer> listComputer = new ArrayList<Computer>();
+				List<Computer> listComputer = new ArrayList<Computer>();
 		try (Connection connect = this.factory.getConnection()) {
 
 			String formattedComputerByName = String.format(COMPUTER_BY_NAME, pagination.getSort());
@@ -155,8 +148,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			return listComputer;
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			logger.error("Error in ComputerDaoImplement/to get list of computer");
+						logger.error("Error in ComputerDaoImplement/to get list of computer");
 			e.printStackTrace();
 
 		}
@@ -166,8 +158,7 @@ public class ComputerDaoImpl implements ComputerDao {
 
 	@Override
 	public int count() {
-		// TODO Auto-generated method stub
-		int count = 0;
+				int count = 0;
 		try (Connection connect = this.factory.getConnection()) {
 
 			PreparedStatement prepastat = connect.prepareStatement(COUNT_ELEMENTS);
@@ -179,8 +170,7 @@ public class ComputerDaoImpl implements ComputerDao {
 
 			logger.info(count + " computers found in database");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
+			e.printStackTrace();
 			logger.error("Error in ComputerDaoImplement/counting computer");
 
 		}
@@ -190,7 +180,6 @@ public class ComputerDaoImpl implements ComputerDao {
 
 	@Override
 	public Computer computerById(long id) {
-		// TODO Auto-generated method stub
 		Computer computer = null;
 
 		try (Connection connect = this.factory.getConnection()) {
@@ -207,8 +196,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			computer = new Computer(idcomputer, name, introd, discon, new Company(idCompany));
 			logger.info("the computer:" + computer + " was found in the database.");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
+			e.printStackTrace();
 			logger.error("Error in ComputerDaoImplement/to get computer by id");
 
 		}

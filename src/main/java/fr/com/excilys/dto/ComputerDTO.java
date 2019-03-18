@@ -1,5 +1,8 @@
 package fr.com.excilys.dto;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ComputerDTO {
 
 	private String id;
@@ -8,13 +11,12 @@ public class ComputerDTO {
 	private String discontinued;
 	private String companyName;
 	private String companyID;
-	
+
 	public ComputerDTO() {
 	}
-	
-	
 
-	public ComputerDTO(String name, String introduced, String discontinued, String companyName, String companyID,String id) {
+	public ComputerDTO(String name, String introduced, String discontinued, String companyName, String companyID,
+			String id) {
 		super();
 		this.name = name;
 		this.introduced = introduced;
@@ -23,40 +25,51 @@ public class ComputerDTO {
 		this.companyID = companyID;
 		this.id = id;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getIntroduced() {
 		return introduced;
 	}
+
 	public void setIntroduced(String introduced) {
 		this.introduced = introduced;
 	}
+
 	public String getDiscontinued() {
 		return discontinued;
 	}
+
 	public void setDiscontinued(String discontinued) {
 		this.discontinued = discontinued;
 	}
+
 	public String getCompanyName() {
 		return companyName;
 	}
+
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
+
 	public String getCompanyID() {
 		return companyID;
 	}
+
 	public void setCompanyID(String companyID) {
 		this.companyID = companyID;
 	}
@@ -66,6 +79,7 @@ public class ComputerDTO {
 		return "ComputerDTO [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued="
 				+ discontinued + ", companyName=" + companyName + ", companyID=" + companyID + "]";
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -120,5 +134,5 @@ public class ComputerDTO {
 			return false;
 		return true;
 	}
-	
+
 }
