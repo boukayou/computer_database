@@ -4,42 +4,42 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import fr.com.excilys.dto.ComputerDTO;
 import fr.com.excilys.dto.ComputerMapper;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.service.ComputerService;
-import fr.com.excilys.springConf.SpringConfig;
 import fr.com.excilys.validator.Pagination;
 
 /**
  * Servlet implementation class DashBoardComputerServlet
  */
-@WebServlet({ "/Dashboard", "" })
+@Controller
+@RequestMapping(path = { "/Dashboard", "" })
 
 public class DashBoardComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
-
 
 	private String nbrOfElements;
 	private String page;
 	private String sort;
 	private Pagination pagination = new Pagination();
-	private ComputerService computerService= context.getBean(ComputerService.class);
-	private ComputerMapper computerMapper = context.getBean(ComputerMapper.class);
+	private ComputerService computerService;
+	private ComputerMapper computerMapper;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public DashBoardComputerServlet() {
+	public DashBoardComputerServlet(ComputerService computerService, ComputerMapper computerMapper) {
+
+		this.computerService = computerService;
+		this.computerMapper = computerMapper;
 
 	}
 
@@ -47,8 +47,9 @@ public class DashBoardComputerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		nbrOfElements = request.getParameter("nbrOfElements");
 		page = request.getParameter("page");
 		sort = request.getParameter("sortBycomputer");

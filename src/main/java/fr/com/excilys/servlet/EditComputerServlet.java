@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import fr.com.excilys.dto.ComputerDTO;
 import fr.com.excilys.dto.ComputerMapper;
 import fr.com.excilys.modele.Company;
@@ -24,13 +26,17 @@ public class EditComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CompanyService companyService;
 	private ComputerService computerService;
+	private ComputerMapper computerMapper;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public EditComputerServlet() {
-		companyService = CompanyService.getInstance();
-		computerService = ComputerService.getInstance();
+	@Autowired
+	public EditComputerServlet(CompanyService companyService, ComputerService computerService,
+			ComputerMapper computerMapper) {
+		this.companyService = companyService;
+		this.computerService = computerService;
+		this.computerMapper = computerMapper;
 	}
 
 	/**
@@ -39,13 +45,10 @@ public class EditComputerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*ComputerDTO computerDto = new ComputerDTO();
-		computerDto.setId(request.getParameter("idComputer"));
-		Computer computer = ComputerMapper.DtoToComputer(computerDto);*/
-	
-		Computer computerToEdit = computerService.getById(Long.parseLong(request.getParameter("idComputer")));
+
+		Computer computerToEdit = this.computerService.getById(Long.parseLong(request.getParameter("idComputer")));
 		request.setAttribute("computerToEdit", computerToEdit);
-		List<Company> listCompany = companyService.getList();
+		List<Company> listCompany = this.companyService.getList();
 		request.setAttribute("list", listCompany);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/editComputer.jsp").forward(request, response);
 	}
@@ -62,7 +65,7 @@ public class EditComputerServlet extends HttpServlet {
 		computerDto.setIntroduced(request.getParameter("introduced"));
 		computerDto.setDiscontinued(request.getParameter("discontinued"));
 		computerDto.setCompanyID(request.getParameter("companyId"));
-		computerService.upDate(ComputerMapper.DtoToComputer(computerDto).get());
+		computerService.upDate(this.computerMapper.DtoToComputer(computerDto).get());
 		response.sendRedirect(request.getContextPath() + "/Dashboard");
 	}
 

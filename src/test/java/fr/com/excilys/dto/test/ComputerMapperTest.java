@@ -7,7 +7,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import fr.com.excilys.dto.ComputerDTO;
 import fr.com.excilys.dto.ComputerMapper;
@@ -22,6 +24,8 @@ class ComputerMapperTest {
 	private ComputerDTO computerDto = new ComputerDTO("AZ", "2029/03/24", "2019/03/24", "Apple Inc.", "10", "1");
 	private Computer computer = new Computer(1, "AZ", LocalDate.parse("2029/03/24", formatter),
 			LocalDate.parse("2019/03/24", formatter), company);
+	public ComputerMapper computerMapper = new ComputerMapper();
+	
 
 	@Test
 	void testListComputerTodListDto() {
@@ -29,7 +33,7 @@ class ComputerMapperTest {
 		List<Computer> listDetest = new ArrayList<Computer>();
 		listDetest.add(computer);
 
-		assertEquals(computerDto, ComputerMapper.getListComputerDto(listDetest).get(0));
+		assertEquals(computerDto, computerMapper.getListComputerDto(listDetest).get(0));
 	}
 
 	@Test
@@ -42,20 +46,20 @@ class ComputerMapperTest {
 		List<Computer> listDetest = new ArrayList<Computer>();
 		listDetest.add(computer);
 
-		assertEquals(computerDto, ComputerMapper.getListComputerDto(listDetest).get(0));
+		assertEquals(computerDto, computerMapper.getListComputerDto(listDetest).get(0));
 
 	}
 
 	@Test
 	void testComputerTodDto() {
 
-		assertEquals(computerDto, ComputerMapper.computerToDto(computer));
+		assertEquals(computerDto, computerMapper.computerToDto(computer));
 
 	}
 
 	@Test
 	void testDtoTodComputer() {
-		assertEquals(computer, ComputerMapper.DtoToComputer(computerDto).get());
+		assertEquals(computer, computerMapper.DtoToComputer(computerDto).get());
 
 	}
 
@@ -63,14 +67,14 @@ class ComputerMapperTest {
 	void testStringToLong() {
 		String str = "1";
 		long strTolng = 1;
-		assertEquals(strTolng, ComputerMapper.StringToLong(str));
+		assertEquals(strTolng, computerMapper.StringToLong(str));
 	}
 
 	@Test
 	void testStringToLocalDate() {
 		LocalDate localDate = LocalDate.of(2012, 12, 22);
 		String localDateStr = "2012/12/22";
-		assertEquals(localDate, ComputerMapper.convertStringToLocalDate(localDateStr).get());
+		assertEquals(localDate, computerMapper.convertStringToLocalDate(localDateStr).get());
 
 	}
 

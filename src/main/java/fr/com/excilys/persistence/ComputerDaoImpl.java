@@ -11,14 +11,21 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import fr.com.excilys.dto.ComputerMapper;
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.validator.ConvertData;
 import fr.com.excilys.validator.Pagination;
 
-@Repository
+@Component
 public class ComputerDaoImpl implements ComputerDao {
 	final Logger logger = LoggerFactory.getLogger(ComputerDaoImpl.class);
 	final static String INSERT = "Insert into computer (name,introduced,discontinued,company_id) values(?,?,?,?) ";
@@ -41,86 +48,151 @@ public class ComputerDaoImpl implements ComputerDao {
 			+ "									LEFT JOIN company ON computer.company_id = company.id "
 			+ "										LIMIT ? OFFSET ?";
 
-	DaoFactoryHikaricp factory;
+	private JdbcTemplate jdbcTemplate;
 
-	public ComputerDaoImpl(DaoFactoryHikaricp fact) {
-		this.factory = fact;
+	public ComputerDaoImpl(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	@Override
 	public void createComputer(Computer computer) {
 
-		try (Connection connect = this.factory.getConnection()) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement prepastat = connection.prepareStatement(INSERT, new String[] { "id" });
+				prepastat.setString(1, computer.getName());
 
-			PreparedStatement prepastat = connect.prepareStatement(INSERT);
-			// prepastat.setLong(1, computer.getId());
-			prepastat.setString(1, computer.getName());
-			if (computer.getIntroduced() == null) {
-				prepastat.setTimestamp(2, null);
-			} else {
-				prepastat.setTimestamp(2, new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
+				if (computer.getIntroduced() == null) {
+					prepastat.setTimestamp(2, null);
+				} else {
+					prepastat.setTimestamp(2, new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
+				}
+
+				if (computer.getDiscontinued() == null) {
+					prepastat.setTimestamp(3, null);
+				} else {
+					prepastat.setTimestamp(3,
+							new java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
+				}
+
+				prepastat.setLong(4, computer.getCompany().getId());
+				return prepastat;
 			}
-			if (computer.getDiscontinued() == null) {
-				prepastat.setTimestamp(3, null);
-			} else {
-				prepastat.setTimestamp(3, new java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
-			}
-			prepastat.setLong(4, computer.getCompany().getId());
-			prepastat.execute();
-			logger.info("The computer: " + computer + " was added to database.");
-		} catch (SQLException e) {
-			logger.error("Error in ComputerDaoImplement/creating computer");
-			e.printStackTrace();
-			
-		}
+		}, keyHolder);
+
+		// return keyHolder.getKey().intValue();
+
+		/*
+		 * try { jdbcTemplate.update(INSERT, args) PreparedStatement prepastat =
+		 * connect.prepareStatement(INSERT); // prepastat.setLong(1, computer.getId());
+		 * prepastat.setString(1, computer.getName()); if (computer.getIntroduced() ==
+		 * null) { prepastat.setTimestamp(2, null); } else { prepastat.setTimestamp(2,
+		 * new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime())); }
+		 * if (computer.getDiscontinued() == null) { prepastat.setTimestamp(3, null); }
+		 * else { prepastat.setTimestamp(3, new
+		 * java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime())); }
+		 * prepastat.setLong(4, computer.getCompany().getId()); prepastat.execute();
+		 * logger.info("The computer: " + computer + " was added to database."); } catch
+		 * (SQLException e) {
+		 * logger.error("Error in ComputerDaoImplement/creating computer");
+		 * e.printStackTrace();
+		 * 
+		 * }
+		 */
 	}
 
 	@Override
 	public void UpdateComputer(Computer computer) {
 
-		try (Connection connect = this.factory.getConnection()) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement prepastat = connection.prepareStatement(UP_DATE, new String[] { "id" });
 
-			PreparedStatement prepastat = connect.prepareStatement(UP_DATE);
-			prepastat.setString(1, computer.getName());
-			if (computer.getIntroduced() == null) {
-				prepastat.setTimestamp(2, null);
-			} else {
-				prepastat.setTimestamp(2, new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
-			}
-			if (computer.getDiscontinued() == null) {
-				prepastat.setTimestamp(3, null);
-			} else {
-				prepastat.setTimestamp(3, new java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
-			}
+				prepastat.setString(1, computer.getName());
 
-			prepastat.setLong(4, computer.getCompany().getId());
-			prepastat.setLong(5, computer.getId());
-			prepastat.execute();
-			logger.info("The computer: " + computer + " was updated to database.");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error("Error in ComputerDaoImplement/Updating computer");
-		}
+				if (computer.getIntroduced() == null) {
+
+					prepastat.setTimestamp(2, null);
+
+				} else {
+
+					prepastat.setTimestamp(2, new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime()));
+				}
+
+				if (computer.getDiscontinued() == null) {
+
+					prepastat.setTimestamp(3, null);
+
+				} else {
+
+					prepastat.setTimestamp(3,
+							new java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime()));
+				}
+
+				prepastat.setLong(4, computer.getCompany().getId());
+				prepastat.setLong(5, computer.getId());
+				return prepastat;
+			}
+		}, keyHolder);
+		/*
+		 * try (Connection connect = this.factory.getConnection()) {
+		 * 
+		 * PreparedStatement prepastat = connect.prepareStatement(UP_DATE);
+		 * prepastat.setString(1, computer.getName()); if (computer.getIntroduced() ==
+		 * null) { prepastat.setTimestamp(2, null); } else { prepastat.setTimestamp(2,
+		 * new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime())); }
+		 * if (computer.getDiscontinued() == null) { prepastat.setTimestamp(3, null); }
+		 * else { prepastat.setTimestamp(3, new
+		 * java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime())); }
+		 * 
+		 * prepastat.setLong(4, computer.getCompany().getId()); prepastat.setLong(5,
+		 * computer.getId()); prepastat.execute(); logger.info("The computer: " +
+		 * computer + " was updated to database."); } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * logger.error("Error in ComputerDaoImplement/Updating computer"); }
+		 */
 	}
 
 	@Override
 	public void deleteComputer(Computer computer) {
-				try (Connection connect = this.factory.getConnection()) {
-			PreparedStatement prepastat = connect.prepareStatement(DELETE);
-			prepastat.setLong(1, computer.getId());
-			prepastat.execute();
-			logger.info("The computer: " + computer + " was deleted.");
-		} catch (SQLException e) {
-						e.printStackTrace();
-			logger.error("Error in ComputerDaoImplement/deleting computer");
 
-		}
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement prepastat = connection.prepareStatement(DELETE, new String[] { "id" });
+
+				prepastat.setLong(1, computer.getId());
+
+				return prepastat;
+			}
+		}, keyHolder);
+
+		/*
+		 * try (Connection connect = this.factory.getConnection()) { PreparedStatement
+		 * prepastat = connect.prepareStatement(DELETE); prepastat.setLong(1,
+		 * computer.getId()); prepastat.execute(); logger.info("The computer: " +
+		 * computer + " was deleted."); } catch (SQLException e) { e.printStackTrace();
+		 * logger.error("Error in ComputerDaoImplement/deleting computer");
+		 * 
+		 * }
+		 */
 	}
 
 	@Override
 	public List<Computer> getList(Pagination pagination) {
-				List<Computer> listComputer = new ArrayList<Computer>();
-		try (Connection connect = this.factory.getConnection()) {
+		//List<Computer> listComputer = new ArrayList<Computer>();
+		
+		String formattedComputerByName = String.format(COMPUTER_BY_NAME, pagination.getSort());
+		
+		return jdbcTemplate.query(formattedComputerByName, new Object[] { "%" + pagination.getSearch() + "%", pagination.getNbOfElements(), pagination.getNbOfElements() * pagination.getPage() }, this);
+
+
+		/**try (Connection connect = this.factory.getConnection()) {
 
 			String formattedComputerByName = String.format(COMPUTER_BY_NAME, pagination.getSort());
 			PreparedStatement prepastat = connect.prepareStatement(formattedComputerByName);
@@ -132,10 +204,14 @@ public class ComputerDaoImpl implements ComputerDao {
 			ResultSet result = prepastat.executeQuery();
 
 			while (result.next()) {
+				
 				long id = result.getLong("computer.id");
+				
 				String name = result.getString("computer.name");
+				
 				LocalDate introd = ConvertData.timestampToLocalDate(result.getTimestamp("computer.introduced"))
 						.orElse(null);
+				
 				LocalDate discon = ConvertData.timestampToLocalDate(result.getTimestamp("computer.discontinued"))
 						.orElse(null);
 				long idCompany = result.getLong("computer.company_id");
@@ -148,18 +224,35 @@ public class ComputerDaoImpl implements ComputerDao {
 			return listComputer;
 
 		} catch (SQLException e) {
-						logger.error("Error in ComputerDaoImplement/to get list of computer");
+			logger.error("Error in ComputerDaoImplement/to get list of computer");
 			e.printStackTrace();
 
 		}
 
-		return listComputer;
+		return listComputer;*/
+	}
+
+	@Override
+	public Computer computerById(long id) {
+		try {
+			return jdbcTemplate.queryForObject(COMPUTER_BY_ID, new Object[] { id }, this);
+		} catch (IncorrectResultSizeDataAccessException ex) {
+			ex.printStackTrace();
+			return null;
+
+		}
 	}
 
 	@Override
 	public int count() {
-				int count = 0;
-		try (Connection connect = this.factory.getConnection()) {
+		//int count = 0;
+		
+	
+		return jdbcTemplate.queryForObject(COUNT_ELEMENTS, Integer.class);
+
+		
+		
+		/*try (Connection connect = this.factory.getConnection()) {
 
 			PreparedStatement prepastat = connect.prepareStatement(COUNT_ELEMENTS);
 
@@ -175,32 +268,17 @@ public class ComputerDaoImpl implements ComputerDao {
 
 		}
 
-		return count;
+		return count;*/
 	}
 
 	@Override
-	public Computer computerById(long id) {
-		Computer computer = null;
-
-		try (Connection connect = this.factory.getConnection()) {
-
-			PreparedStatement prepastat = connect.prepareStatement(COMPUTER_BY_ID);
-			prepastat.setLong(1, id);
-			ResultSet result = prepastat.executeQuery();
-			result.next();
-			long idcomputer = result.getLong("id");
-			String name = result.getString("name");
-			LocalDate introd = ConvertData.timestampToLocalDate(result.getTimestamp("introduced")).orElse(null);
-			LocalDate discon = ConvertData.timestampToLocalDate(result.getTimestamp("discontinued")).orElse(null);
-			long idCompany = result.getLong("company_id");
-			computer = new Computer(idcomputer, name, introd, discon, new Company(idCompany));
-			logger.info("the computer:" + computer + " was found in the database.");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error("Error in ComputerDaoImplement/to get computer by id");
-
-		}
-		return computer;
+	public Computer mapRow(ResultSet result, int rowNum) throws SQLException {
+		long idcomputer = result.getLong("id");
+		String name = result.getString("name");
+		LocalDate introd = ConvertData.timestampToLocalDate(result.getTimestamp("introduced")).orElse(null);
+		LocalDate discon = ConvertData.timestampToLocalDate(result.getTimestamp("discontinued")).orElse(null);
+		long idCompany = result.getLong("company_id");
+		return new Computer(idcomputer, name, introd, discon, new Company(idCompany));
 	}
 
 }

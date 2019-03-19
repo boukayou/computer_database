@@ -1,4 +1,4 @@
-package fr.com.excilys.persistence;
+/*package fr.com.excilys.persistence;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -20,6 +20,7 @@ public class DaoFactoryHikaricp {
 	private DaoFactoryHikaricp() {
 		HikariConfig cfg = new HikariConfig("/home/excilys/computer_database/hikari.properties");
 		ds = new HikariDataSource(cfg);
+		
 	}
 
 	public static DaoFactoryHikaricp getInstance() {
@@ -43,4 +44,4 @@ public class DaoFactoryHikaricp {
 
 		return new CompanyDaoImpl(this);
 	}
-}
+}*/
