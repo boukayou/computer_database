@@ -2,15 +2,16 @@ package fr.com.excilys.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.persistence.ComputerDao;
 import fr.com.excilys.validator.Pagination;
 import fr.com.excilys.validator.ValidaTorComputer;
 
-@Service
+@Component
 public class ComputerService {
+	public int test = 2;
 
 	private ComputerDao computerDao;
 

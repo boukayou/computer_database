@@ -32,7 +32,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 @EnableWebMvc
 @ComponentScan(value = { "fr.com.excilys.dto", "fr.com.excilys.modele", "fr.com.excilys.service",
-		"fr.com.excilys.servlet", "fr.com.excilys.validator", "fr.com.excilys.persistence" })
+		"fr.com.excilys.controllers", "fr.com.excilys.validator", "fr.com.excilys.persistence" })
 public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer {
 
 	@Bean
@@ -53,7 +53,7 @@ public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer
 	ViewResolver viewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/views/");
+		viewResolver.setPrefix("src/main/webapp/WEB-INF/");
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
 	}

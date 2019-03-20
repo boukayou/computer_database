@@ -2,15 +2,12 @@ package fr.com.excilys.validator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
-import fr.com.excilys.persistence.ComputerDaoImpl;
 import fr.com.excilys.service.CompanyService;
 import fr.com.excilys.service.ComputerService;
 @Component
@@ -25,15 +22,15 @@ public class Pagination {
 	public Pagination(CompanyService companyService, ComputerService computerService) {
 		this.companyService=companyService;
 		this.computerService = computerService;
+		System.out.println("oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"+computerService.test);
 	}
 	
 
-	public Pagination(int nbOfElements, int page, String search, String sort, ComputerService computerService) {
+	public Pagination(int nbOfElements, int page, String search, String sort) {
 		this.nbOfElements = nbOfElements;
 		this.page = page;
 		this.search = search;
 		this.sort = sort;
-		this.computerService = computerService;
 	}
 
 	public Pagination() {
@@ -94,6 +91,7 @@ public class Pagination {
 		/*Company company = new Company();
 		company.setId(10);
 	    companyService.delete(company);*/
+
 		return computerService.getList(this);
 	}
 
@@ -113,5 +111,13 @@ public class Pagination {
 		return listNavigation;
 
 	}
+
+
+	@Override
+	public String toString() {
+		return "Pagination [nbOfElements=" + nbOfElements + ", page=" + page + ", search=" + search + ", sort=" + sort
+				+ "]";
+	}
+	
 
 }

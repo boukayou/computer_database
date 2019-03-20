@@ -1,4 +1,4 @@
-package fr.com.excilys.servlet;
+package fr.com.excilys.controllers;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

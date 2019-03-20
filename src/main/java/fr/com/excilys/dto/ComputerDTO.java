@@ -1,7 +1,6 @@
 package fr.com.excilys.dto;
 
 import org.springframework.stereotype.Component;
-
 @Component
 public class ComputerDTO {
 
@@ -15,8 +14,7 @@ public class ComputerDTO {
 	public ComputerDTO() {
 	}
 
-	public ComputerDTO(String name, String introduced, String discontinued, String companyName, String companyID,
-			String id) {
+	public ComputerDTO(String name, String introduced, String discontinued, String companyName, String companyID,String id) {
 		super();
 		this.name = name;
 		this.introduced = introduced;

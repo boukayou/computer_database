@@ -137,7 +137,6 @@ public class ComputerDaoImpl implements ComputerDao {
 	@Override
 	public List<Computer> getList(Pagination pagination) {
 		// List<Computer> listComputer = new ArrayList<Computer>();
-
 		String formattedComputerByName = String.format(COMPUTER_BY_NAME, pagination.getSort());
 
 		return jdbcTemplate.query(formattedComputerByName, new Object[] { "%" + pagination.getSearch() + "%",
