@@ -4,75 +4,74 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.com.excilys.modele.Company;
 
-@Repository
+@Component
 public class CompanyDaoImpl implements CompanyDao {
 	final Logger logger = LoggerFactory.getLogger(CompanyDaoImpl.class);
-	DaoFactoryHikaricp factory;
 	static final String LIST_COMPANY = "SELECT name,id FROM company";
 	final static String DELETE_COMPUTER = "DELETE FROM computer where company_id =?";
 	final static String DELETE_COMPANY = "DELETE FROM company where company.id =?";
 
-	public CompanyDaoImpl(DaoFactoryHikaricp fact) {
-		this.factory = fact;
+	private JdbcTemplate jdbcTemplate;
+
+	public CompanyDaoImpl(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	public List<Company> listCompany() {
-		List<Company> listCompany = new ArrayList<Company>();
 
-		try (Connection connect = this.factory.getConnection()) {
-			PreparedStatement prepareStat = connect.prepareStatement("SELECT * FROM company");
-			ResultSet result = prepareStat.executeQuery();
-			while (result.next()) {
-				long id = result.getLong("id");
-				String name = result.getString("name");
-				Company company = new Company(id, name);
-				listCompany.add(company);
+		return jdbcTemplate.query(LIST_COMPANY, this);
+
+	}
+
+	@Transactional
+	@Override
+	public void deleteCompany(Company company) {
+
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement prepastat = connection.prepareStatement(DELETE_COMPUTER, new String[] { "id" });
+
+				prepastat.setLong(1, company.getId());
+
+				return prepastat;
 			}
-			return listCompany;
+		}, keyHolder);
 
-		} catch (SQLException e) {
-			logger.error("Error in CompanyDaoImplement/ mathod listCompany");
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement prepastat = connection.prepareStatement(DELETE_COMPANY, new String[] { "id" });
 
-			e.printStackTrace();
-		}
-		return listCompany;
+				prepastat.setLong(1, company.getId());
+
+				return prepastat;
+			}
+		}, keyHolder);
+
 	}
 
 	@Override
-	public void deleteCompany(Company company) {
-		try (Connection connect = this.factory.getConnection()) {
+	public Company mapRow(ResultSet result, int rowNum) throws SQLException {
+		long idcompany = result.getLong("id");
+		String name = result.getString("name");
 
-			try {
-				connect.setAutoCommit(false);
-				PreparedStatement prepaStatComputer = connect.prepareStatement(DELETE_COMPUTER);
-				prepaStatComputer.setLong(1, company.getId());
-				prepaStatComputer.execute();
-
-				PreparedStatement prepaStatCompany = connect.prepareStatement(DELETE_COMPANY);
-				prepaStatCompany.setLong(1, company.getId());
-				prepaStatCompany.execute();
-				connect.commit();
-				logger.info("The company: " + company + " was deleted.");
-			} catch (SQLException e) {
-				connect.rollback();
-				e.printStackTrace();
-				logger.error("Error in CompanyDaoImplement/deleting company");
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-			logger.error("Error in CompanyDaoImplement/deleting company");
-
-		}
+		return new Company(idcompany, name);
 	}
+
 }

@@ -3,12 +3,8 @@ package fr.com.excilys.ui;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import java.util.List;
 import java.util.Scanner;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
@@ -31,6 +27,7 @@ public class VueMenu  {
 		Scanner scnz = new Scanner(System.in);
 		 String value = scnz.nextLine();
 		 //System.out.println(value);
+		 scnz.close();
 		 return value;
 	}
 	public static void showAllCompanies(List<Company> lCompany) {
@@ -48,8 +45,10 @@ public class VueMenu  {
 	
 	public static long getId() {
 		System.out.println("Enter the id : \n");
-		Scanner scnId = new Scanner(System.in);	
-		return scnId.nextLong();
+		Scanner scnId = new Scanner(System.in);
+		long value =scnId.nextLong();
+		scnId.close();
+		return value;
     }
 	public static void showComputersDetails(Computer comp ) {
 		

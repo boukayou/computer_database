@@ -20,9 +20,9 @@ public class DeleteComputerServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteComputerServlet() {
+    public DeleteComputerServlet(ComputerService computerService) {
 
-		computerService = ComputerService.getInstance();
+		this.computerService = computerService;
     }
 
 	/**

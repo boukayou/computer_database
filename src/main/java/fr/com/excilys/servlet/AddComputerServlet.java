@@ -49,7 +49,7 @@ public class AddComputerServlet  {
 	 *      response)
 	 */
 	
-	 @GetMapping
+	/* @GetMapping
 	  public String get(Model model) {
 	    ArrayList<Company> companies = companyService.getList();
 
@@ -67,7 +67,7 @@ public class AddComputerServlet  {
 
 		request.setAttribute("list", listCompany);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp").forward(request, response);
-	}
+	}*/
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse

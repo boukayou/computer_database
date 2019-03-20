@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,9 +16,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
-import fr.com.excilys.dto.ComputerMapper;
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.validator.ConvertData;
@@ -81,26 +78,6 @@ public class ComputerDaoImpl implements ComputerDao {
 				return prepastat;
 			}
 		}, keyHolder);
-
-		// return keyHolder.getKey().intValue();
-
-		/*
-		 * try { jdbcTemplate.update(INSERT, args) PreparedStatement prepastat =
-		 * connect.prepareStatement(INSERT); // prepastat.setLong(1, computer.getId());
-		 * prepastat.setString(1, computer.getName()); if (computer.getIntroduced() ==
-		 * null) { prepastat.setTimestamp(2, null); } else { prepastat.setTimestamp(2,
-		 * new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime())); }
-		 * if (computer.getDiscontinued() == null) { prepastat.setTimestamp(3, null); }
-		 * else { prepastat.setTimestamp(3, new
-		 * java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime())); }
-		 * prepastat.setLong(4, computer.getCompany().getId()); prepastat.execute();
-		 * logger.info("The computer: " + computer + " was added to database."); } catch
-		 * (SQLException e) {
-		 * logger.error("Error in ComputerDaoImplement/creating computer");
-		 * e.printStackTrace();
-		 * 
-		 * }
-		 */
 	}
 
 	@Override
@@ -138,23 +115,6 @@ public class ComputerDaoImpl implements ComputerDao {
 				return prepastat;
 			}
 		}, keyHolder);
-		/*
-		 * try (Connection connect = this.factory.getConnection()) {
-		 * 
-		 * PreparedStatement prepastat = connect.prepareStatement(UP_DATE);
-		 * prepastat.setString(1, computer.getName()); if (computer.getIntroduced() ==
-		 * null) { prepastat.setTimestamp(2, null); } else { prepastat.setTimestamp(2,
-		 * new java.sql.Timestamp(Date.valueOf(computer.getIntroduced()).getTime())); }
-		 * if (computer.getDiscontinued() == null) { prepastat.setTimestamp(3, null); }
-		 * else { prepastat.setTimestamp(3, new
-		 * java.sql.Timestamp(Date.valueOf(computer.getDiscontinued()).getTime())); }
-		 * 
-		 * prepastat.setLong(4, computer.getCompany().getId()); prepastat.setLong(5,
-		 * computer.getId()); prepastat.execute(); logger.info("The computer: " +
-		 * computer + " was updated to database."); } catch (SQLException e) {
-		 * e.printStackTrace();
-		 * logger.error("Error in ComputerDaoImplement/Updating computer"); }
-		 */
 	}
 
 	@Override
@@ -172,64 +132,17 @@ public class ComputerDaoImpl implements ComputerDao {
 			}
 		}, keyHolder);
 
-		/*
-		 * try (Connection connect = this.factory.getConnection()) { PreparedStatement
-		 * prepastat = connect.prepareStatement(DELETE); prepastat.setLong(1,
-		 * computer.getId()); prepastat.execute(); logger.info("The computer: " +
-		 * computer + " was deleted."); } catch (SQLException e) { e.printStackTrace();
-		 * logger.error("Error in ComputerDaoImplement/deleting computer");
-		 * 
-		 * }
-		 */
 	}
 
 	@Override
 	public List<Computer> getList(Pagination pagination) {
-		//List<Computer> listComputer = new ArrayList<Computer>();
-		
+		// List<Computer> listComputer = new ArrayList<Computer>();
+
 		String formattedComputerByName = String.format(COMPUTER_BY_NAME, pagination.getSort());
-		
-		return jdbcTemplate.query(formattedComputerByName, new Object[] { "%" + pagination.getSearch() + "%", pagination.getNbOfElements(), pagination.getNbOfElements() * pagination.getPage() }, this);
 
+		return jdbcTemplate.query(formattedComputerByName, new Object[] { "%" + pagination.getSearch() + "%",
+				pagination.getNbOfElements(), pagination.getNbOfElements() * pagination.getPage() }, this);
 
-		/**try (Connection connect = this.factory.getConnection()) {
-
-			String formattedComputerByName = String.format(COMPUTER_BY_NAME, pagination.getSort());
-			PreparedStatement prepastat = connect.prepareStatement(formattedComputerByName);
-
-			prepastat.setString(1, "%" + pagination.getSearch() + "%");
-			prepastat.setInt(2, pagination.getNbOfElements());
-			prepastat.setInt(3, pagination.getNbOfElements() * pagination.getPage());
-
-			ResultSet result = prepastat.executeQuery();
-
-			while (result.next()) {
-				
-				long id = result.getLong("computer.id");
-				
-				String name = result.getString("computer.name");
-				
-				LocalDate introd = ConvertData.timestampToLocalDate(result.getTimestamp("computer.introduced"))
-						.orElse(null);
-				
-				LocalDate discon = ConvertData.timestampToLocalDate(result.getTimestamp("computer.discontinued"))
-						.orElse(null);
-				long idCompany = result.getLong("computer.company_id");
-				Company company = new Company();
-				company.setId(idCompany);
-				company.setName(result.getString("company.name"));
-				listComputer.add(new Computer(id, name, introd, discon, company));
-			}
-
-			return listComputer;
-
-		} catch (SQLException e) {
-			logger.error("Error in ComputerDaoImplement/to get list of computer");
-			e.printStackTrace();
-
-		}
-
-		return listComputer;*/
 	}
 
 	@Override
@@ -245,30 +158,10 @@ public class ComputerDaoImpl implements ComputerDao {
 
 	@Override
 	public int count() {
-		//int count = 0;
-		
-	
+		// int count = 0;
+
 		return jdbcTemplate.queryForObject(COUNT_ELEMENTS, Integer.class);
 
-		
-		
-		/*try (Connection connect = this.factory.getConnection()) {
-
-			PreparedStatement prepastat = connect.prepareStatement(COUNT_ELEMENTS);
-
-			ResultSet result = prepastat.executeQuery();
-			if (result.next()) {
-				count = result.getInt("nbElements");
-			}
-
-			logger.info(count + " computers found in database");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error("Error in ComputerDaoImplement/counting computer");
-
-		}
-
-		return count;*/
 	}
 
 	@Override

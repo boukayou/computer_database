@@ -27,6 +27,7 @@
 		<springWebmvc.version>5.1.5.RELEASE</springWebmvc.version>
 		<springJdbc.version>5.1.5.RELEASE</springJdbc.version>
 		<servletApi.version>4.0.1</servletApi.version>
+		<mysqlConnector.version>5.1.18</mysqlConnector.version>
 	</properties>
 
 	<dependencies>
@@ -93,6 +94,14 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${springJdbc.version}</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysqlConnector.version}</version>
+		</dependency>
+
 
 	</dependencies>
 

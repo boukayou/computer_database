@@ -6,21 +6,27 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import fr.com.excilys.modele.Company;
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.persistence.ComputerDaoImpl;
 import fr.com.excilys.service.CompanyService;
 import fr.com.excilys.service.ComputerService;
-
+@Component
 public class Pagination {
 	final Logger logger = LoggerFactory.getLogger(Pagination.class);
 	private int nbOfElements = 10;
 	private int page = 0;
 	private String search = "";
 	private String sort = "name";
-	ComputerService computerService = ComputerService.getInstance();
-	CompanyService companyService = CompanyService.getInstance();
+	private ComputerService computerService ;
+	private CompanyService companyService ;
+	public Pagination(CompanyService companyService, ComputerService computerService) {
+		this.companyService=companyService;
+		this.computerService = computerService;
+	}
+	
 
 	public Pagination(int nbOfElements, int page, String search, String sort, ComputerService computerService) {
 		this.nbOfElements = nbOfElements;

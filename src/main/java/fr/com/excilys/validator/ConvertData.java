@@ -14,17 +14,5 @@ public class ConvertData {
 		}else {
 			return Optional.ofNullable(localdate);
 		}
-	}
-	
-	/*public static Optional<Timestamp> LocalDateTotimestamp(Date date) {
-		Timestamp tsp = null;
-		if(date!=null) {
-			tsp= timestamp.toLocalDateTime().toLocalDate();
-			return Optional.of(tsp);
-		}else {
-			return Optional.ofNullable(tsp);
-		}
-	}*/
-	
-	
+	}	
 }
