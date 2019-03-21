@@ -12,11 +12,16 @@ public class ValidatorTech {
 
 		public static boolean validatorComputer(ComputerDTO computerDto) {
 		
-			return ((checkDateIsValidType(computerDto) & checkNameIsNotEmpty(computerDto))) ? true : false;
+			return ((checkDateIsValidType(computerDto) && checkNameIsNotEmpty(computerDto))) ? true : false;
 			
 		}
 
 		public static boolean checkDateIsValidType(ComputerDTO computerDto) {
+			
+			if((computerDto.getIntroduced() == null || computerDto.getIntroduced().isEmpty())  && (computerDto.getDiscontinued() == null || computerDto.getDiscontinued().isEmpty())) {
+				return true;
+				
+			}
 
 			String patternStr = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))";
 			Pattern pattern = Pattern.compile(patternStr);

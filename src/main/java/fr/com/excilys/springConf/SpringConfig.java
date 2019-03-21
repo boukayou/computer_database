@@ -31,6 +31,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @EnableWebMvc
+//@EnableTransactionManagement
 @ComponentScan(value = { "fr.com.excilys.dto", "fr.com.excilys.service", "fr.com.excilys.controllers",
 		"fr.com.excilys.validator", "fr.com.excilys.persistence" })
 public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer {
@@ -81,6 +82,19 @@ public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer
 		resolver.setCookieMaxAge(4800);
 		return resolver;
 	}
+	
+	
+//	@Bean
+//	   public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+//	      LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+//	      em.setDataSource(dataSource());
+//	      em.setPackagesToScan(new String[] { "fr.com.excilys.modele" });
+//	 
+//	      JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+//	      em.setJpaVendorAdapter(vendorAdapter);
+//	 
+//	      return em;
+//	   }
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

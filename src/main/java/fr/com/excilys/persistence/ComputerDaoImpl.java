@@ -166,11 +166,12 @@ public class ComputerDaoImpl implements ComputerDao {
 	@Override
 	public Computer mapRow(ResultSet result, int rowNum) throws SQLException {
 		long idcomputer = result.getLong("id");
-		String name = result.getString("name");
+		String nameComputer = result.getString("computer.name");
 		LocalDate introd = this.convertData.timestampToLocalDate(result.getTimestamp("introduced")).orElse(null);
 		LocalDate discon = this.convertData.timestampToLocalDate(result.getTimestamp("discontinued")).orElse(null);
+		String nameCompany = result.getString("company.name");
 		long idCompany = result.getLong("company_id");
-		return new Computer(idcomputer, name, introd, discon, new Company(idCompany));
+		return new Computer(idcomputer, nameComputer, introd, discon, new Company(idCompany,nameCompany));
 	}
 
 }

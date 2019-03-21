@@ -49,6 +49,8 @@ public class DashBoardComputerServlet {
 		}
 
 		List<Computer> listcomputer = this.computerService.getList(pagination);
+		for(Computer listComputer2 : listcomputer) {
+		System.out.println(listComputer2);}
 
 		List<ComputerDTO> listComputerDto = this.computerMapper.getListComputerDto(listcomputer);
 		List<String> listNavigation = this.computerMapper.IntToString(pagination.navigation());

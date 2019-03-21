@@ -1,7 +1,7 @@
 package fr.com.excilys.modele;
 
 import java.time.LocalDate;
-
+//@Entity
 public class Computer {
 
 	private long id;

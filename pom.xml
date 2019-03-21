@@ -28,6 +28,8 @@
 		<springJdbc.version>5.1.5.RELEASE</springJdbc.version>
 		<servletApi.version>4.0.1</servletApi.version>
 		<mysqlConnector.version>5.1.18</mysqlConnector.version>
+		<springJpa.version>2.1.5.RELEASE</springJpa.version>
+		<hibernate.version>5.4.1.Final</hibernate.version>
 	</properties>
 
 	<dependencies>
@@ -102,7 +104,19 @@
 			<version>${mysqlConnector.version}</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.data</groupId> -->
+<!-- 			<artifactId>spring-data-jpa</artifactId> -->
+<!-- 			<version>${springJpa.version}</version> -->
+<!-- 		</dependency> -->
 
+ 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core --> 
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.hibernate</groupId> -->
+<!-- 			<artifactId>hibernate-core</artifactId> -->
+<!-- 			<version>${hibernate.version}</version> -->
+<!-- 		</dependency> -->
 	</dependencies>
 
 

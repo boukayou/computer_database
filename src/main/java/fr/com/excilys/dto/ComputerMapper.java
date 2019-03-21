@@ -20,7 +20,7 @@ import fr.com.excilys.validator.ValidatorTech;
 public class ComputerMapper {
 	
 
-	final static Logger logger = LoggerFactory.getLogger(ComputerDaoImpl.class);
+	final static Logger logger = LoggerFactory.getLogger(ComputerMapper.class);
 
 	public ComputerDTO computerToDto(Computer computer) {
 		ComputerDTO computerDto = new ComputerDTO();
@@ -34,16 +34,7 @@ public class ComputerMapper {
 		return computerDto;
 	}
 
-	public  List<ComputerDTO> getListComputerDto(List<Computer> computers) {
-		List<ComputerDTO> listToreturn = new ArrayList<ComputerDTO>();
-		for (Computer computer : computers) {
-			listToreturn.add(computerToDto(computer));
-		}
-		return listToreturn;
-
-	}
-
-	public  Optional<Computer> DtoToComputer(ComputerDTO computerDto) {
+	public  Optional<Computer> DtoToComputer(ComputerDTO computerDto){
 		Computer computer = new Computer();
 		Optional<Computer> optionalComputer = Optional.empty();
 
@@ -54,18 +45,30 @@ public class ComputerMapper {
 			}
 
 			computer.setName(computerDto.getName());
-
-			if (computerDto.getIntroduced().equals("")) {
+//
+//			if (computerDto.getIntroduced().equals("")) {
+//				computer.setIntroduced(null);
+//			} else {
+//				computer.setIntroduced(convertStringToLocalDate(computerDto.getIntroduced()));
+//			}
+			if (computerDto.getIntroduced() != null && !computerDto.getIntroduced().isEmpty()) {
+				computer.setIntroduced(convertStringToLocalDate(computerDto.getIntroduced()));
+			}else {
 				computer.setIntroduced(null);
-			} else {
-				computer.setIntroduced(convertStringToLocalDate(computerDto.getIntroduced()).get());
+			}
+			if (computerDto.getDiscontinued() != null && !computerDto.getDiscontinued().isEmpty()) {
+				computer.setDiscontinued(convertStringToLocalDate(computerDto.getIntroduced()));
+			}else {
+				computer.setDiscontinued(null);
 			}
 
-			if (computerDto.getDiscontinued().equals("")) {
-				computer.setDiscontinued(null);
-			} else {
-				computer.setDiscontinued(convertStringToLocalDate(computerDto.getDiscontinued()).get());
-			}
+			
+//
+//			if (computerDto.getDiscontinued().equals("")) {
+//				computer.setDiscontinued(null);
+//			} else {
+//				computer.setDiscontinued(convertStringToLocalDate(computerDto.getDiscontinued()));
+//			}
 
 			Company company = new Company();
 			company.setId(Long.parseLong(computerDto.getCompanyID()));
@@ -75,6 +78,15 @@ public class ComputerMapper {
 
 		}
 		return optionalComputer;
+	}
+	
+	public  List<ComputerDTO> getListComputerDto(List<Computer> computers) {
+		List<ComputerDTO> listToreturn = new ArrayList<ComputerDTO>();
+		for (Computer computer : computers) {
+			listToreturn.add(computerToDto(computer));
+		}
+		return listToreturn;
+
 	}
 
 	public  String convertLocalDateToString(LocalDate localDate) {
@@ -88,27 +100,45 @@ public class ComputerMapper {
 		return formattedString;
 	}
 
-	public  Optional<LocalDate> convertStringToLocalDate(String str) {
-
-		Optional<LocalDate> optionalDate = Optional.empty();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-
-		try {
-			LocalDate formattedLocalDate = LocalDate.parse(str, formatter);
-			optionalDate = Optional.of(formattedLocalDate);
-
-		} catch (DateTimeParseException e) {
-			logger.error(
-					"Error in Computermapper/ConvertDate the date format is not valid at index :" + e.getErrorIndex());
-
+//	public  Optional<LocalDate> convertStringToLocalDate(String str) {
+//		
+//		
+//		
+//		Optional<LocalDate> optionalDate = Optional.empty();
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+//		
+//		System.out.println("oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"+str);
+//
+//		try {
+//			LocalDate formattedLocalDate =  LocalDate.parse("1995-01-11", formatter);
+//			System.out.println("oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo222222222222222222222"+str);
+//
+//			optionalDate = Optional.of(formattedLocalDate);
+//
+//		} catch (DateTimeParseException e) {
+//			e.getStackTrace();
+//			logger.error("Error in Computermapper/ConvertDate the date format is not valid ");
+//
+//		}
+//		return optionalDate;
+//	}
+	
+	private LocalDate convertStringToLocalDate(String date) {
+		LocalDate formattedString = null;
+		if (date != null && !date.isEmpty()) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			formattedString = LocalDate.parse(date, formatter);
 		}
-		return optionalDate;
-	}
+		return formattedString;
+}
+	
+	
 
 	public  long StringToLong(String str) {
 		return Long.parseLong(str);
 	}
 
+	
 	public  List<String> IntToString(List<Integer> linteger) {
 		List<String> strNavigation = new ArrayList<String>();
 

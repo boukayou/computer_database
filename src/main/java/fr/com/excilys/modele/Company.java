@@ -1,5 +1,6 @@
 package fr.com.excilys.modele;
 
+//@Entity
 public class Company {
 
 	private long id;
