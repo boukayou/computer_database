@@ -11,17 +11,19 @@ import fr.com.excilys.validator.ValidaTorComputer;
 
 @Component
 public class ComputerService {
-	public int test = 2;
 
-	private ComputerDao computerDao;
-
-	private ComputerService(ComputerDao computerDao) {
-
+	protected ComputerDao computerDao;
+	protected ValidaTorComputer validaTorComputer;
+	
+	
+	protected ComputerService(ComputerDao computerDao , ValidaTorComputer validaTorComputer) {
+		
 		this.computerDao = computerDao;
+		this.validaTorComputer = validaTorComputer;
 	}
 
 	public List<Computer> getList(Pagination pagination) {
-
+		
 		return computerDao.getList(pagination);
 	}
 

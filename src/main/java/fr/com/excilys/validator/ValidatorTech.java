@@ -3,9 +3,11 @@ package fr.com.excilys.validator;
 	import java.util.regex.Matcher;
 	import java.util.regex.Pattern;
 
-	import fr.com.excilys.dto.ComputerDTO;
+import org.springframework.stereotype.Component;
 
+import fr.com.excilys.dto.ComputerDTO;
 
+@Component
 public class ValidatorTech {
 
 		public static boolean validatorComputer(ComputerDTO computerDto) {

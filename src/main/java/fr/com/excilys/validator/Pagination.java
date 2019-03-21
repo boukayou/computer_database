@@ -5,35 +5,25 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import fr.com.excilys.modele.Computer;
 import fr.com.excilys.service.CompanyService;
 import fr.com.excilys.service.ComputerService;
-@Component
+
+@Service
 public class Pagination {
 	final Logger logger = LoggerFactory.getLogger(Pagination.class);
 	private int nbOfElements = 10;
 	private int page = 0;
 	private String search = "";
-	private String sort = "name";
-	private ComputerService computerService ;
-	private CompanyService companyService ;
+	private String sort = "computer.name";
+
+	protected ComputerService computerService;
+	protected CompanyService companyService;
+
 	public Pagination(CompanyService companyService, ComputerService computerService) {
-		this.companyService=companyService;
+		this.companyService = companyService;
 		this.computerService = computerService;
-		System.out.println("oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"+computerService.test);
-	}
-	
-
-	public Pagination(int nbOfElements, int page, String search, String sort) {
-		this.nbOfElements = nbOfElements;
-		this.page = page;
-		this.search = search;
-		this.sort = sort;
-	}
-
-	public Pagination() {
 	}
 
 	public int getNbOfElements() {
@@ -65,7 +55,8 @@ public class Pagination {
 					this.page = 0;
 				}
 			} catch (NumberFormatException e) {
-				logger.warn("Error in the method setPage in the class :fr.com.excilys.cheking/Pagination: check if the parsing type is valid!");
+				logger.warn(
+						"Error in the method setPage in the class :fr.com.excilys.cheking/Pagination: check if the parsing type is valid!");
 
 			}
 		}
@@ -87,19 +78,12 @@ public class Pagination {
 		this.sort = sort;
 	}
 
-	public List<Computer> getList() {
-		/*Company company = new Company();
-		company.setId(10);
-	    companyService.delete(company);*/
-
-		return computerService.getList(this);
-	}
-
 	public List<Integer> navigation() {
 
 		List<Integer> listNavigation = new ArrayList<Integer>();
 		List<Integer> navigation = new ArrayList<Integer>();
-		long computersFound = computerService.count();
+
+		int computersFound = computerService.count();
 		long pages = computersFound / nbOfElements;
 
 		for (Integer i = 1; i <= pages + 1; i++) {
@@ -112,12 +96,10 @@ public class Pagination {
 
 	}
 
-
 	@Override
 	public String toString() {
 		return "Pagination [nbOfElements=" + nbOfElements + ", page=" + page + ", search=" + search + ", sort=" + sort
 				+ "]";
 	}
-	
 
 }

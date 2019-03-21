@@ -2,10 +2,6 @@ package fr.com.excilys.modele;
 
 import java.time.LocalDate;
 
-import org.springframework.stereotype.Component;
-
-
-@Component
 public class Computer {
 
 	private long id;

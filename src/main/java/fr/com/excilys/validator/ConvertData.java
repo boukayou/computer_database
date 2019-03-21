@@ -4,9 +4,11 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
+@Component
 public class ConvertData {
 	
-	public static Optional<LocalDate> timestampToLocalDate(Timestamp timestamp) {
+	public  Optional<LocalDate> timestampToLocalDate(Timestamp timestamp) {
 		LocalDate localdate = null;
 		if(timestamp !=null) {
 			localdate= timestamp.toLocalDateTime().toLocalDate();

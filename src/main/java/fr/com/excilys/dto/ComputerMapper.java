@@ -22,7 +22,7 @@ public class ComputerMapper {
 
 	final static Logger logger = LoggerFactory.getLogger(ComputerDaoImpl.class);
 
-	public  ComputerDTO computerToDto(Computer computer) {
+	public ComputerDTO computerToDto(Computer computer) {
 		ComputerDTO computerDto = new ComputerDTO();
 
 		computerDto.setId(Long.toString(computer.getId()));

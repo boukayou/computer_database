@@ -31,8 +31,8 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(value = { "fr.com.excilys.dto", "fr.com.excilys.modele", "fr.com.excilys.service",
-		"fr.com.excilys.controllers", "fr.com.excilys.validator", "fr.com.excilys.persistence" })
+@ComponentScan(value = { "fr.com.excilys.dto", "fr.com.excilys.service", "fr.com.excilys.controllers",
+		"fr.com.excilys.validator", "fr.com.excilys.persistence" })
 public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer {
 
 	@Bean
@@ -53,16 +53,16 @@ public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer
 	ViewResolver viewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("src/main/webapp/WEB-INF/");
+		viewResolver.setPrefix("/WEB-INF/");
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
 	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/static/js/**").addResourceLocations("/static/js/");
-		registry.addResourceHandler("/static/css/**").addResourceLocations("/static/css/");
-		registry.addResourceHandler("/static/fonts/**").addResourceLocations("/static/fonts/");
+		registry.addResourceHandler("/js/**").addResourceLocations("/js/");
+		registry.addResourceHandler("/css/**").addResourceLocations("/css/");
+		registry.addResourceHandler("/fonts/**").addResourceLocations("/fonts/");
 	}
 
 	@Bean

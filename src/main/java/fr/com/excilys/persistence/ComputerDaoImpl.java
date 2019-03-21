@@ -34,9 +34,8 @@ public class ComputerDaoImpl implements ComputerDao {
 			+ "									LEFT JOIN company ON computer.company_id = company.id "
 			+ "							 			WHERE computer.id= ?";
 
-	final static String COMPUTER_BY_NAME = "SELECT computer.id,computer.name,computer.introduced,computer.discontinued,computer.company_id, company.name "
-			+ "									FROM computer "
-			+ "										LEFT JOIN company ON computer.company_id = company.id "
+	final static String COMPUTER_BY_NAME = "SELECT computer.id,computer.name,computer.introduced,computer.discontinued,computer.company_id, company.name"
+			+ "									 FROM computer LEFT JOIN company ON computer.company_id = company.id "
 			+ "							 				WHERE computer.name LIKE ? ORDER BY %s ASC"
 			+ "												 LIMIT ?  OFFSET ?  ";
 
@@ -46,9 +45,11 @@ public class ComputerDaoImpl implements ComputerDao {
 			+ "										LIMIT ? OFFSET ?";
 
 	private JdbcTemplate jdbcTemplate;
+	private ConvertData convertData;
 
-	public ComputerDaoImpl(JdbcTemplate jdbcTemplate) {
+	public ComputerDaoImpl(JdbcTemplate jdbcTemplate, ConvertData convertData) {
 		this.jdbcTemplate = jdbcTemplate;
+		this.convertData = convertData;
 	}
 
 	@Override
@@ -136,7 +137,6 @@ public class ComputerDaoImpl implements ComputerDao {
 
 	@Override
 	public List<Computer> getList(Pagination pagination) {
-		// List<Computer> listComputer = new ArrayList<Computer>();
 		String formattedComputerByName = String.format(COMPUTER_BY_NAME, pagination.getSort());
 
 		return jdbcTemplate.query(formattedComputerByName, new Object[] { "%" + pagination.getSearch() + "%",
@@ -157,18 +157,18 @@ public class ComputerDaoImpl implements ComputerDao {
 
 	@Override
 	public int count() {
-		// int count = 0;
+		int count = 0;
 
-		return jdbcTemplate.queryForObject(COUNT_ELEMENTS, Integer.class);
-
+		count = jdbcTemplate.queryForObject(COUNT_ELEMENTS, Integer.class);
+		return count;
 	}
 
 	@Override
 	public Computer mapRow(ResultSet result, int rowNum) throws SQLException {
 		long idcomputer = result.getLong("id");
 		String name = result.getString("name");
-		LocalDate introd = ConvertData.timestampToLocalDate(result.getTimestamp("introduced")).orElse(null);
-		LocalDate discon = ConvertData.timestampToLocalDate(result.getTimestamp("discontinued")).orElse(null);
+		LocalDate introd = this.convertData.timestampToLocalDate(result.getTimestamp("introduced")).orElse(null);
+		LocalDate discon = this.convertData.timestampToLocalDate(result.getTimestamp("discontinued")).orElse(null);
 		long idCompany = result.getLong("company_id");
 		return new Computer(idcomputer, name, introd, discon, new Company(idCompany));
 	}

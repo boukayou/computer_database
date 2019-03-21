@@ -20,7 +20,7 @@ import fr.com.excilys.modele.Company;
 @Component
 public class CompanyDaoImpl implements CompanyDao {
 	final Logger logger = LoggerFactory.getLogger(CompanyDaoImpl.class);
-	static final String LIST_COMPANY = "SELECT name,id FROM company";
+	static final String LIST_COMPANY = "SELECT company.name,id FROM company";
 	final static String DELETE_COMPUTER = "DELETE FROM computer where company_id =?";
 	final static String DELETE_COMPANY = "DELETE FROM company where company.id =?";
 
