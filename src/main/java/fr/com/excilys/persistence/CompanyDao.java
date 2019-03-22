@@ -5,7 +5,8 @@ import org.springframework.jdbc.core.RowMapper;
 
 import fr.com.excilys.modele.Company;
 
-public interface CompanyDao extends RowMapper <Company> {
+//extends CrudRepository<Company, Long> enlever Rowmapper
+ public interface CompanyDao extends RowMapper <Company> {
 
 	List<Company> listCompany() ;
 	

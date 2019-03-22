@@ -1,13 +1,37 @@
 package fr.com.excilys.modele;
 
 import java.time.LocalDate;
-//@Entity
-public class Computer {
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="computer")
+public class Computer {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "introduced")
 	private LocalDate introduced;
+	
+	@Column(name = "discontinued")
 	private LocalDate discontinued;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "company_id", table = "computer", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_computer_company_1"))
 	private Company company;
 
 	public Computer() {

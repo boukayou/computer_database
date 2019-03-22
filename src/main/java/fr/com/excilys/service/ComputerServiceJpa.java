@@ -1,40 +1,35 @@
 package fr.com.excilys.service;
 
-
 import java.util.List;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.persistence.ComputerDao;
-import fr.com.excilys.persistence.ComputerDaoJpa;
 import fr.com.excilys.validator.Pagination;
 import fr.com.excilys.validator.ValidaTorComputer;
 
 @Component
-public class ComputerService {
+public class ComputerServiceJpa {
 
-	protected ComputerDaoJpa computerDaoJpa;
+	protected ComputerDao computerDao;
 	protected ValidaTorComputer validaTorComputer;
 	
 	
-	protected ComputerService(ComputerDaoJpa computerDaoJpa , ValidaTorComputer validaTorComputer) {
+	protected ComputerServiceJpa(ComputerDao computerDao , ValidaTorComputer validaTorComputer) {
 		
-		this.computerDaoJpa = computerDaoJpa;
+		this.computerDao = computerDao;
 		this.validaTorComputer = validaTorComputer;
 	}
 
 	public List<Computer> getList(Pagination pagination) {
 		
-		//return computerDao.getList(pagination);
-		return computerDaoJpa.findAll();
+		return computerDao.getList(pagination);
 	}
 
-	public long count() {
+	public int count() {
 
-		return computerDaoJpa.count();
+		return computerDao.count();
 	
 	}
 	
@@ -63,9 +58,5 @@ public class ComputerService {
 	public void delete(Computer computer) {
 
 		computerDao.deleteComputer(computer);
-	}
-	
-	private Pageable createPageRequest() {
-	    return  PageRequest.of(1, 10, Sort.Direction.ASC, "title", "description");
 	}
 }
