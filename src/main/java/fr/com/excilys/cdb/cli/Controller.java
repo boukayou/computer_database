@@ -1,16 +1,6 @@
-package fr.com.excilys.controller;
+package fr.com.excilys.cdb.cli;
 
-import java.sql.SQLException;
-import java.text.ParseException;
-
-import org.springframework.stereotype.Component;
-
-import fr.com.excilys.modele.Computer;
-import fr.com.excilys.service.CompanyService;
-import fr.com.excilys.service.ComputerService;
-import fr.com.excilys.ui.VueMenu;
-
-@Component
+/*@Component
 public class Controller {
 
 	private Boolean isAlive;
@@ -26,11 +16,11 @@ public class Controller {
 		// Begin();
 	}
 
-	/*
-	 * public static Controller getInstance() throws ParseException,
-	 * ClassNotFoundException { if(instance==null) { instance = new Controller(); }
-	 * return instance; }
-	 */
+	
+//	  public static Controller getInstance() throws ParseException,
+//	  ClassNotFoundException { if(instance==null) { instance = new Controller(); }
+//	  return instance; }
+//	 
 
 	private void initialise() {
 		this.isAlive = true;
@@ -84,4 +74,4 @@ public class Controller {
 			}
 		}
 	}
-}
+}*/

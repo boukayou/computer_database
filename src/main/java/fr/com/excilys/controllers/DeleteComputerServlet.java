@@ -8,17 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.com.excilys.modele.Computer;
-import fr.com.excilys.service.ComputerService;
+import fr.com.excilys.service.ComputerServiceJpa;
 
 @Controller
 @RequestMapping(path = "/DeleteComputer")
 
 public class DeleteComputerServlet {
-	private ComputerService computerService;
+	
+	private ComputerServiceJpa computerServiceJpa;
 
-	public DeleteComputerServlet(ComputerService computerService) {
+	public DeleteComputerServlet(ComputerServiceJpa computerServiceJpa) {
 
-		this.computerService = computerService;
+		this.computerServiceJpa = computerServiceJpa;
 	}
 
 	@PostMapping
@@ -29,8 +30,8 @@ public class DeleteComputerServlet {
 		try {
 			for (String str : idTodelete) {
 
-				Computer computerToDelete = this.computerService.getById(Long.parseLong(str));
-				this.computerService.delete(computerToDelete);
+				Computer computerToDelete = this.computerServiceJpa.getById(Long.parseLong(str)).get();
+				this.computerServiceJpa.delete(computerToDelete);
 
 			}
 

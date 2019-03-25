@@ -11,8 +11,9 @@ public class ValidaTorComputer {
 		
 			if(computer.getIntroduced() ==null||computer.getDiscontinued() ==null) {
 				return true;
+				
 			}
-			return computer.getIntroduced().isBefore(computer.getDiscontinued());
+			return  computer.getIntroduced().isBefore(computer.getDiscontinued());
 		
 	}
 

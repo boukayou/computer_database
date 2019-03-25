@@ -62,14 +62,14 @@
 									class="fa fa-trash-o fa-lg"></i>
 							</a>
 						</span></th>
-						<th><a href="/cdb/Dashboard?sortBycomputer=computer.name">Computer
+						<th><a href="/cdb/Dashboard?sortBycomputer=name">Computer
 								name</a></th>
 						<th><a
-							href="/cdb/Dashboard?sortBycomputer=computer.introduced">Introduced
+							href="/cdb/Dashboard?sortBycomputer=introduced">Introduced
 								date</a></th>
 						<!-- Table header for Discontinued Date -->
 						<th><a
-							href="/cdb/Dashboard?sortBycomputer=computer.discontinued">Discontinued
+							href="/cdb/Dashboard?sortBycomputer=discontinued">Discontinued
 								date</a></th>
 						<!-- Table header for Company -->
 						<th><a href="/cdb/Dashboard?sortBycomputer=company.name">Company</a>

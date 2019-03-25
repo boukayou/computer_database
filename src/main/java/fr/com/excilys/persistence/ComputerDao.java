@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import fr.com.excilys.modele.Computer;
 import fr.com.excilys.validator.Pagination;
-@Component
+/*
 public interface ComputerDao extends RowMapper<Computer> {
 
 	void createComputer(Computer computer);
@@ -23,3 +23,4 @@ public interface ComputerDao extends RowMapper<Computer> {
 	Computer computerById(long id);
 
 }
+*/

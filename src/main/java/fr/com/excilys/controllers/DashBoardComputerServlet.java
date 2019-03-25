@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import fr.com.excilys.dto.ComputerDTO;
 import fr.com.excilys.dto.ComputerMapper;
 import fr.com.excilys.modele.Computer;
-import fr.com.excilys.service.CompanyService;
-import fr.com.excilys.service.ComputerService;
+import fr.com.excilys.service.CompanyServiceJpa;
+import fr.com.excilys.service.ComputerServiceJpa;
 import fr.com.excilys.validator.Pagination;
 
 @Controller
@@ -21,15 +21,16 @@ import fr.com.excilys.validator.Pagination;
 public class DashBoardComputerServlet {
 
 	protected Pagination pagination;
-	protected ComputerService computerService;
-	protected ComputerMapper computerMapper;
-	protected CompanyService companyService;
 
-	public DashBoardComputerServlet(ComputerService computerService, CompanyService companyService,
+	private CompanyServiceJpa companyServiceJpa;
+	private ComputerServiceJpa computerServiceJpa;
+	private ComputerMapper computerMapper;
+
+	public DashBoardComputerServlet(ComputerServiceJpa computerServiceJpa, CompanyServiceJpa companyServiceJpa,
 			ComputerMapper computerMapper, Pagination pagination) {
 
-		this.computerService = computerService;
-		this.companyService = companyService;
+		this.computerServiceJpa = computerServiceJpa;
+		this.companyServiceJpa = companyServiceJpa;
 		this.computerMapper = computerMapper;
 		this.pagination = pagination;
 	}
@@ -37,7 +38,7 @@ public class DashBoardComputerServlet {
 	@GetMapping
 	public String get(Model model, @RequestParam(name = "nbrOfElements", defaultValue = "10") String nbrOfElements,
 			@RequestParam(name = "page", defaultValue = "1") String page,
-			@RequestParam(name = "sortBycomputer", defaultValue = "computer.name") String sortBycomputer,
+			@RequestParam(name = "sortBycomputer", defaultValue = "name") String sortBycomputer,
 			@RequestParam(name = "search", defaultValue = "") String search) {
 
 		pagination.setPage(page);
@@ -48,18 +49,20 @@ public class DashBoardComputerServlet {
 			pagination.setSearch(search);
 		}
 
-		List<Computer> listcomputer = this.computerService.getList(pagination);
-		for(Computer listComputer2 : listcomputer) {
-		System.out.println(listComputer2);}
+		List<Computer> listcomputer = this.computerServiceJpa.getList(pagination);
+		
 
-		List<ComputerDTO> listComputerDto = this.computerMapper.getListComputerDto(listcomputer);
+		List<ComputerDTO> listcomputerDto = this.computerMapper.getListComputerDto(listcomputer);
+		
+
+
 		List<String> listNavigation = this.computerMapper.IntToString(pagination.navigation());
 
-		String nbrOfCompFOund = String.valueOf(this.computerService.count());
+		String nbrOfCompFOund = String.valueOf(this.computerServiceJpa.count());
 
 		model.addAttribute("listNavigation", listNavigation);
 
-		model.addAttribute("listComputerDto", listComputerDto);
+		model.addAttribute("listComputerDto", listcomputerDto);
 
 		model.addAttribute("nbrOfCompFOund", nbrOfCompFOund);
 

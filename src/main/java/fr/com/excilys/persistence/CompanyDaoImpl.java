@@ -16,8 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.com.excilys.modele.Company;
-
-@Component
+/*
 public class CompanyDaoImpl implements CompanyDao {
 	final Logger logger = LoggerFactory.getLogger(CompanyDaoImpl.class);
 	static final String LIST_COMPANY = "SELECT company.name,id FROM company";
@@ -75,3 +74,4 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 }
+*/

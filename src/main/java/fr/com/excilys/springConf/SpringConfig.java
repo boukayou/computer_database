@@ -6,7 +6,6 @@ import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -16,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -48,20 +46,20 @@ import com.zaxxer.hikari.HikariDataSource;
 public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer {
 	@Autowired
 	private Environment env;
-
+	
 	@Bean
-	DataSource dataSource() {
+	HikariDataSource dataSource() {
 		HikariConfig config = new HikariConfig("/home/excilys/computer_database/hikari.properties");
 
 		return new HikariDataSource(config);
 
 	}
 
-	@Bean
+	/*@Bean
 	JdbcTemplate jdbcTemplate(DataSource dataSource) {
 
 		return new JdbcTemplate(dataSource);
-	}
+	}*/
 
 	@Bean
 	ViewResolver viewResolver() {
@@ -95,8 +93,8 @@ public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer
 		resolver.setCookieMaxAge(4800);
 		return resolver;
 	}
-
-	@Bean
+	
+	@Bean(name="transactionManager") 
 	public PlatformTransactionManager txManager(EntityManagerFactory entityManagerFactory) {
 		// JpaTransactionManager jpaTransactionManager = new
 		// JpaTransactionManager(entityManagerFactory.getObject());
@@ -107,14 +105,16 @@ public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer
 	}
 
 	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(HikariDataSource dataSource) {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource);
 		em.setPackagesToScan(new String[] { "fr.com.excilys.modele" });
 
-		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+		vendorAdapter.setGenerateDdl(true);
 		em.setJpaVendorAdapter(vendorAdapter);
-		em.setJpaProperties(jpaProperties());
+		
+		//em.setJpaProperties(jpaProperties());
 		return em;
 	}
 

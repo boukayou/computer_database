@@ -1,10 +1,8 @@
 package fr.com.excilys.service.test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
-
-import fr.com.excilys.service.ComputerService;
 
 class ComputerServiceTest {
 

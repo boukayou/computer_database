@@ -12,40 +12,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import fr.com.excilys.dto.ComputerDTO;
 import fr.com.excilys.dto.ComputerMapper;
 import fr.com.excilys.modele.Company;
-import fr.com.excilys.service.CompanyService;
-import fr.com.excilys.service.ComputerService;
-
+import fr.com.excilys.modele.Computer;
+import fr.com.excilys.service.CompanyServiceJpa;
+import fr.com.excilys.service.ComputerServiceJpa;
 
 @Controller
 @RequestMapping(path = "/AddComputer")
 
 public class AddComputerServlet {
 
-	private CompanyService companyService;
-	private ComputerService computerService;
+	private CompanyServiceJpa companyServiceJpa;
+	private ComputerServiceJpa computerServiceJpa;
 	private ComputerMapper computerMapper;
 
-	public AddComputerServlet(ComputerService computerService, CompanyService companyService,ComputerMapper computerMapper) {
-		this.computerService = computerService;
-		this.companyService = companyService;
-		this.computerMapper = computerMapper;
+	public AddComputerServlet(ComputerServiceJpa computerServiceJpa, CompanyServiceJpa companyServiceJpa,
+			ComputerMapper computerMapperJpa) {
+		this.computerServiceJpa = computerServiceJpa;
+		this.companyServiceJpa = companyServiceJpa;
+		this.computerMapper = computerMapperJpa;
 	}
-
-
 
 	@GetMapping
 	public String get(Model model) {
 
-		List<Company> listCompany = this.companyService.getList();
+		List<Company> listCompany = this.companyServiceJpa.getList();
 
 		model.addAttribute("listCompany", listCompany);
 
 		return "addComputer";
 	}
 
-
 	@PostMapping
-	public String post(@RequestParam(name = "computerName",required=true) String computerName,
+	public String post(@RequestParam(name = "computerName", required = true) String computerName,
 			@RequestParam(name = "introduced") String introduced,
 			@RequestParam(name = "discontinued") String discontinued,
 			@RequestParam(name = "companyId") String companyId) {
@@ -56,9 +54,10 @@ public class AddComputerServlet {
 		computerDto.setIntroduced(introduced);
 		computerDto.setDiscontinued(discontinued);
 		computerDto.setCompanyID(companyId);
-			this.computerService.create(this.computerMapper.DtoToComputer(computerDto).get());
-			System.out.println("fin nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
-		return  "redirect:/Dashboard";
+		Computer computer = this.computerMapper.DtoToComputer(computerDto).get();
+
+		this.computerServiceJpa.create(computer);
+		return "redirect:/Dashboard";
 
 	}
 

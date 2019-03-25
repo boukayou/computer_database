@@ -1,13 +1,6 @@
 package fr.com.excilys.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
-import fr.com.excilys.modele.Company;
-import fr.com.excilys.persistence.CompanyDao;
-
-@Component
+/*
 public class CompanyService {
 
 	private CompanyDao companyDao;
@@ -28,3 +21,4 @@ public class CompanyService {
 		companyDao.deleteCompany(company);
 	}
 }
+*/

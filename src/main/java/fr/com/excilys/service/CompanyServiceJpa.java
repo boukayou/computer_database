@@ -3,28 +3,38 @@ package fr.com.excilys.service;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.com.excilys.modele.Company;
-import fr.com.excilys.persistence.CompanyDao;
+import fr.com.excilys.persistence.CompanyDaoJpa;
+import fr.com.excilys.persistence.ComputerDaoJpa;
 
 @Component
 public class CompanyServiceJpa {
 
-	private CompanyDao companyDao;
+	private CompanyDaoJpa companyDaoJpa;
 	
 	
-	private CompanyServiceJpa(CompanyDao companyDao) {
+	public CompanyServiceJpa(CompanyDaoJpa companyDaoJpa) {
 
-		this.companyDao = companyDao;
+		this.companyDaoJpa = companyDaoJpa;
+
 	}
 
 	public List<Company> getList() {
-
-		return this.companyDao.listCompany();
+		
+	return (List<Company>) this.companyDaoJpa.findAll();
 	}
-
+	@Transactional
 	public void delete(Company company) {
-
-		companyDao.deleteCompany(company);
+		
+		try {
+			
+			companyDaoJpa.delete(company);
+		}catch (Exception e) {
+			e.getStackTrace();
+		}
+		
 	}
 }
+ 

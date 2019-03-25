@@ -1,9 +1,9 @@
 package fr.com.excilys.persistence;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import fr.com.excilys.modele.Computer;
 
-public interface ComputerDaoJpa extends CrudRepository<Computer, Long> {
+public interface ComputerDaoJpa extends PagingAndSortingRepository<Computer, Long> {
 
 }

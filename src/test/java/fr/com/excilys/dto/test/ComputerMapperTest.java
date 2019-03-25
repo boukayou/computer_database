@@ -69,14 +69,14 @@ class ComputerMapperTest {
 		long strTolng = 1;
 		assertEquals(strTolng, computerMapper.StringToLong(str));
 	}
-
+/*
 	@Test
 	void testStringToLocalDate() {
 		LocalDate localDate = LocalDate.of(2012, 12, 22);
 		String localDateStr = "2012/12/22";
 		assertEquals(localDate, computerMapper.convertStringToLocalDate(localDateStr).get());
 
-	}
+	}*/
 
 	@Test
 	void testLocalDateToString() {

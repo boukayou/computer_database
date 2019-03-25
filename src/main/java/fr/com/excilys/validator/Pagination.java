@@ -5,12 +5,11 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import fr.com.excilys.service.CompanyService;
-import fr.com.excilys.service.ComputerService;
+import fr.com.excilys.service.ComputerServiceJpa;
 
-@Service
+@Component
 public class Pagination {
 	final Logger logger = LoggerFactory.getLogger(Pagination.class);
 	private int nbOfElements = 10;
@@ -18,12 +17,10 @@ public class Pagination {
 	private String search = "";
 	private String sort = "computer.name";
 
-	protected ComputerService computerService;
-	protected CompanyService companyService;
+	protected ComputerServiceJpa computerServiceJpa;
 
-	public Pagination(CompanyService companyService, ComputerService computerService) {
-		this.companyService = companyService;
-		this.computerService = computerService;
+	public Pagination( ComputerServiceJpa computerServiceJpa) {
+		this.computerServiceJpa = computerServiceJpa;
 	}
 
 	public int getNbOfElements() {
@@ -83,7 +80,7 @@ public class Pagination {
 		List<Integer> listNavigation = new ArrayList<Integer>();
 		List<Integer> navigation = new ArrayList<Integer>();
 
-		int computersFound = computerService.count();
+		long computersFound = 60 ;//computerServiceJpa.count();
 		long pages = computersFound / nbOfElements;
 
 		for (Integer i = 1; i <= pages + 1; i++) {
