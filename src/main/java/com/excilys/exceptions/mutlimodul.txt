@@ -1,1 +1,0 @@
-core, persistence, service, binding, webapp, console.

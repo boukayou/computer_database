@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Context>
-  <JarScanner>
-    <JarScanFilter
-        pluggabilityScan="${tomcat.util.scan.StandardJarScanFilter.jarsToScan},
-                       computer_database.jar"/>
-  </JarScanner>
-</Context>
