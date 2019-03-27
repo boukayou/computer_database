@@ -25,6 +25,8 @@
 		<mysqlConnector.version>5.1.18</mysqlConnector.version>
 		<springJpa.version>2.1.5.RELEASE</springJpa.version>
 		<hibernate.version>5.4.1.Final</hibernate.version>
+		<springSecurity.version>5.1.4.RELEASE</springSecurity.version>
+		<springSecurityWeb.version>5.1.4.RELEASE</springSecurityWeb.version>
 		<maven.compiler.source>1.10</maven.compiler.source>
 		<maven.compiler.target>1.10</maven.compiler.target>
 	</properties>
