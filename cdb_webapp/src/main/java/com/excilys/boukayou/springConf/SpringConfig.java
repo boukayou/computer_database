@@ -39,6 +39,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @EnableJpaRepositories(basePackages="com.excilys.boukayou.persistence")
 @EnableTransactionManagement
 @ComponentScan(value = { "com.excilys.boukayou.dto", "com.excilys.boukayou.mapper","com.excilys.boukayou.service", "com.excilys.boukayou.controllers","com.excilys.boukayou.validator","com.excilys.boukayou.validator.tech"})
+
 public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer {
 
 	

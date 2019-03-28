@@ -15,7 +15,7 @@ import com.excilys.boukayou.service.ComputerServiceJpa;
 import com.excilys.boukayou.validator.Pagination;
 
 @Controller
-@RequestMapping(path = { "/Dashboard", "" })
+@RequestMapping(path = "/Dashboard")
 
 public class DashBoardComputerServlet {
 

@@ -27,6 +27,7 @@
 		<hibernate.version>5.4.1.Final</hibernate.version>
 		<springSecurity.version>5.1.4.RELEASE</springSecurity.version>
 		<springSecurityWeb.version>5.1.4.RELEASE</springSecurityWeb.version>
+		<springSecurityTaglibs.version>5.1.4.RELEASE</springSecurityTaglibs.version>
 		<maven.compiler.source>1.10</maven.compiler.source>
 		<maven.compiler.target>1.10</maven.compiler.target>
 	</properties>
