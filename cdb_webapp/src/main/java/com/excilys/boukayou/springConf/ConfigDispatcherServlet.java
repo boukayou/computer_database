@@ -6,7 +6,7 @@ public class ConfigDispatcherServlet extends AbstractAnnotationConfigDispatcherS
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] {};
+		return new Class<?>[] {SecurityConfig.class};
 	}
 
 	@Override

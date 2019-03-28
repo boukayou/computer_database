@@ -40,7 +40,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @EnableTransactionManagement
 @ComponentScan(value = { "com.excilys.boukayou.dto", "com.excilys.boukayou.mapper","com.excilys.boukayou.service", "com.excilys.boukayou.controllers","com.excilys.boukayou.validator","com.excilys.boukayou.validator.tech"})
 
-public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer {
+public class SpringConfig implements WebMvcConfigurer {
 
 	
 	@Bean
@@ -114,7 +114,7 @@ public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer
 		interceptor.setParamName("locale");
 		registry.addInterceptor(interceptor);
 	}
-
+/*
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		// Create the 'root' Spring application context
@@ -123,7 +123,7 @@ public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer
 
 		/// Manage the lifecycle of the root application context
 		servletContext.addListener(new ContextLoaderListener(rootContext));
-	}
+	}*/
 
 	/*private Properties jpaProperties() {
 		Properties properties = new Properties();

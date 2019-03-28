@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import com.excilys.boukayou.modele.Computer;
@@ -72,7 +73,7 @@ public class ComputerServiceJpa {
 			return null;
 		}
 	}
-
+	
 	public void delete(Computer computer) {
 		
 		try {

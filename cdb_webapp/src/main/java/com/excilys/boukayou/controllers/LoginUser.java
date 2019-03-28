@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.excilys.boukayou.modele.User;
 
 @Controller
-@RequestMapping(path = {"/Login",""})
+@RequestMapping(path = {"/Login"})
 public class LoginUser {
 
 	public LoginUser() {
@@ -35,7 +35,7 @@ public class LoginUser {
 		
 		userSafe.setName("user");
 		userSafe.setPassword("password");
-		
+
 		if (user.equals(userSafe)) {
 		return "redirect:/Dashboard";
 		}else {

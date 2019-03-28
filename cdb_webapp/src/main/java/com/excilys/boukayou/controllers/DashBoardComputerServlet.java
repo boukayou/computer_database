@@ -15,7 +15,7 @@ import com.excilys.boukayou.service.ComputerServiceJpa;
 import com.excilys.boukayou.validator.Pagination;
 
 @Controller
-@RequestMapping(path = "/Dashboard")
+@RequestMapping(path = {"/Dashboard",""})
 
 public class DashBoardComputerServlet {
 
@@ -30,7 +30,7 @@ public class DashBoardComputerServlet {
 		this.computerMapper = computerMapper;
 		this.pagination = pagination;
 	}
-
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping
 	public String get(Model model, @RequestParam(name = "nbrOfElements", defaultValue = "10") String nbrOfElements,
 			@RequestParam(name = "page", defaultValue = "1") String page,
@@ -41,9 +41,7 @@ public class DashBoardComputerServlet {
 		pagination.setSort(sortBycomputer);
 		pagination.setNbOfElements(nbrOfElements);
 		pagination.setSearch(search);
-		/*if (null != search) {
-			pagination.setSearch(search);
-		}*/
+	
 
 		List<Computer> listcomputer = this.computerServiceJpa.getList(pagination);
 		
