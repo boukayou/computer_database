@@ -11,23 +11,21 @@
 	<name>cdb_parent</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
 		<slf4j.version>1.7.25</slf4j.version>
 		<logback-classic.version>1.2.3</logback-classic.version>
 		<logback-core.version>1.2.3</logback-core.version>
 		<jstl.version>1.2</jstl.version>
 		<selenium.version>3.141.59</selenium.version>
 		<HikariCP.version>2.5.1</HikariCP.version>
-		<springWebmvc.version>5.1.5.RELEASE</springWebmvc.version>
-		<springJdbc.version>5.1.5.RELEASE</springJdbc.version>
 		<servletApi.version>4.0.1</servletApi.version>
 		<mysqlConnector.version>5.1.18</mysqlConnector.version>
-		<springJpa.version>2.1.5.RELEASE</springJpa.version>
-		<hibernate.version>5.4.1.Final</hibernate.version>
 		<springSecurity.version>5.1.4.RELEASE</springSecurity.version>
 		<springSecurityWeb.version>5.1.4.RELEASE</springSecurityWeb.version>
 		<springSecurityTaglibs.version>5.1.4.RELEASE</springSecurityTaglibs.version>
+		<springWebmvc.version>5.1.5.RELEASE</springWebmvc.version>
+		<springJdbc.version>5.1.5.RELEASE</springJdbc.version>
+		<springJpa.version>2.1.5.RELEASE</springJpa.version>
+		<hibernate.version>5.3.9.Final</hibernate.version>
 		<maven.compiler.source>1.10</maven.compiler.source>
 		<maven.compiler.target>1.10</maven.compiler.target>
 	</properties>
