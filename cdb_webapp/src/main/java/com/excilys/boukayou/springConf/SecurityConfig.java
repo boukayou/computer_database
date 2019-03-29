@@ -33,9 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/**").hasRole("USER").and().formLogin().loginPage("/Login").failureUrl("/403");
-		
+		http.authorizeRequests()/*.antMatchers("/AddComputer").access("hasRole('USER')")*/.and().formLogin();//.loginPage("/login").failureUrl("/403");
+	
      
     }
+	
  
 }

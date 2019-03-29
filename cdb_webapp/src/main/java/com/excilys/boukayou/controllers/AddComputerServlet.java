@@ -2,6 +2,7 @@ package com.excilys.boukayou.controllers;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ import com.excilys.boukayou.service.ComputerServiceJpa;
 
 @Controller
 @RequestMapping(path = "/AddComputer")
-
+@PreAuthorize("hasRole('ADMIN')")
 public class AddComputerServlet {
 
 	private CompanyServiceJpa companyServiceJpa;
