@@ -26,6 +26,8 @@
 		<springJdbc.version>5.1.5.RELEASE</springJdbc.version>
 		<springJpa.version>2.1.5.RELEASE</springJpa.version>
 		<hibernate.version>5.3.9.Final</hibernate.version>
+		<jaxbApi.version>2.2.11</jaxbApi.version>
+		<jackson.version>2.9.8</jackson.version>
 		<maven.compiler.source>1.10</maven.compiler.source>
 		<maven.compiler.target>1.10</maven.compiler.target>
 	</properties>

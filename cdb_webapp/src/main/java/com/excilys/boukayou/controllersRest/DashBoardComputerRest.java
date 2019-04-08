@@ -1,4 +1,4 @@
-package com.excilys.boukayou.controllers;
+package com.excilys.boukayou.controllersRest;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.excilys.boukayou.dto.ComputerDTO;
 import com.excilys.boukayou.mapper.ComputerMapper;
@@ -14,17 +15,17 @@ import com.excilys.boukayou.modele.Computer;
 import com.excilys.boukayou.service.ComputerServiceJpa;
 import com.excilys.boukayou.validator.Pagination;
 
-@Controller
-@RequestMapping(path = { "/Dashboard", "" })
+@RestController
+@RequestMapping(path =  "/DashboardRest")
 
-public class DashBoardComputerServlet {	
+public class DashBoardComputerRest {	
 
 	protected Pagination pagination;
 
 	private ComputerServiceJpa computerServiceJpa;
 	private ComputerMapper computerMapper;
 
-	public DashBoardComputerServlet(ComputerServiceJpa computerServiceJpa, ComputerMapper computerMapper,
+	public DashBoardComputerRest(ComputerServiceJpa computerServiceJpa, ComputerMapper computerMapper,
 			Pagination pagination) {
 
 		this.computerServiceJpa = computerServiceJpa;
@@ -34,7 +35,7 @@ public class DashBoardComputerServlet {
 
 	// @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping
-	public String get(Model model, @RequestParam(name = "nbrOfElements", defaultValue = "10") String nbrOfElements,
+	public List<ComputerDTO> get(Model model, @RequestParam(name = "nbrOfElements", defaultValue = "10") String nbrOfElements,
 			@RequestParam(name = "page", defaultValue = "1") String page,
 			@RequestParam(name = "sortBycomputer", defaultValue = "name") String sortBycomputer,
 			@RequestParam(name = "search", defaultValue = "") String search) {
@@ -58,7 +59,7 @@ public class DashBoardComputerServlet {
 
 		model.addAttribute("nbrOfCompFOund", nbrOfCompFOund);
 
-		return "dashboard";
+		return listcomputerDto;
 	}
 
 }

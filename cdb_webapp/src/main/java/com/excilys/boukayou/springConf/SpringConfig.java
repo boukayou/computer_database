@@ -3,8 +3,6 @@ package com.excilys.boukayou.springConf;
 import java.util.Locale;
 
 import javax.persistence.EntityManagerFactory;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -17,9 +15,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -38,7 +33,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @EnableWebMvc
 @EnableJpaRepositories(basePackages="com.excilys.boukayou.persistence")
 @EnableTransactionManagement
-@ComponentScan(value = { "com.excilys.boukayou.dto", "com.excilys.boukayou.mapper","com.excilys.boukayou.service", "com.excilys.boukayou.controllers","com.excilys.boukayou.validator","com.excilys.boukayou.validator.tech"})
+@ComponentScan(value = { "com.excilys.boukayou.dto", "com.excilys.boukayou.mapper","com.excilys.boukayou.service", "com.excilys.boukayou.controllersRest","com.excilys.boukayou.controllers","com.excilys.boukayou.validator","com.excilys.boukayou.validator.tech"})
 
 public class SpringConfig implements WebMvcConfigurer {
 
@@ -120,14 +115,12 @@ public class SpringConfig implements WebMvcConfigurer {
 		// Create the 'root' Spring application context
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 		rootContext.register(SpringConfig.class);
-
 		/// Manage the lifecycle of the root application context
 		servletContext.addListener(new ContextLoaderListener(rootContext));
 	}*/
 
 	/*private Properties jpaProperties() {
 		Properties properties = new Properties();
-
 		properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 		properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
 		properties.put("hibernate.format_sql", env.getProperty("hibernate.format_sql"));

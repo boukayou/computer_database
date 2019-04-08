@@ -8,8 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import com.zaxxer.hikari.HikariDataSource;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -22,8 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     public void configureGlobal(AuthenticationManagerBuilder auth) 
       throws Exception {
 		//Definition of each role
-        auth.inMemoryAuthentication().withUser("user").password("password").roles("USER")
-        .and().withUser("admin").password("password").roles("ADMIN", "USER");
+        auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
+       // .and().withUser("admin").password("password").roles("ADMIN", "USER");
        
       /*  auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery(
     			"select username,password, enabled from users where username=?")
@@ -33,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()/*.antMatchers("/AddComputer").access("hasRole('USER')")*/.and().formLogin();//.loginPage("/login").failureUrl("/403");
+		http.authorizeRequests().antMatchers("/SSSSS").access("hasRole('USER')").and().formLogin();//.loginPage("/login").failureUrl("/403");
 	
      
     }
