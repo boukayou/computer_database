@@ -2,6 +2,7 @@ package com.excilys.boukayou.controllersRest;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ import com.excilys.boukayou.validator.Pagination;
 
 @RestController
 @RequestMapping(path = "/computers")
+//@PreAuthorize("hasRole('USER')")
+
 public class DashBoardComputerRest {
 
 	protected Pagination pagination;
@@ -35,9 +38,7 @@ public class DashBoardComputerRest {
 
 	ComputerMapper mapper;
 
-	// @PreAuthorize("hasRole('ROLE_ADMIN')")
-
-	@GetMapping("/")
+	@GetMapping
 	public List<ComputerDTO> getAll() {
 
 		List<Computer> listcomputer = this.computerServiceJpa.getAll();
@@ -47,7 +48,7 @@ public class DashBoardComputerRest {
 		return listcomputerDto;
 	}
 
-	@GetMapping("/paged")
+	 @GetMapping("/paged")
 	public List<ComputerDTO> getByPaged(@RequestParam(name = "nbrOfElements", defaultValue = "10") String nbrOfElements,
 			@RequestParam(name = "page", defaultValue = "1") String page,
 			@RequestParam(name = "sortBycomputer", defaultValue = "name") String sortBycomputer,
@@ -71,7 +72,7 @@ public class DashBoardComputerRest {
 		return this.computerMapper.computerToDto(this.computerServiceJpa.getById(id).get());
 	}
 
-	@PostMapping(value = "/")
+	@PostMapping
 	ComputerDTO create(@RequestBody ComputerDTO newComputer) {
 
 		Computer computer = this.computerMapper.DtoToComputer(newComputer).get();

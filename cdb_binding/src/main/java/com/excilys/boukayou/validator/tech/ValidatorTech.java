@@ -34,18 +34,14 @@ public class ValidatorTech {
 		Pattern pattern = Pattern.compile( patternStr);
 
 		// create a matcher that will match the given input against this pattern
-		System.out.println("la date introduced --------------...................................................................----------------------"+computerDto.getIntroduced());
 		Matcher matcherIntroduced = pattern.matcher(computerDto.getIntroduced());
 		boolean matchIntroduced = matcherIntroduced.matches();
-		System.out.println("la date --------------...................................................................----------------------"+matchIntroduced);
 
 
 		// create a matcher that will match the given input against this pattern
-		System.out.println("la date discontinued --------------...................................................................----------------------"+computerDto.getDiscontinued());
 
 		Matcher matcherDiscontinued = pattern.matcher(computerDto.getIntroduced());
 		boolean matchDiscontinued = matcherDiscontinued.matches();
-		System.out.println("la date --------------...................................................................----------------------"+matchDiscontinued);
 
 
 		return (matchIntroduced & matchDiscontinued) ;

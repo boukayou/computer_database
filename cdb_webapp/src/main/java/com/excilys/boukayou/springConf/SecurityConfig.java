@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/SSSSS").access("hasRole('USER')").and().formLogin();//.loginPage("/login").failureUrl("/403");
+		http.authorizeRequests().antMatchers("/DashBoardComputerRest").access("hasRole('USER')").and().formLogin();//.loginPage("/login").failureUrl("/403");
 		//http.headers().disable();
 	http.csrf().disable();
     }
