@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	/*@Autowired
@@ -32,8 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/SSSSS").access("hasRole('USER')").and().formLogin();//.loginPage("/login").failureUrl("/403");
-	
-     
+		//http.headers().disable();
+	http.csrf().disable();
     }
 	
  

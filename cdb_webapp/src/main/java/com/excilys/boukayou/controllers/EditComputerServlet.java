@@ -1,7 +1,5 @@
 package com.excilys.boukayou.controllers;
 
-
-
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -27,19 +25,19 @@ public class EditComputerServlet {
 	private ComputerServiceJpa computerServiceJpa;
 	private ComputerMapper computerMapper;
 
-	public EditComputerServlet(ComputerServiceJpa computerServiceJpa, CompanyServiceJpa companyServiceJpa,ComputerMapper computerMapper) {
+	public EditComputerServlet(ComputerServiceJpa computerServiceJpa, CompanyServiceJpa companyServiceJpa,
+			ComputerMapper computerMapper) {
 		this.computerServiceJpa = computerServiceJpa;
 		this.companyServiceJpa = companyServiceJpa;
 		this.computerMapper = computerMapper;
 	}
 
 	@GetMapping
-	public String get(Model model, @RequestParam(name = "idComputer") String idComputer ){
-		
+	public String get(Model model, @RequestParam(name = "idComputer") String idComputer) {
+
 		Computer computerToEdit = this.computerServiceJpa.getById(Long.parseLong(idComputer)).get();
 		model.addAttribute("computerToEdit", computerToEdit);
-		
-		
+
 		List<Company> listCompany = this.companyServiceJpa.getList();
 		model.addAttribute("list", listCompany);
 
@@ -50,8 +48,7 @@ public class EditComputerServlet {
 	public String post(@RequestParam(name = "computerName", required = true) String computerName,
 			@RequestParam(name = "introduced") String introduced,
 			@RequestParam(name = "discontinued") String discontinued,
-			@RequestParam(name = "idComputer") String idComputer,
-			@RequestParam(name = "companyId") String companyId) {
+			@RequestParam(name = "idComputer") String idComputer, @RequestParam(name = "companyId") String companyId) {
 
 		ComputerDTO computerDto = new ComputerDTO();
 

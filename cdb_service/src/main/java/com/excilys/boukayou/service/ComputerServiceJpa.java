@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import com.excilys.boukayou.modele.Computer;
@@ -19,38 +18,39 @@ public class ComputerServiceJpa {
 
 	protected ComputerDaoJpa computerDaoJpa;
 	protected ValidaTorComputer validaTorComputer;
-	//protected Pagination pagination;
-	
-	
-	public  ComputerServiceJpa(ComputerDaoJpa computerDaoJpa , ValidaTorComputer validaTorComputer/* Pagination pagination*/) {
-		
+
+	public ComputerServiceJpa(ComputerDaoJpa computerDaoJpa, ValidaTorComputer validaTorComputer) {
+
 		this.computerDaoJpa = computerDaoJpa;
 		this.validaTorComputer = validaTorComputer;
-		//this.pagination = pagination;
+
 	}
 
-	
 	public List<Computer> getList(Pagination pagination) {
-	
+
 		return computerDaoJpa.findAllByNameContains(pagination.getSearch(), createPageRequest(pagination)).getContent();
-		
+
+	}
+
+	public List<Computer> getAll() {
+
+		return (List<Computer>) computerDaoJpa.findAll();
+
 	}
 
 	public long count() {
 
 		return computerDaoJpa.count();
-	
+
 	}
-	
 
 	public Optional<Computer> getById(long id) {
-		
+
 		return computerDaoJpa.findById(id);
 	}
- 
 
 	public Computer create(Computer computer) {
-		
+
 		if (ValidaTorComputer.validatorComputer(computer)) {
 
 			return computerDaoJpa.save(computer);
@@ -73,19 +73,20 @@ public class ComputerServiceJpa {
 			return null;
 		}
 	}
-	
+
 	public void delete(Computer computer) {
-		
+
 		try {
-		computerDaoJpa.delete(computer);
-		
-		}catch (Exception e) {
+			computerDaoJpa.delete(computer);
+
+		} catch (Exception e) {
 			e.getStackTrace();
 		}
 	}
-	
+
 	private Pageable createPageRequest(Pagination pagination) {
-	
-		return PageRequest.of(pagination.getPage(), pagination.getNbOfElements(), Sort.by(pagination.getSort()).ascending());
+
+		return PageRequest.of(pagination.getPage(), pagination.getNbOfElements(),
+				Sort.by(pagination.getSort()).ascending());
 	}
 }

@@ -1,4 +1,4 @@
-package com.excilys.boukayou.controllersRest;
+/*package com.excilys.boukayou.controllersRest;
 
 import java.util.NoSuchElementException;
 
@@ -44,3 +44,4 @@ public class DeleteComputerRest {
 	}
 
 }
+*/

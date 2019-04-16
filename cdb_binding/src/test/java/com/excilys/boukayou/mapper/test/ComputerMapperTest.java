@@ -63,7 +63,8 @@ class ComputerMapperTest {
 
 	@Test
 	void testDtoTodComputer() {
-		assertEquals(computer, computerMapper.DtoToComputer(computerDto).get());
+		//assertEquals(computer, computerMapper.DtoToComputer(computerDto).get());
+		assertEquals(computer, computerMapper.DtoToComputer(computerDto));
 
 	}
 

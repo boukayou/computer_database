@@ -14,29 +14,39 @@ public class ValidatorTech {
 	public void validatorTech(ComputerDTO computerDto) throws ValidatorException {
 
 		if (!(checkDateIsValidType(computerDto) && checkNameIsNotEmpty(computerDto))) {
-			throw new ValidatorException("Data computer invalid !");
+			throw new ValidatorException("Data computer invalid Je suis un hero un hero !");
 		}
-
 	}
 
 	public static boolean checkDateIsValidType(ComputerDTO computerDto) {
-
 		if ((computerDto.getIntroduced() == null || computerDto.getIntroduced().isEmpty())
 				&& (computerDto.getDiscontinued() == null || computerDto.getDiscontinued().isEmpty())) {
+
 			return true;
 
 		}
 
-		String patternStr = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))";
-		Pattern pattern = Pattern.compile(patternStr);
+		//String patternStr = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))";
+		String patternStr =  "^((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)$"
+			      + "|^(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))$"
+			      + "|^(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))$"
+			      + "|^(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30))$";
+		Pattern pattern = Pattern.compile( patternStr);
 
 		// create a matcher that will match the given input against this pattern
+		System.out.println("la date introduced --------------...................................................................----------------------"+computerDto.getIntroduced());
 		Matcher matcherIntroduced = pattern.matcher(computerDto.getIntroduced());
 		boolean matchIntroduced = matcherIntroduced.matches();
+		System.out.println("la date --------------...................................................................----------------------"+matchIntroduced);
+
 
 		// create a matcher that will match the given input against this pattern
+		System.out.println("la date discontinued --------------...................................................................----------------------"+computerDto.getDiscontinued());
+
 		Matcher matcherDiscontinued = pattern.matcher(computerDto.getIntroduced());
 		boolean matchDiscontinued = matcherDiscontinued.matches();
+		System.out.println("la date --------------...................................................................----------------------"+matchDiscontinued);
+
 
 		return (matchIntroduced & matchDiscontinued) ;
 	}

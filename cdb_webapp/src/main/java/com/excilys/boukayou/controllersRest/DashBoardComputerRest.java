@@ -2,9 +2,11 @@ package com.excilys.boukayou.controllersRest;
 
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,12 +18,10 @@ import com.excilys.boukayou.service.ComputerServiceJpa;
 import com.excilys.boukayou.validator.Pagination;
 
 @RestController
-@RequestMapping(path =  "/DashboardRest")
-
-public class DashBoardComputerRest {	
+@RequestMapping(path = "/computers")
+public class DashBoardComputerRest {
 
 	protected Pagination pagination;
-
 	private ComputerServiceJpa computerServiceJpa;
 	private ComputerMapper computerMapper;
 
@@ -33,9 +33,22 @@ public class DashBoardComputerRest {
 		this.pagination = pagination;
 	}
 
+	ComputerMapper mapper;
+
 	// @PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping
-	public List<ComputerDTO> get(Model model, @RequestParam(name = "nbrOfElements", defaultValue = "10") String nbrOfElements,
+
+	@GetMapping("/")
+	public List<ComputerDTO> getAll() {
+
+		List<Computer> listcomputer = this.computerServiceJpa.getAll();
+
+		List<ComputerDTO> listcomputerDto = this.computerMapper.getListComputerDto(listcomputer);
+
+		return listcomputerDto;
+	}
+
+	@GetMapping("/paged")
+	public List<ComputerDTO> getByPaged(@RequestParam(name = "nbrOfElements", defaultValue = "10") String nbrOfElements,
 			@RequestParam(name = "page", defaultValue = "1") String page,
 			@RequestParam(name = "sortBycomputer", defaultValue = "name") String sortBycomputer,
 			@RequestParam(name = "search", defaultValue = "") String search) {
@@ -49,17 +62,28 @@ public class DashBoardComputerRest {
 
 		List<ComputerDTO> listcomputerDto = this.computerMapper.getListComputerDto(listcomputer);
 
-		List<String> listNavigation = this.computerMapper.IntToString(pagination.navigation());
-
-		String nbrOfCompFOund = String.valueOf(this.computerServiceJpa.count());
-
-		model.addAttribute("listNavigation", listNavigation);
-
-		model.addAttribute("listComputerDto", listcomputerDto);
-
-		model.addAttribute("nbrOfCompFOund", nbrOfCompFOund);
-
 		return listcomputerDto;
+	}
+
+	@GetMapping("/{id}")
+	ComputerDTO getById(@PathVariable long id) {
+
+		return this.computerMapper.computerToDto(this.computerServiceJpa.getById(id).get());
+	}
+
+	@PostMapping(value = "/")
+	ComputerDTO create(@RequestBody ComputerDTO newComputer) {
+
+		Computer computer = this.computerMapper.DtoToComputer(newComputer).get();
+		this.computerServiceJpa.create(computer);
+		return newComputer;
+	}
+
+	@DeleteMapping("/{id}")
+	ComputerDTO delete(@PathVariable long id) {
+		Computer computer = this.computerServiceJpa.getById(id).get();
+		this.computerServiceJpa.delete(computer);
+		return this.computerMapper.computerToDto(computer);
 	}
 
 }

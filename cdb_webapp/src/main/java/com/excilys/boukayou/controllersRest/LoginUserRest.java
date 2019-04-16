@@ -1,4 +1,4 @@
-package com.excilys.boukayou.controllersRest;
+/*package com.excilys.boukayou.controllersRest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,4 +44,4 @@ public class LoginUserRest {
 
 	}
 
-}
+}*/
