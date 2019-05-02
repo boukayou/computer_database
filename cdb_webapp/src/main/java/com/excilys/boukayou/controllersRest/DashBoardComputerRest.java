@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -78,6 +79,14 @@ public class DashBoardComputerRest {
 		Computer computer = this.computerMapper.DtoToComputer(newComputer).get();
 		this.computerServiceJpa.create(computer);
 		return newComputer;
+	}
+	
+	@PatchMapping
+	ComputerDTO upDate(@RequestBody ComputerDTO Computer) {
+
+		Computer computer = this.computerMapper.DtoToComputer(Computer).get();
+		this.computerServiceJpa.upDate(computer);
+		return Computer;
 	}
 
 	@DeleteMapping("/{id}")
